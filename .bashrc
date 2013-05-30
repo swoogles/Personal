@@ -1,0 +1,159 @@
+# Sample .bashrc for SuSE Linux
+# Copyright (c) SuSE GmbH Nuernberg
+
+# There are 3 different types of shells in bash: the login shell, normal shell
+# and interactive shell. Login shells read ~/.profile and interactive shells
+# read ~/.bashrc; in our setup, /etc/profile sources ~/.bashrc - thus all
+# settings made here will also take effect in a login shell.
+#
+# NOTE: It is recommended to make language settings in ~/.profile rather than
+# here, since multilingual X sessions would not work properly if LANG is over-
+# ridden in every subshell.
+
+if [ -f /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
+# don't put duplicate lines in the history. See bash(1) for more options
+# ... or force ignoredups and ignorespace
+HISTCONTROL=ignoredups:ignorespace
+
+
+
+# Some applications read the EDITOR variable to determine your favourite text
+# editor. So uncomment the line below and enter the editor of your choice :-)
+export EDITOR=/usr/bin/vim
+#export EDITOR=/usr/bin/mcedit
+
+export PRINTER=Xerox-Phaser-8560DN
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+export HISTSIZE=1000
+export HISTFILESIZE=50000
+export HISTIGNORE='&:bg:fg:ll:h'
+
+# Displays time in the top right corner
+PROMPT_CLOCK="\[\033[s\]\[\033[1;\$((COLUMNS-4))f\]\$(date +%H:%M)\[\033[u\]" # Clock in top right corner
+# PS1=${MAIN_PROMPT}${PROMPT_CLOCK} # Main prompt
+PROMPT_BRANCH="\[\033[s\]\[\033[2;\$((COLUMNS-8))f\]\$(git branch 2>/dev/null | grep \*)\[\033[u\]" # Git branch in top right corner
+
+PROMPT_MAIN='\n\[\e[0;32m\]\u@\[\e[1;32m\]\h \[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\n\$\[\e[m\] \[\e[1;37m\]'
+PS1=${PROMPT_MAIN} # ${PROMPT_BRANCH}
+
+# JD's prompt
+# PS1="\n\u:\w \[$EWHITE\] \n$ "
+
+# For some news readers it makes sense to specify the NEWSSERVER variable here
+#export NEWSSERVER=your.news.server
+
+# If you want to use a Palm device with Linux, uncomment the two lines below.
+# For some (older) Palm Pilots, you might need to set a lower baud rate
+# e.g. 57600 or 38400; lowest is 9600 (very slow!)
+#
+#export PILOTPORT=/dev/pilot
+#export PILOTRATE=115200
+
+#export CATALINA_BASE=~/.netbeans/7.0/apache-tomcat-7.0.14.0_base/
+
+test -s ~/.alias && . ~/.alias || true
+
+#Use VIM instead of VI
+alias vi=vim
+
+#VIM bindings in bash
+# set -o vi
+
+#Safe Versions
+alias 'rmrf'='~/scripts/rmEnhanced.sh'
+
+#Tomcat commands
+# tomcatHome='/home/bfrasure/apache-tomcat-7.0.14/'
+tomcatHome='/home/bfrasure/.netbeans/7.1.2/apache-tomcat-7.0.22.0_base'
+tomcatCmd='/opt/apache-tomcat-7.0.14/bin/'
+alias tcStart="sudo ${tomcatCmd}catalina.sh run"
+alias tcStop="sudo ${tomcatCmd}catalina.sh stop"
+
+homeDir='/home/bfrasure/'
+alias Billd="${homeDir}scripts/Billd.sh"
+
+#PRINTER=xerox;
+#export PRINTER
+
+#Get on HPU
+alias linus='ssh bfrasure@linus-public.highpoint.edu'
+#Get on Zeus
+alias zeus='ssh bfrasure@zeus'
+
+#Git alias's
+alias gs='git status '
+alias ga='git add '
+alias gb='git branch '
+alias gc='git commit '
+alias gd='git diff '
+alias go='git checkout '
+alias gk='gitk --all&'
+alias gx='gitx --all'
+alias gr='git reset '
+alias PUSH='~/scripts/gitPush.sh'
+
+#cd Variations
+alias ..="cd .."
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
+
+
+
+#Hop to key directories
+alias cdsr='cd ~/NetBeansProjects/smilereminder3/'
+alias cdsf='cd ~/NetBeansProjects/smilereminder3/appSubfiles/web/'
+
+#More Key directories
+alias cdcmd='cd ~/CommandLine/'
+alias cdfeed='cd ~/Feed/'
+alias cdjaxb='cd ~/NetBeansProjects/smilereminder3/appProfile/src/java/com/communitect/framework/feed'
+alias cdapi='cd ~/API'
+
+alias cdtom='cd '$tomcatHome
+alias cdlogs='cdtom; cd logs' 
+
+alias cds='cd ~/scripts'
+#alias cdlogs='cd '${tomcatHome}/logs
+
+alias cdjunk='cd ~/junkDir'
+
+alias cdot='cd /media/ffcf93ba-7e63-4a29-ae33-cab0b6537424/opt/apache-tomcat-7.0.14'
+
+alias lynx='lynx -vikeys'
+
+alias dbsr='psql -U srpostgres smilereminder'
+alias dbnm='psql -U srpostgres numbermapping'
+
+alias cdp='cd ~/Dropbox/Projects/ShapesLibrary/'
+
+
+
+
+set -b						# causes output from background processes to be output right away, not on wait for next primary prompt
+
+
+
+# Functions
+netinfo ()
+{
+  echo "--------------- Network Information ---------------"
+  /sbin/ifconfig | awk /'inet addr/ {print $2}'
+  echo ""
+  /sbin/ifconfig | awk /'Bcast/ {print $3}'
+  echo ""
+  /sbin/ifconfig | awk /'inet addr/ {print $4}'
+
+  # /sbin/ifconfig | awk /'HWaddr/ {print $4,$5}'
+  echo "---------------------------------------------------"
+}
+
+mkdircd () {
+  mkdir -p "$@" &&
+  eval cd "\"$$#\"";
+}
