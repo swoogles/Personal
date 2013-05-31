@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/home/bfrasure/NetBeansProjects/smilereminder3/appOneDeskAPI'
+let g:netrw_dirhist_2='/home/bfrasure/NetBeansProjects/smilereminder3/appOneDeskAPI/src'
+let g:netrw_dirhist_3='/home/bfrasure/NetBeansProjects/smilereminder3/appOneDeskAPI/src/java'
+let g:netrw_dirhist_4='/home/bfrasure/NetBeansProjects/smilereminder3/appOneDeskAPI/src/java/com'
+let g:netrw_dirhist_5='/home/bfrasure/NetBeansProjects/smilereminder3/appOneDeskAPI/src/java/com/communitect'
+let g:netrw_dirhist_6='/home/bfrasure/NetBeansProjects/smilereminder3/appOneDeskAPI/src/java/com/communitect/representation'
+let g:netrw_dirhist_7='/home/bfrasure/NetBeansProjects/smilereminder3/dbSmileReminder'
+let g:netrw_dirhist_8='/home/bfrasure/Tim'

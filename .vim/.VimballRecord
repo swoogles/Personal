@@ -1,0 +1,1 @@
+tcomment.vba: call delete('/home/bfrasure/.vim/doc/tcomment.txt')|call delete('/home/bfrasure/.vim/plugin/tcomment.vim')|call delete('/home/bfrasure/.vim/autoload/tcomment.vim')
