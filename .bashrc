@@ -28,7 +28,7 @@ export EDITOR=/usr/bin/vim
 export PRINTER=Xerox-Phaser-8560DN
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-export HISTSIZE=1000
+export HISTSIZE=50000
 export HISTFILESIZE=50000
 export HISTIGNORE='&:bg:fg:ll:h'
 
