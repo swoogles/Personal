@@ -268,4 +268,4 @@ function! LoadCscope()
   endif
 endfunction
 au BufEnter /* call LoadCscope()
-
+call LoadCscope()
