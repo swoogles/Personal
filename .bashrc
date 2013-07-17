@@ -157,3 +157,5 @@ mkdircd () {
   mkdir -p "$@" &&
   eval cd "\"$$#\"";
 }
+
+alias billding='ssh -p 7822 root@199.195.116.237'
