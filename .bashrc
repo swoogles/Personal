@@ -135,12 +135,9 @@ alias dbnm='psql -U srpostgres numbermapping'
 
 alias cdp='cd ~/Dropbox/Projects/ShapesLibrary/'
 
-
-
+alias billding='ssh -p 7822 root@199.195.116.237'
 
 set -b						# causes output from background processes to be output right away, not on wait for next primary prompt
-
-
 
 # Functions
 netinfo ()
