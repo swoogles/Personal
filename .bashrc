@@ -158,6 +158,9 @@ mkdircd () {
   eval cd "\"$$#\"";
 }
 
+
+alias billding='ssh -p 7822 root@199.195.116.237'
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -178,3 +181,7 @@ fi
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
+
+alias billding='ssh -p 7822 root@199.195.116.237'
+
+alias vimsesh="vim -S ~/vim_sessions/`git rev-parse --abbrev-ref HEAD`.vim"
