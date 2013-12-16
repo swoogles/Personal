@@ -1,4 +1,32 @@
 sudo apt-get install vim
+#Alternate bleeding edge install
+# git clone https://github.com/b4winckler/vim
+# ./configure --enable-cscope --prefix=/usr --with-features=huge --enable-pythoninterp --enable-luainterp
+
+# ** VIM ** 
+
+  #Pathogen Setup
+  wget -O ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+
+  #Syntastic Setup
+  git clone https://github.com/scrooloose/syntastic.git ~/.vim/bundle
+
+  # **** VUNDLE *****
+  # Ohhhh man, screw that old way of doing things. Use vundle. It's awesome.
+  # Read here: https://github.com/gmarik/vundle#about
+  # Run: git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+  # These lines should be enough to get going:
+  #
+  # set rtp+=~/.vim/bundle/vundle/
+  # call vundle#rc()
+  # " let Vundle manage Vundle
+  # " required! 
+  # Bundle 'gmarik/vundle'
+  #
+  # Use the URL of the github repo in question for extremely easy installs
+  #
+  # Can also use the url from vim-scripts repos
+
 sudo apt-get install screen
 sudo apt-get install g++
 sudo apt-get install libboost-all-dev
