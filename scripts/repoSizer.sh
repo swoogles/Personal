@@ -1,13 +1,16 @@
 #! /bin/bash
+
+branch="nightly"
 echo "Hi"
-git checkout nightly 2>/dev/null
+git checkout $branch 2>/dev/null
 numCommits=158
 prevNumLines=0
 countLines="wc -l"
-for i in {0..5}
+numCommits=5
+for i in {0..$numCommits}
 # for i in {0..158}
 do
-  git checkout nightly~$i 2>/dev/null
+  git checkout $branch~$i 2>/dev/null
   commitDate=`git log --pretty=format:"%ai" | head -1`
   cppFiles=`find . -iname "*cpp"`
   headerFiles=`find . -iname "*h"`
