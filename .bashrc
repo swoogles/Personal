@@ -41,12 +41,13 @@ PROMPT_CLOCK="\[\033[s\]\[\033[1;\$((COLUMNS-4))f\]\$(date +%H:%M)\[\033[u\]" # 
 PROMPT_BRANCH="\[\033[s\]\[\033[2;\$((COLUMNS-8))f\]\$(git branch 2>/dev/null | grep \*)\[\033[u\]" # Git branch in top right corner
 
 # Variables I'm using:
-PROMPT_USR="\[$txtgrn\]\u" #  \u : Username
-PROMPT_HOST="\[$bldgrn\]\h" #  \h : Hostname
-PROMPT_DIR="$txtrst \[$bldblu\]\w" #  \w : Working directory
-PROMPT_CMD_NUM="\[$undcyn\]\!" #  \! : Command Number
-PROMPT_CURSOR="\[$bldgrn\]$"
-PROMPT_CMD_TXT="$txtrst \[$bldwht\]"
+PROMPT_USR="$txtgrn\u" #  \u : Username
+PROMPT_HOST="$bldgrn\h" #  \h : Hostname
+PROMPT_DIR="$txtrst $bldblu\w" #  \w : Working directory
+PROMPT_CMD_NUM="$undcyn\!" #  \! : Command Number
+PROMPT_CURSOR="$bldgrn$"
+PROMPT_CMD_TXT="$txtrst $bldwht"
+# \n : NewLine
 # \n : NewLine
 PROMPT_MAIN="\n$PROMPT_USR@$PROMPT_HOST $PROMP_DIR $txtrst \n $PROMPT_CMD_NUM $txtrst $PROMPT_CURSOR $PROMPT_CMD_TXT"
 
