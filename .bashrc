@@ -40,7 +40,19 @@ PROMPT_CLOCK="\[\033[s\]\[\033[1;\$((COLUMNS-4))f\]\$(date +%H:%M)\[\033[u\]" # 
 # PS1=${MAIN_PROMPT}${PROMPT_CLOCK} # Main prompt
 PROMPT_BRANCH="\[\033[s\]\[\033[2;\$((COLUMNS-8))f\]\$(git branch 2>/dev/null | grep \*)\[\033[u\]" # Git branch in top right corner
 
-PROMPT_MAIN='\n\[\e[0;32m\]\u@\[\e[1;32m\]\h \[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\n\$\[\e[m\] \[\e[1;37m\]'
+# Variables I'm using:
+PROMPT_USR="$txtgrn\u" #  \u : Username
+PROMPT_HOST="$bldgrn\h" #  \h : Hostname
+PROMPT_DIR="$txtrst $bldblu\w" #  \w : Working directory
+PROMPT_CMD_NUM="$undcyn\!" #  \! : Command Number
+PROMPT_CURSOR="$bldgrn$"
+PROMPT_CMD_TXT="$txtrst $bldwht"
+# \n : NewLine
+# \n : NewLine
+PROMPT_MAIN="\n$PROMPT_USR@$PROMPT_HOST $PROMP_DIR $txtrst \n $PROMPT_CMD_NUM $txtrst $PROMPT_CURSOR $PROMPT_CMD_TXT"
+
+# Old and crappy version
+# PROMPT_MAIN='\n\[\e[0;32m\]\u@\[\e[1;32m\]\h \[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\n\$\[\e[m\] \[\e[1;37m\]'
 PS1=${PROMPT_MAIN} # ${PROMPT_BRANCH}
 
 # JD's prompt

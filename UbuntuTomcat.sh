@@ -1,3 +1,7 @@
+#cgdb Setup
+ sudo apt-get install libreadline-dev
+ sudo apt-get install ncurses-dev
+
 # Install Java
 sudo apt-get install default-jdk
 # Set JAVA_HOME variable
