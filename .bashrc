@@ -45,15 +45,19 @@ PROMPT_CLOCK="\[\033[s\]\[\033[1;\$((COLUMNS-4))f\]\$(date +%H:%M)\[\033[u\]" # 
 PROMPT_BRANCH="\[\033[s\]\[\033[2;\$((COLUMNS-8))f\]\$(git branch 2>/dev/null | grep \*)\[\033[u\]" # Git branch in top right corner
 
 # Variables I'm using:
+PROMPT_SPC="    " # Currently 5 basic spaces
 PROMPT_USR="$txtgrn\u" #  \u : Username
 PROMPT_HOST="$bldgrn\h" #  \h : Hostname
 PROMPT_DIR="$txtrst $bldblu\w" #  \w : Working directory
 PROMPT_CMD_NUM="$undcyn\!" #  \! : Command Number
 PROMPT_CURSOR="$bldgrn$"
 PROMPT_CMD_TXT="$txtrst $bldwht"
+PROMPT_RUN_GIT_BRANCH_URL="$txtrst$bldylw`~/scripts/GitOriginUrl.sh`"
+PROMPT_RUN_GIT_BRANCH_NAME="$txtrst$bldred`~/scripts/GitBranchName.sh`"
+PROMPT_TIME="$txtrst\t"
 # \n : NewLine
 # \n : NewLine
-PROMPT_MAIN="\n$PROMPT_USR@$PROMPT_HOST $PROMPT_DIR $txtrst \n $PROMPT_CMD_NUM $txtrst $PROMPT_CURSOR $PROMPT_CMD_TXT"
+PROMPT_MAIN="\n$PROMPT_USR@$PROMPT_HOST $PROMPT_DIR $PROMPT_SPC ${PROMPT_RUN_GIT_BRANCH_URL}->$PROMPT_RUN_GIT_BRANCH_NAME $PROMPT_SPC $PROMPT_TIME $txtrst \n $PROMPT_CMD_NUM$txtrst $PROMPT_CURSOR$PROMPT_CMD_TXT"
 
 # Old and crappy version
 # PROMPT_MAIN='\n\[\e[0;32m\]\u@\[\e[1;32m\]\h \[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\n\$\[\e[m\] \[\e[1;37m\]'
