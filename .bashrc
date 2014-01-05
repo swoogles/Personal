@@ -14,6 +14,10 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
+if [ -f ~/.bash_colors ]; then
+  . ~/.bash_colors 
+fi
+
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoredups:ignorespace
@@ -49,7 +53,7 @@ PROMPT_CURSOR="$bldgrn$"
 PROMPT_CMD_TXT="$txtrst $bldwht"
 # \n : NewLine
 # \n : NewLine
-PROMPT_MAIN="\n$PROMPT_USR@$PROMPT_HOST $PROMP_DIR $txtrst \n $PROMPT_CMD_NUM $txtrst $PROMPT_CURSOR $PROMPT_CMD_TXT"
+PROMPT_MAIN="\n$PROMPT_USR@$PROMPT_HOST $PROMPT_DIR $txtrst \n $PROMPT_CMD_NUM $txtrst $PROMPT_CURSOR $PROMPT_CMD_TXT"
 
 # Old and crappy version
 # PROMPT_MAIN='\n\[\e[0;32m\]\u@\[\e[1;32m\]\h \[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\n\$\[\e[m\] \[\e[1;37m\]'
