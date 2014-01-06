@@ -23,6 +23,6 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 #
 # m h  dom mon dow   command
-* * * * * date >> ~/cronOutput.txt
-* * * * * /home/bfrasure/scripts/UpdatePersonal.sh >> ~/cronOutput.txt
+*/* * * * * date >> ~/cronOutput.txt
+*/5 * * * * /home/bfrasure/scripts/UpdatePersonal.sh >> ~/cronOutput.txt
 # * * * * * /home/bfrasure/scripts/UpdatePhysics.sh >> ~/cronOutput.txt
