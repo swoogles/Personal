@@ -63,6 +63,11 @@ PROMPT_MAIN="\n$PROMPT_USR@$PROMPT_HOST $PROMPT_DIR $PROMPT_SPC ${PROMPT_RUN_GIT
 # PROMPT_MAIN='\n\[\e[0;32m\]\u@\[\e[1;32m\]\h \[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\n\$\[\e[m\] \[\e[1;37m\]'
 PS1=${PROMPT_MAIN} # ${PROMPT_BRANCH}
 
+#Make sure every session piles commands into the HISTFILE as they occur, rather than when the shell exits
+#This might turn out to be a bad idea as I'll get funky scrolling behavior in windows that I want to keep doing distinct tasks
+shopt -s histappend
+PROMPT_COMMAND="history -a; history -n;"
+
 # JD's prompt
 # PS1="\n\u:\w \[$EWHITE\] \n$ "
 
@@ -156,6 +161,8 @@ alias dbnm='psql -U srpostgres numbermapping'
 alias cdp='cd ~/Dropbox/Projects/ShapesLibrary/'
 
 alias billding='ssh -p 7822 root@199.195.116.237'
+
+alias make='grc -es make'
 
 set -b						# causes output from background processes to be output right away, not on wait for next primary prompt
 
