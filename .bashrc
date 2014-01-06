@@ -54,7 +54,7 @@ PS_RUN_GIT_BRANCH_URL="$txtrst$bldylw`~/scripts/GitOriginUrl.sh`"
 PS_RUN_GIT_BRANCH_NAME="$txtrst$bldred`~/scripts/GitBranchName.sh`"
 PS_TIME="$txtrst\t"
 # \n : NewLine
-# \n : NewLine
+#Looks like: bfrasure@bfrasure-desktop-mint  ~/Repositories/Personal      Personal->master      24:50:27
 PS_MAIN="\n$PS_USR@$PS_HOST $PS_DIR $PS_SPC ${PS_RUN_GIT_BRANCH_URL}->$PS_RUN_GIT_BRANCH_NAME $PS_SPC $PS_TIME $txtrst \n $PS_CMD_NUM$txtrst $PS_CURSOR$PS_CMD_TXT"
 
 # Old and crappy version
