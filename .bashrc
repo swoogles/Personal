@@ -50,12 +50,12 @@ PS_DIR="$txtrst $bldblu\w" #  \w : Working directory
 PS_CMD_NUM="$undcyn\!" #  \! : Command Number
 PS_CURSOR="$bldgrn$"
 PS_CMD_TXT="$txtrst $bldwht"
-PS_RUN_GIT_BRANCH_URL="$txtrst$bldylw`~/scripts/GitOriginUrl.sh`"
-PS_RUN_GIT_BRANCH_NAME="$txtrst$bldred`~/scripts/GitBranchName.sh`"
+PS_GIT_BRCH_URL="$txtrst$bldylw`~/scripts/GitOriginUrl.sh`"
+PS_GIT_BRCH_NAME="$txtrst$bldred`~/scripts/GitBranchName.sh`"
 PS_TIME="$txtrst\t"
 # \n : NewLine
 #Looks like: bfrasure@bfrasure-desktop-mint  ~/Repositories/Personal      Personal->master      24:50:27
-PS_MAIN="\n$PS_USR@$PS_HOST $PS_DIR $PS_SPC ${PS_RUN_GIT_BRANCH_URL}->$PS_RUN_GIT_BRANCH_NAME $PS_SPC $PS_TIME $txtrst \n $PS_CMD_NUM$txtrst $PS_CURSOR$PS_CMD_TXT"
+PS_MAIN="\n$PS_USR@$PS_HOST $PS_DIR $PS_SPC ${PS_GIT_BRCH_URL}->$PS_GIT_BRCH_NAME $PS_SPC $PS_TIME $txtrst \n $PS_CMD_NUM$txtrst $PS_CURSOR$PS_CMD_TXT"
 
 # Old and crappy version
 # PS_MAIN='\n\[\e[0;32m\]\u@\[\e[1;32m\]\h \[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\n\$\[\e[m\] \[\e[1;37m\]'
@@ -93,22 +93,22 @@ alias vi=vim
 alias 'rmrf'='~/scripts/rmEnhanced.sh'
 
 #Tomcat commands
-# tomcatHome='/home/bfrasure/apache-tomcat-7.0.14/'
-tomcatHome='/home/bfrasure/.netbeans/7.1.2/apache-tomcat-7.0.22.0_base'
+# tomcatHome="/home/$USER/apache-tomcat-7.0.14/"
+tomcatHome="/home/$USER/.netbeans/7.1.2/apache-tomcat-7.0.22.0_base"
 tomcatCmd='/opt/apache-tomcat-7.0.14/bin/'
 alias tcStart="sudo ${tomcatCmd}catalina.sh run"
 alias tcStop="sudo ${tomcatCmd}catalina.sh stop"
 
-homeDir='/home/bfrasure/'
+homeDir="/home/$USER/"
 alias Billd="${homeDir}scripts/Billd.sh"
 
 #PRINTER=xerox;
 #export PRINTER
 
 #Get on HPU
-alias linus='ssh bfrasure@linus-public.highpoint.edu'
+alias linus="ssh $USER@linus-public.highpoint.edu"
 #Get on Zeus
-alias zeus='ssh bfrasure@zeus'
+alias zeus="ssh $USER@zeus"
 
 #Git alias's
 alias gs='git status '

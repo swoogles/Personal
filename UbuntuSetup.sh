@@ -1,4 +1,5 @@
-sudo apt-get install vim
+INSTALL="sudo apt-get install"
+$INSTALL vim
 #Alternate bleeding edge install
 # git clone https://github.com/b4winckler/vim
 # ./configure --enable-cscope --prefix=/usr --with-features=huge --enable-pythoninterp --enable-luainterp
@@ -27,22 +28,22 @@ sudo apt-get install vim
   #
   # Can also use the url from vim-scripts repos
 
-sudo apt-get install screen
-sudo apt-get install g++
-sudo apt-get install libboost-all-dev
+$INSTALL screen
+$INSTALL g++
+$INSTALL libboost-all-dev
 #Instructions for setting up opengl here: www.wikihow.com/Install-Mesa-(openGL)-on-Linux-Mint
-sudo apt-get install freeglut3-dev
-sudo apt-get install cmake
-sudo apt-get install libglew-dev
-sudo apt-get install mesa-common-dev
-sudo apt-get install build-essential
-sudo apt-get install libglew1.5-dev libglm-dev
-sudo apt-get install libxmu-dev
+$INSTALL freeglut3-dev
+$INSTALL cmake
+$INSTALL libglew-dev
+$INSTALL mesa-common-dev
+$INSTALL build-essential
+$INSTALL libglew1.5-dev libglm-dev
+$INSTALL libxmu-dev
 #To solve "could not find working GL lib" error
-sudo apt-get install libxi-dev libxine-dev
+$INSTALL libxi-dev libxine-dev
 
 
-sudo apt-get install imagemagick
-sudo apt-get install libmagick++-dev
+$INSTALL imagemagick
+$INSTALL libmagick++-dev
 
 wget http://plib.sourceforge.net/dist/plib-1.8.5.tar.gz
