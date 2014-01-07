@@ -22,8 +22,6 @@ fi
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoredups:ignorespace
 
-
-
 # Some applications read the EDITOR variable to determine your favourite text
 # editor. So uncomment the line below and enter the editor of your choice :-)
 export EDITOR=/usr/bin/vim
@@ -50,24 +48,21 @@ PS_DIR="$txtrst $bldblu\w" #  \w : Working directory
 PS_CMD_NUM="$undcyn\!" #  \! : Command Number
 PS_CURSOR="$bldgrn$"
 PS_CMD_TXT="$txtrst $bldwht"
-PS_GIT_BRCH_URL="$txtrst$bldylw`~/scripts/GitOriginUrl.sh`"
-PS_GIT_BRCH_NAME="$txtrst$bldred`~/scripts/GitBranchName.sh`"
+PS_GIT_BRCH_URL="$txtrst$bldylw\$(~/scripts/GitOriginUrl.sh)"
+PS_GIT_BRCH_NAME="$txtrst$bldred\$(~/scripts/GitBranchName.sh)"
 PS_TIME="$txtrst\t"
 # \n : NewLine
 #Looks like: bfrasure@bfrasure-desktop-mint  ~/Repositories/Personal      Personal->master      24:50:27
-PS_MAIN="\n$PS_USR@$PS_HOST $PS_DIR $PS_SPC ${PS_GIT_BRCH_URL}->$PS_GIT_BRCH_NAME $PS_SPC $PS_TIME $txtrst \n $PS_CMD_NUM$txtrst $PS_CURSOR$PS_CMD_TXT"
+# PS_MAIN="\n$PS_USR@$PS_HOST $PS_DIR $PS_SPC ${PS_GIT_BRCH_URL}->$PS_GIT_BRCH_NAME $PS_SPC $PS_TIME $txtrst \n $PS_CMD_NUM$txtrst $PS_CURSOR$PS_CMD_TXT"
+#Looks like: bfrasure@bfrasure-desktop-mint  ~/Repositories/Personal      Personal->master
+PS_MAIN="\n$PS_USR@$PS_HOST $PS_DIR $PS_SPC ${PS_GIT_BRCH_URL}->$PS_GIT_BRCH_NAME $PS_SPC $txtrst \n $PS_CMD_NUM$txtrst $PS_CURSOR$PS_CMD_TXT"
 
-# Old and crappy version
-# PS_MAIN='\n\[\e[0;32m\]\u@\[\e[1;32m\]\h \[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\n\$\[\e[m\] \[\e[1;37m\]'
 PS1=${PS_MAIN} # ${PS_BRANCH}
 
 #Make sure every session piles commands into the HISTFILE as they occur, rather than when the shell exits
 #This might turn out to be a bad idea as I'll get funky scrolling behavior in windows that I want to keep doing distinct tasks
 shopt -s histappend
 PROMPT_COMMAND="history -a; history -n;"
-
-# JD's prompt
-# PS1="\n\u:\w \[$EWHITE\] \n$ "
 
 # For some news readers it makes sense to specify the NEWSSERVER variable here
 #export NEWSSERVER=your.news.server
@@ -128,8 +123,6 @@ alias ..2="cd ../.."
 alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
-
-
 
 #Hop to key directories
 alias cdsr='cd ~/NetBeansProjects/smilereminder3/'
@@ -210,3 +203,24 @@ fi
 alias billding='ssh -p 7822 root@199.195.116.237'
 
 alias vimsesh="vim -S ~/vim_sessions/`git rev-parse --abbrev-ref HEAD`.vim"
+
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+
+#CentOS aliases
+alias yi="sudo yum install"
+alias yu="sudo yum update"
+alias ycu="sudo yum check-update"
+alias yr="sudo yum remove"
+alias yl="sudo yum list"
+alias yrl="sudo yum repolist"
+alias yh="sudo yum history"
+alias yhi="sudo yum history info"
+
+declare -a aliases=(\
+  'gs="git status "'\
+  'ga="git add "')
+
+for i in "${aliases[@]}"
+do
+  echo $i
+done
