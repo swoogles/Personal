@@ -50,10 +50,22 @@ PS_CURSOR="$bldgrn$"
 PS_CMD_TXT="$txtrst $bldwht"
 PS_GIT_BRCH_URL="$txtrst$bldylw\$(~/scripts/GitOriginUrl.sh)"
 PS_GIT_BRCH_NAME="$txtrst$bldred\$(~/scripts/GitBranchName.sh)"
+
+# Need to wrap this up into one function so that I can hit it like the previous git functions and have it refresh everytime.
+# if [ -e .git ];
+# then
+#   PS_GIT="$PS_GIT_BRCH_URL->$PS_GIT_BRCH_NAME"
+# else
+#   PS_GIT=""
+# fi
+# PS_MAIN="\n$PS_USR@$PS_HOST $PS_DIR $PS_SPC ${PS_GIT} $PS_SPC $txtrst \n $PS_CMD_NUM$txtrst $PS_CURSOR$PS_CMD_TXT"
+
 PS_TIME="$txtrst\t"
 # \n : NewLine
+
 #Looks like: bfrasure@bfrasure-desktop-mint  ~/Repositories/Personal      Personal->master      24:50:27
 # PS_MAIN="\n$PS_USR@$PS_HOST $PS_DIR $PS_SPC ${PS_GIT_BRCH_URL}->$PS_GIT_BRCH_NAME $PS_SPC $PS_TIME $txtrst \n $PS_CMD_NUM$txtrst $PS_CURSOR$PS_CMD_TXT"
+
 #Looks like: bfrasure@bfrasure-desktop-mint  ~/Repositories/Personal      Personal->master
 PS_MAIN="\n$PS_USR@$PS_HOST $PS_DIR $PS_SPC ${PS_GIT_BRCH_URL}->$PS_GIT_BRCH_NAME $PS_SPC $txtrst \n $PS_CMD_NUM$txtrst $PS_CURSOR$PS_CMD_TXT"
 

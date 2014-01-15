@@ -257,6 +257,9 @@ if has('cscope')
   command! -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
 endif
 
+function! LatexSuite()
+  source ~/.vim/ftplugin/tex_latexSuite.vim
+endfunction
 
 function! LoadCscope()
   let db = findfile("cscope.out", ".;")
@@ -269,3 +272,25 @@ function! LoadCscope()
 endfunction
 au BufEnter /* call LoadCscope()
 call LoadCscope()
+
+""""" For vim-latex stuff """"" 
+" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
+filetype plugin on
+
+" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" can be called correctly.
+set shellslash
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=grep\ -nH\ $*
+
+" OPTIONAL: This enables automatic indentation as you type.
+filetype indent on
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+""""" /For vim-latex stuff """"" 
