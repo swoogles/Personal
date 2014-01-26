@@ -9,7 +9,10 @@
 "  for MS-DOS and Win32:  $VIM\_vimrc
 "	    for OpenVMS:  sys$login:.vimrc
 
-" call pathogen#infect()
+execute pathogen#incubate()
+" execute pathogen#runtime_append_all_bundles()
+execute pathogen#helptags()
+execute pathogen#infect()
 
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
