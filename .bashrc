@@ -49,7 +49,7 @@ PS_CMD_NUM="$undcyn\!" #  \! : Command Number
 PS_CURSOR="$bldgrn$"
 PS_CMD_TXT="$txtrst $bldwht"
 PS_GIT_BRCH_URL="$txtrst$bldylw\$(~/scripts/GitOriginUrl.sh)"
-PS_GIT_BRCH_NAME="$txtrst$bldred\$(~/scripts/GitBranchName.sh)"
+PS_GIT_BRCH_NAME="$txtrst$bldpur\$(~/scripts/GitBranchName.sh)"
 
 # Need to wrap this up into one function so that I can hit it like the previous git functions and have it refresh everytime.
 # if [ -e .git ];
