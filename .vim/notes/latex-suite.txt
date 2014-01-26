@@ -1,0 +1,4 @@
+To Compile: <leader>ll
+To View: <leader>lv
+
+To change compile format: :TTarget

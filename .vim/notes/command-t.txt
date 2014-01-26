@@ -1,0 +1,12 @@
+// From: http://stackoverflow.com/questions/3794895/installing-vim-with-ruby-support-ruby
+To get vim compiled with ruby support: 
+
+  sudo apt-get install vim-nox;
+
+Problem:
+error: could not load the C extension
+
+To compile extensions
+sudo apt-get install rake
+//In .vim/bundle/command-t
+  rake make
