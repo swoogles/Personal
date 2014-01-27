@@ -297,3 +297,10 @@ filetype indent on
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
 """"" /For vim-latex stuff """"" 
+
+""" TagBar """
+nmap <F5> :TagbarToggle<CR>
+
+""" Ignore certain filetypes for command-t searches """
+set wildignore+=*.o,*.obj,*.d
+
