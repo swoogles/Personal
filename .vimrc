@@ -206,6 +206,9 @@ map Y y$
 nnoremap j gj
 nnoremap k gk
 
+" Spacebar for folds!
+nnoremap <space> za
+
 " Using H & L to move to beginning and end of line respectively
 map H ^
 map L $

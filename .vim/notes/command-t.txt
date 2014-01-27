@@ -10,3 +10,8 @@ To compile extensions
 sudo apt-get install rake
 //In .vim/bundle/command-t
   rake make
+
+  // Installing rake (CentOS)
+  sudo yum install rubygems
+  gem update --system
+  gem install rake
