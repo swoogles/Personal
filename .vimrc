@@ -209,6 +209,9 @@ nnoremap k gk
 " Spacebar for folds!
 nnoremap <space> za
 
+" Super-powered undo!
+nnoremap <leader>u :GundoToggle<CR>
+
 " Using H & L to move to beginning and end of line respectively
 map H ^
 map L $
