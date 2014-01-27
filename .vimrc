@@ -127,15 +127,6 @@ set wildmenu
 " Update vimrc on write
 au! BufWritePost .vimrc source % 
 
-" Indention based Folding + manual
-"augroup vimrc
-"  au BufReadPre * setlocal foldmethod=indent
-"  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-"augroup END
-
-" Manual Folding
-"au BufReadPre * setLocal foldmethod=indent
-
 
 "Abbreviations
 ab #b /*******************************
@@ -206,8 +197,22 @@ map Y y$
 nnoremap j gj
 nnoremap k gk
 
+""" FOLDS 
+set foldmethod=syntax
+set foldlevelstart=1
+
 " Spacebar for folds!
 nnoremap <space> za
+
+" Indention based Folding + manual
+"augroup vimrc
+"  au BufReadPre * setlocal foldmethod=indent
+"  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+"augroup END
+
+" Manual Folding
+"au BufReadPre * setLocal foldmethod=indent
+
 
 " Super-powered undo!
 nnoremap <leader>u :GundoToggle<CR>
