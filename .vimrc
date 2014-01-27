@@ -1,16 +1,8 @@
-" An example for a vimrc file.
+" My vimrc
+" Bill Frasure
 "
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2001 Jan 20
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
+" It grows stronger every day.
 
-" execute pathogen#incubate()
-" execute pathogen#runtime_append_all_bundles()
 execute pathogen#infect()
 execute pathogen#helptags()
 
@@ -23,20 +15,10 @@ set sta
 set ts=2
 set et
 " End of my lines -ordinary
-" Begin of my lines -change indents
-map #1 :s/^   //
-map #2 :s/^/   /
-" End of my lines -change indents
 
-"Begin of my lines - F3 to latex current file
-"                    from command or insert
-map #3 :w:! latex % 
-map! #3 :w:! latex % i
-" End of my lines - latex
+" Abbreviations {{{
 
-" cmap w!! %!sudo tee > /dev/null %
-cmap w!! w !sudo dd of=%
-
+" OpenGL abbreviations {{{
 " Begin my lines - for OpenGL
 ab glB glBegin
 ab glC glClear
@@ -59,6 +41,20 @@ ab glutIWP glutInitWindowPosition
 ab glutIWS glutInitWindowSize
 ab glutML glutMainLoop
 " End of my lines -for OpenGL
+" }}}
+
+"Abbreviations
+ab #b /*******************************
+ab #e *******************************/
+
+"Java Abbreviations"
+ab jp/ System.out.println(
+iab jc/ /*
+\<CR>  *
+\<CR>  *
+\<CR>  */
+
+" }}}
 
 set nocompatible
 
@@ -68,28 +64,12 @@ set laststatus=2
 set bs=2		" allow backspacing over everything in insert mode
 set ai			" always set autoindenting on
 
-" Turned off backups to not interfere with Project code
-"if has("vms")
-"  set nobackup		" do not keep a backup file, use versions instead
-"else
-"  set backup		" keep a backup file
-"endif
-
-set history=50		" keep 50 lines of command line history
+set history=500		" keep 500 lines of command line history
 set ruler		" show the cursor position all the time
 set incsearch		" do incremental searching
 set ignorecase "Case insensitive search
 set hidden "Remember undo after quitting
 
-
-" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-" let &guioptions = substitute(&guioptions, "t", "", "g")
-
-" Don't use Ex mode, use Q for formatting
-map Q gq
-
-" Make p in Visual mode replace the selected text with the "" register.
-vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -128,16 +108,6 @@ set wildmenu
 au! BufWritePost .vimrc source % 
 
 
-"Abbreviations
-ab #b /*******************************
-ab #e *******************************/
-
-"Java Abbreviations"
-ab jp/ System.out.println(
-iab jc/ /*
-\<CR>  *
-\<CR>  *
-\<CR>  */
 
 " Macros
 :let @a='_m`"tyw$b"nywA^M^Rt^Rn^[b~biget^[OF() {^Mreturn ^Rn;^M|<80>kb}^Mvoid ^Rn^[b~biset^[OF( <80>kb^Rt^Rn^[b~binew^[bywA) {^M^Rn = ^R";^M}^M^[a'
@@ -149,8 +119,6 @@ iab jc/ /*
 
 " ctags options
 set tags=tags;/
-" ctags mappings
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR> 
 
 "MiniBufExplorer options
 let g:miniBufExplMapWindowNavVim = 1
@@ -185,24 +153,10 @@ let g:last_pos = 0
 colors zellner
 colors torte
 
-
-" Eclim stuff
-let mapleader = ","
-:nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
-
-" Make Capital Y behave like other capitals
-map Y y$
-
-" Better behavior while scrolling through wrapped lines
-nnoremap j gj
-nnoremap k gk
-
 """ FOLDS 
+" Folds {{{
 set foldmethod=syntax
 set foldlevelstart=1
-
-" Spacebar for folds!
-nnoremap <space> za
 
 " Indention based Folding + manual
 "augroup vimrc
@@ -213,19 +167,7 @@ nnoremap <space> za
 " Manual Folding
 "au BufReadPre * setLocal foldmethod=indent
 
-
-" Super-powered undo!
-nnoremap <leader>u :GundoToggle<CR>
-
-" Using H & L to move to beginning and end of line respectively
-map H ^
-map L $
-
-
-" Highlight line after jump
-
-"Paste over visual selection, without copying selection into default register
-vnoremap p "_dP
+"}}}
 
 "Buffer Diffing
 let g:diffed_buffers=[]
@@ -254,6 +196,7 @@ endfunction
 :map <F2> :echo 'Current time is ' . strftime('%c')<CR>
 :map! <F3> a<C-R>=strftime('%c')<CR><Esc>
 
+" Cscope {{{
 if has('cscope')
   set cscopetag cscopeverbose
 
@@ -271,10 +214,6 @@ if has('cscope')
   command! -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
 endif
 
-function! LatexSuite()
-  source ~/.vim/ftplugin/tex_latexSuite.vim
-endfunction
-
 function! LoadCscope()
   let db = findfile("cscope.out", ".;")
   if (!empty(db))
@@ -286,32 +225,82 @@ function! LoadCscope()
 endfunction
 au BufEnter /* call LoadCscope()
 call LoadCscope()
+" }}}
 
-""""" For vim-latex stuff """"" 
-" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
-filetype plugin on
+" vim-latex {{{
+  function! LatexSuite()
+    source ~/.vim/ftplugin/tex_latexSuite.vim
+  endfunction
+  " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
+  filetype plugin on
+
+  " IMPORTANT: grep will sometimes skip displaying the file name if you
+  " search in a singe file. This will confuse Latex-Suite. Set your grep
+  " program to always generate a file-name.
+  set grepprg=grep\ -nH\ $*
+
+  " OPTIONAL: This enables automatic indentation as you type.
+  filetype indent on
+
+  " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+  " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+  " The following changes the default filetype back to 'tex':
+  let g:tex_flavor='latex'
+" }}}
+
+" WindowsShit {{{
+" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
+" let &guioptions = substitute(&guioptions, "t", "", "g")
 
 " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
 " can be called correctly.
 set shellslash
-
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
-
-" OPTIONAL: This enables automatic indentation as you type.
-filetype indent on
-
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
-""""" /For vim-latex stuff """"" 
-
-""" TagBar """
-nmap <F5> :TagbarToggle<CR>
+"}}}
 
 """ Ignore certain filetypes for command-t searches """
 set wildignore+=*.o,*.obj,*.d
 
+" Key Mappings {{{
+let mapleader = ","
+:nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
+
+" Don't use Ex mode, use Q for formatting
+map Q gq
+
+" Make Capital Y behave like other capitals
+map Y y$
+
+" Better behavior while scrolling through wrapped lines
+nnoremap j gj
+nnoremap k gk
+
+" cmap w!! %!sudo tee > /dev/null %
+cmap w!! w !sudo dd of=%
+
+" Make p in Visual mode replace the selected text with the "" register.
+vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+
+" ctags mappings
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR> 
+
+" Using H & L to move to beginning and end of line respectively
+map H ^
+map L $
+
+"Paste over visual selection, without copying selection into default register
+vnoremap p "_dP
+
+" Super-powered undo!
+nnoremap <leader>u :GundoToggle<CR>
+
+" Spacebar for folds!
+nnoremap <space> za
+
+""" TagBar """
+nmap <F5> :TagbarToggle<CR>
+
+" }}}
+
+" This is useful for sectioning off vimrc. It only applies this folding method when editing vimrc itself
+set modelines=1
+" vim:foldmethod=marker:foldlevel=0
