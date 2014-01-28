@@ -6,228 +6,164 @@
 execute pathogen#infect()
 execute pathogen#helptags()
 
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-" Begin my lines - ordinary
-set autoindent
-set sw=2
-set sta
-set ts=2
-set et
-" End of my lines -ordinary
-
-" Abbreviations {{{
-
-" OpenGL abbreviations {{{
-" Begin my lines - for OpenGL
-ab glB glBegin
-ab glC glClear
-ab glC3f glColor3f
-ab glCC glClearColor
-ab glE glEnd
-ab glF glFlush
-ab glLI glLoadIdentity
-ab glMM glMatrixMode
-ab glV2f glVertex2f
-ab GL_C_B_B GL_COLOR_BUFFER_BIT
-ab GL_PO GL_POLYGON
-ab GL_PR GL_PROJECTION
-ab gluO gluOrtho
-ab glutCW glutCreateWindow
-ab glutDF glutDisplayFunc
-ab glutI glutInit
-ab glutIDM glutInitDisplayMode
-ab glutIWP glutInitWindowPosition
-ab glutIWS glutInitWindowSize
-ab glutML glutMainLoop
-" End of my lines -for OpenGL
-" }}}
-
-"Abbreviations
-ab #b /*******************************
-ab #e *******************************/
-
-"Java Abbreviations"
-ab jp/ System.out.println(
-iab jc/ /*
-\<CR>  *
-\<CR>  *
-\<CR>  */
-
-" }}}
-
-set nocompatible
-
-" Used for powerline
-set laststatus=2
-
-set bs=2		" allow backspacing over everything in insert mode
-set ai			" always set autoindenting on
-
-set history=500		" keep 500 lines of command line history
-set ruler		" show the cursor position all the time
-set incsearch		" do incremental searching
-set ignorecase "Case insensitive search
-set hidden "Remember undo after quitting
+" Options {{{
+  " Use Vim settings, rather then Vi settings (much better!).
+  " This must be first, because it changes other options as a side effect.
+  " Begin my lines - ordinary
+  set autoindent
+  set sw=2
+  set sta
+  set ts=2
+  set et
+  " End of my lines -ordinary
 
 
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-endif
+  set nocompatible
 
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
+  " Used for powerline
+  set laststatus=2
 
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
+  set bs=2		" allow backspacing over everything in insert mode
+  set ai			" always set autoindenting on
 
-  " For all text files set 'textwidth' to 78 characters.
-  au FileType text setlocal tw=78
+  set history=500		" keep 500 lines of command line history
+  set ruler		" show the cursor position all the time
+  set incsearch		" do incremental searching
+  set ignorecase "Case insensitive search
+  set hidden "Remember undo after quitting
 
-  " When editing a file, always jump to the last known cursor position.
-  autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
+  " ctags options
+  set tags=tags;/
 
-endif " has("autocmd")
+  "MiniBufExplorer options
+  let g:miniBufExplMapWindowNavVim = 1
+  let g:miniBufExplMapWindowNavArrows = 1
+  let g:miniBufExplMapCTabSwitchBufs = 1
+  let g:miniBufExplModSelTarget = 1 
 
-au FileType * setl fo-=cro
+  " Open new splits on the right
+  set splitright
+  set splitbelow 
 
-" au Filetype java :so ~/JavaKit/javakit/vim/JavaKit.vim
+  " Ignore certain filetypes for command-t searches
+  " *** This almost certainly affects many different areas. I think I should use
+  " it for ignoring ALL binary data types that I might encounter. ***
+  set wildignore+=*.o,*.obj,*.d
 
-set wildmenu
-
-" Update vimrc on write
-au! BufWritePost .vimrc source % 
-
-
-
-" Macros
-:let @a='_m`"tyw$b"nywA^M^Rt^Rn^[b~biget^[OF() {^Mreturn ^Rn;^M|<80>kb}^Mvoid ^Rn^[b~biset^[OF( <80>kb^Rt^Rn^[b~binew^[bywA) {^M^Rn = ^R";^M}^M^[a'
-
-" Make quick backup of current file
-:let @b=':! cp % %_backup'
-" Delete backup file
-:let @d=':! rm %_backup'
-
-" ctags options
-set tags=tags;/
-
-"MiniBufExplorer options
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1 
-
-" Open new splits on the right
-set splitright
-set splitbelow 
-
-
-" Highlight cursor after jump
-function! s:Cursor_Moved()
-  let cur_pos = winline()
-  if g:last_pos == 0
-    set cul
-    let g:last_pos = cur_pos
-    return
+  " Switch syntax highlighting on, when the terminal has colors
+  " Also switch on highlighting the last used search pattern.
+  if &t_Co > 2 || has("gui_running")
+    syntax on
+    set hlsearch
   endif
-  let diff = g:last_pos - cur_pos
-  if diff > 1 || diff < -1
-    set cul
-  else
-    set nocul
-  endif
-  let g:last_pos = cur_pos
-endfunction
-autocmd CursorMoved,CursorMovedI * call s:Cursor_Moved()
-let g:last_pos = 0
 
-colors zellner
-colors torte
+  set wildmenu
 
-""" FOLDS 
+" }}}
+" Macros {{{
+  :let @a='_m`"tyw$b"nywA^M^Rt^Rn^[b~biget^[OF() {^Mreturn ^Rn;^M|<80>kb}^Mvoid ^Rn^[b~biset^[OF( <80>kb^Rt^Rn^[b~binew^[bywA) {^M^Rn = ^R";^M}^M^[a'
+
+  " Make quick backup of current file
+  :let @b=':! cp % %_backup'
+  " Delete backup file
+  :let @d=':! rm %_backup'
+" }}}
+" Themes {{{
+  colors zellner
+  colors torte
+" }}}
 " Folds {{{
-set foldmethod=syntax
-set foldlevelstart=1
+  set foldmethod=syntax
+  set foldlevelstart=1
 
-" Indention based Folding + manual
-"augroup vimrc
-"  au BufReadPre * setlocal foldmethod=indent
-"  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-"augroup END
+  " Indention based Folding + manual
+  "augroup vimrc
+  "  au BufReadPre * setlocal foldmethod=indent
+  "  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+  "augroup END
 
-" Manual Folding
-"au BufReadPre * setLocal foldmethod=indent
+  " Manual Folding
+  "au BufReadPre * setLocal foldmethod=indent
 
 "}}}
+" Functions {{{
 
-"Buffer Diffing
-let g:diffed_buffers=[]
-function! DiffText(a, b, diffed_buffers)
-  " enew
-  execute 'tab split | enew'
-  setlocal buftype=nowrite
-  call add(a:diffed_buffers, bufnr('%'))
-  call setline(1, split(a:a, "\n"))
-  diffthis
-  vnew
-  setlocal buftype=nowrite
-  call add(a:diffed_buffers, bufnr('%'))
-  call setline(1, split(a:b, "\n"))
-  diffthis
-endfunction
-function! WipeOutDiffs(diffed_buffers)
-  for buffer in a:diffed_buffers
-    execute 'bwipeout! '.buffer
-  endfor
-  call remove(a:diffed_buffers, 0, -1)
-endfunction
-:nnoremap <special> <F7> :call DiffText(@a, @b, g:diffed_buffers)
-:nnoremap <special> <F8> :call WipeOutDiffs(g:diffed_buffers) | let g:diffed_buffers=[]
+  " Highlight cursor after jump
+  function! s:Cursor_Moved()
+    let cur_pos = winline()
+    if g:last_pos == 0
+      set cul
+      let g:last_pos = cur_pos
+      return
+    endif
+    let diff = g:last_pos - cur_pos
+    if diff > 1 || diff < -1
+      set cul
+    else
+      set nocul
+    endif
+    let g:last_pos = cur_pos
+  endfunction
+  autocmd CursorMoved,CursorMovedI * call s:Cursor_Moved()
+  let g:last_pos = 0
 
-:map <F2> :echo 'Current time is ' . strftime('%c')<CR>
-:map! <F3> a<C-R>=strftime('%c')<CR><Esc>
+  "Buffer Diffing
+  let g:diffed_buffers=[]
+  function! DiffText(a, b, diffed_buffers)
+    " enew
+    execute 'tab split | enew'
+    setlocal buftype=nowrite
+    call add(a:diffed_buffers, bufnr('%'))
+    call setline(1, split(a:a, "\n"))
+    diffthis
+    vnew
+    setlocal buftype=nowrite
+    call add(a:diffed_buffers, bufnr('%'))
+    call setline(1, split(a:b, "\n"))
+    diffthis
+  endfunction
+  function! WipeOutDiffs(diffed_buffers)
+    for buffer in a:diffed_buffers
+      execute 'bwipeout! '.buffer
+    endfor
+    call remove(a:diffed_buffers, 0, -1)
+  endfunction
 
-" Cscope {{{
-if has('cscope')
-  set cscopetag cscopeverbose
-
-  if has('quickfix')
-    set cscopequickfix=s-,c-,d-,i-,t-,e-
-  endif
-
-  cnoreabbrev csa cs add
-  cnoreabbrev csf cs find
-  cnoreabbrev csk cs kill
-  cnoreabbrev csr cs reset
-  cnoreabbrev css cs show
-  cnoreabbrev csh cs help
-
-  command! -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
-endif
-
-function! LoadCscope()
-  let db = findfile("cscope.out", ".;")
-  if (!empty(db))
-    let path = strpart(db, 0, match(db, "/cscope.out$"))
-    set nocscopeverbose " suppress 'duplicate connection' error
-    exe "cs add " . db . " " . path
-    set cscopeverbose
-  endif
-endfunction
-au BufEnter /* call LoadCscope()
-call LoadCscope()
 " }}}
+" Cscope {{{
 
+  if has('cscope')
+    set cscopetag cscopeverbose
+
+    if has('quickfix')
+      set cscopequickfix=s-,c-,d-,i-,t-,e-
+    endif
+
+    cnoreabbrev csa cs add
+    cnoreabbrev csf cs find
+    cnoreabbrev csk cs kill
+    cnoreabbrev csr cs reset
+    cnoreabbrev css cs show
+    cnoreabbrev csh cs help
+
+    command! -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
+  endif
+
+  function! LoadCscope()
+    let db = findfile("cscope.out", ".;")
+    if (!empty(db))
+      let path = strpart(db, 0, match(db, "/cscope.out$"))
+      set nocscopeverbose " suppress 'duplicate connection' error
+      exe "cs add " . db . " " . path
+      set cscopeverbose
+    endif
+  endfunction
+  au BufEnter /* call LoadCscope()
+  call LoadCscope()
+
+" }}}
 " vim-latex {{{
+
   function! LatexSuite()
     source ~/.vim/ftplugin/tex_latexSuite.vim
   endfunction
@@ -246,61 +182,135 @@ call LoadCscope()
   " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
   " The following changes the default filetype back to 'tex':
   let g:tex_flavor='latex'
-" }}}
 
+" }}}
 " WindowsShit {{{
-" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-" let &guioptions = substitute(&guioptions, "t", "", "g")
+  " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
+  " let &guioptions = substitute(&guioptions, "t", "", "g")
 
-" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
-" can be called correctly.
-set shellslash
+  " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+  " can be called correctly.
+  set shellslash
 "}}}
-
-""" Ignore certain filetypes for command-t searches """
-set wildignore+=*.o,*.obj,*.d
-
 " Key Mappings {{{
-let mapleader = ","
-:nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
 
-" Don't use Ex mode, use Q for formatting
-map Q gq
+  " The door to level 3 vimming
+  let mapleader = ","
 
-" Make Capital Y behave like other capitals
-map Y y$
+  :nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
 
-" Better behavior while scrolling through wrapped lines
-nnoremap j gj
-nnoremap k gk
+  " Don't use Ex mode, use Q for formatting
+  map Q gq
 
-" cmap w!! %!sudo tee > /dev/null %
-cmap w!! w !sudo dd of=%
+  " Make Capital Y behave like other capitals
+  map Y y$
 
-" Make p in Visual mode replace the selected text with the "" register.
-vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+  " Better behavior while scrolling through wrapped lines
+  nnoremap j gj
+  nnoremap k gk
 
-" ctags mappings
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR> 
+  " Using H & L to move to beginning and end of line respectively
+  map H ^
+  map L $
 
-" Using H & L to move to beginning and end of line respectively
-map H ^
-map L $
+  " cmap w!! %!sudo tee > /dev/null %
+  cmap w!! w !sudo dd of=%
 
-"Paste over visual selection, without copying selection into default register
-vnoremap p "_dP
+  " Make p in Visual mode replace the selected text with the "" register.
+  vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
-" Super-powered undo!
-nnoremap <leader>u :GundoToggle<CR>
+  " ctags mappings
+  map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR> 
 
-" Spacebar for folds!
-nnoremap <space> za
+  "Paste over visual selection, without copying selection into default register
+  vnoremap p "_dP
 
-""" TagBar """
-nmap <F5> :TagbarToggle<CR>
+  " Super-powered undo!
+  nnoremap <leader>u :GundoToggle<CR>
+
+  " Spacebar for folds!
+  nnoremap <space> za
+
+  """ TagBar """
+  nmap <leader>n  :TagbarToggle<CR>
+
+  " Easy comparison of 2 arbitrary text put in the a and b buffers
+  :nnoremap <special> <F7> :call DiffText(@a, @b, g:diffed_buffers)
+  " Remove buffers opened by DiffText
+  :nnoremap <special> <F8> :call WipeOutDiffs(g:diffed_buffers) | let g:diffed_buffers=[]
+
+  :map <F2> :echo 'Current time is ' . strftime('%c')<CR>
+  :map! <F3> a<C-R>=strftime('%c')<CR><Esc>
 
 " }}}
+" Abbreviations {{{
 
-" This is useful for sectioning off vimrc. It only applies this folding method when editing vimrc itself
-set modelines=1
-" vim:foldmethod=marker:foldlevel=0
+  " OpenGL abbreviations {{{
+    ab glB glBegin
+    ab glC glClear
+    ab glC3f glColor3f
+    ab glCC glClearColor
+    ab glE glEnd
+    ab glF glFlush
+    ab glLI glLoadIdentity
+    ab glMM glMatrixMode
+    ab glV2f glVertex2f
+    ab GL_C_B_B GL_COLOR_BUFFER_BIT
+    ab GL_PO GL_POLYGON
+    ab GL_PR GL_PROJECTION
+    ab gluO gluOrtho
+    ab glutCW glutCreateWindow
+    ab glutDF glutDisplayFunc
+    ab glutI glutInit
+    ab glutIDM glutInitDisplayMode
+    ab glutIWP glutInitWindowPosition
+    ab glutIWS glutInitWindowSize
+    ab glutML glutMainLoop
+  " }}}
+
+  "Abbreviations
+  ab #b /*******************************
+  ab #e *******************************/
+
+  "Java Abbreviations"
+  ab jp/ System.out.println(
+  iab jc/ /*
+  \<CR>  *
+  \<CR>  *
+  \<CR>  */
+
+" }}}
+" Unsorted {{{
+
+  " Only do this part when compiled with support for autocommands.
+  if has("autocmd")
+
+    " Enable file type detection.
+    " Use the default filetype settings, so that mail gets 'tw' set to 72,
+    " 'cindent' is on in C files, etc.
+    " Also load indent files, to automatically do language-dependent indenting.
+    filetype plugin indent on
+
+    " For all text files set 'textwidth' to 78 characters.
+    au FileType text setlocal tw=78
+
+    " When editing a file, always jump to the last known cursor position.
+    autocmd BufReadPost *
+      \ if line("'\"") > 0 && line("'\"") <= line("$") |
+      \   exe "normal g`\"" |
+      \ endif
+
+  endif " has("autocmd")
+
+  au FileType * setl fo-=cro
+
+" }}}
+" Meta {{{
+
+  " Update vimrc on write
+  au! BufWritePost .vimrc source % 
+
+  " This is useful for sectioning off vimrc. It only applies this folding method when editing vimrc itself
+  set modelines=1
+  " vim:foldmethod=marker:foldlevel=0
+" }}}
