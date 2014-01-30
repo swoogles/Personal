@@ -28,3 +28,6 @@
 [submodule ".vim/bundle/vim-unimpaired"]
 	path = .vim/bundle/vim-unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
+[submodule ".vim/bundle/zoom-win"]
+	path = .vim/bundle/zoom-win
+	url = https://github.com/vim-scripts/ZoomWin.git

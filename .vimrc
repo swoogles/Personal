@@ -230,6 +230,7 @@ execute pathogen#helptags()
 
   " Spacebar for folds!
   nnoremap <space> za
+  nnoremap <S-space> zO
 
   """ TagBar """
   nmap <leader>n  :TagbarToggle<CR>
