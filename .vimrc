@@ -85,6 +85,9 @@ execute pathogen#helptags()
   " Manual Folding
   "au BufReadPre * setLocal foldmethod=indent
 
+  " To get ZoomWin working
+  set nocp
+
 "}}}
 " Functions {{{
 
