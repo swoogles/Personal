@@ -11,6 +11,7 @@ execute pathogen#helptags()
   " This must be first, because it changes other options as a side effect.
   " Begin my lines - ordinary
   set autoindent
+  set expandtab
   set sw=2
   set sta
   set ts=2
