@@ -27,7 +27,7 @@ execute pathogen#helptags()
   set bs=2		" allow backspacing over everything in insert mode
   set ai			" always set autoindenting on
 
-  set history=500		" keep 500 lines of command line history
+  set history=1000		" keep 500 lines of command line history
   set ruler		" show the cursor position all the time
   set incsearch		" do incremental searching
   set ignorecase "Case insensitive search
