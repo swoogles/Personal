@@ -236,3 +236,5 @@ for i in "${aliases[@]}"
 do
   echo $i
 done
+
+alias cdr="cd ~/Repositories"
