@@ -1,5 +1,6 @@
 hardstatus alwayslastline
 hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+altscreen on
 # chdir /home/brasure/Dropbox/Projects/ShapesLibrary/src
 # screen -t src 0 vim
 # chdir /home/brasure/Dropbox/Projects/ShapesLibrary/Release
