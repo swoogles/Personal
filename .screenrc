@@ -1,6 +1,14 @@
 hardstatus alwayslastline
 hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
+# Support alternative screens so that, for example, when you
+# quit out of vi, the display is redrawn as it was before vi
+# redrew the full screen.
 altscreen on
+
+# Scrollback buffer size in lines
+defscrollback 5000
+
 # chdir /home/brasure/Dropbox/Projects/ShapesLibrary/src
 # screen -t src 0 vim
 # chdir /home/brasure/Dropbox/Projects/ShapesLibrary/Release
