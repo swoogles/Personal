@@ -247,6 +247,9 @@ execute pathogen#helptags()
   :map <F2> :echo 'Current time is ' . strftime('%c')<CR>
   :map! <F3> a<C-R>=strftime('%c')<CR><Esc>
 
+  " Fugitive
+  nnoremap <leader>gs :Gstatus<CR>
+
 " }}}
 " Abbreviations {{{
 
