@@ -127,7 +127,10 @@ alias go='git checkout '
 alias gk='gitk --all&'
 alias gx='gitx --all'
 alias gr='git reset '
+alias gm='git merge '
 alias PUSH='~/scripts/gitPush.sh'
+alias gplo='git pull origin '
+alias gpsho='git push origin '
 
 #cd Variations
 alias ..="cd .."
