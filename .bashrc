@@ -123,14 +123,17 @@ alias ga='git add '
 alias gb='git branch '
 alias gc='git commit '
 alias gd='git diff '
+alias gdc='git diff --cached '
 alias go='git checkout '
 alias gk='gitk --all&'
 alias gx='gitx --all'
 alias gr='git reset '
 alias gm='git merge '
+alias gl='git log '
 alias PUSH='~/scripts/gitPush.sh'
 alias gplo='git pull origin '
 alias gpsho='git push origin '
+alias gitgraph='git log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s" --simplify-by-decoration'
 
 #cd Variations
 alias ..="cd .."
