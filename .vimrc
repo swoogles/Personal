@@ -251,6 +251,9 @@ execute pathogen#helptags()
   nnoremap <leader>gs :Gstatus<CR>
   nnoremap <leader>gl :Glog<CR>
 
+  " Make session
+  nnoremap <leader>ms :mksession! ~/.current.vim<CR>
+
 " }}}
 " Abbreviations {{{
 

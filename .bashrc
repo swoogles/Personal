@@ -221,6 +221,7 @@ fi
 alias billding='ssh -p 7822 root@199.195.116.237'
 
 alias vimsesh="vim -S ~/vim_sessions/`git rev-parse --abbrev-ref HEAD`.vim"
+alias vimcur="vim -S ~/.current.vim"
 
 alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 
