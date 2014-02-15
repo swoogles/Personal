@@ -249,6 +249,7 @@ execute pathogen#helptags()
 
   " Fugitive
   nnoremap <leader>gs :Gstatus<CR>
+  nnoremap <leader>gl :Glog<CR>
 
 " }}}
 " Abbreviations {{{
