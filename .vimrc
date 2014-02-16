@@ -254,6 +254,9 @@ execute pathogen#helptags()
   " Make session
   nnoremap <leader>ms :mksession! ~/.current.vim<CR>
 
+  " Cscope bindings
+  nnoremap <leader>ff :cs find f 
+
 " }}}
 " Abbreviations {{{
 
