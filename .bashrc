@@ -182,6 +182,10 @@ set -b						# causes output from background processes to be output right away, n
 # Source: https://dgl.cx/wikipedia-dns
 wiki() { dig +short txt $1.wp.dg.cx; }
 
+# Change into highest level parent directory that matches the search term
+# This awk part might be better in a standalone script.
+cdu() { cd $( pwd | awk -v term="$1" ' BEGIN { FS="/"; found=0; } { for ( i = 1; i <= NF && found==0; ++i ) { path=path$i"/"; if ( $i ~ term ) {  found++; } } } END { print path; } ' ; ) ;}
+
 netinfo ()
 {
   echo "--------------- Network Information ---------------"
