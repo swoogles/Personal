@@ -76,6 +76,9 @@ PS1=${PS_MAIN} # ${PS_BRANCH}
 shopt -s histappend
 PROMPT_COMMAND="history -a; history -n;"
 
+# Show a timestamp with every history entry
+export HISTTIMEFORMAT="%d/%m/%y %T "
+
 # For some news readers it makes sense to specify the NEWSSERVER variable here
 #export NEWSSERVER=your.news.server
 
