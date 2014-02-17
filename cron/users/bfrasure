@@ -25,4 +25,5 @@
 # m h  dom mon dow   command
 */* * * * * date >> ~/cronOutput.txt
 */5 * * * * /home/bfrasure/scripts/UpdatePersonal.sh >> ~/cronOutput.txt
-# * * * * * /home/bfrasure/scripts/UpdatePhysics.sh >> ~/cronOutput.txt
+*/5 * * * * /home/bfrasure/scripts/UpdatePhysics.sh >> ~/cronOutput.txt
+*/5 * * * * /home/bfrasure/scripts/UpdateLatex.sh >> ~/cronOutput.txt
