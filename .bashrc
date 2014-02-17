@@ -176,6 +176,12 @@ alias make='grc -es make'
 set -b						# causes output from background processes to be output right away, not on wait for next primary prompt
 
 # Functions
+
+# Get a brief wiki summary of the argument
+# Discovered here: http://www.catonmat.net/blog/another-ten-one-liners-from-commandlinefu-explained/
+# Source: https://dgl.cx/wikipedia-dns
+wiki() { dig +short txt $1.wp.dg.cx; }
+
 netinfo ()
 {
   echo "--------------- Network Information ---------------"
