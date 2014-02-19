@@ -258,3 +258,4 @@ do
 done
 
 alias cdr="cd ~/Repositories"
+alias ll="ls -al"
