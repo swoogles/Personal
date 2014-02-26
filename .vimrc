@@ -60,6 +60,9 @@ execute pathogen#helptags()
 
   set wildmenu
 
+  " Spell check for commit messages.
+  autocmd Filetype gitcommit setlocal spell 
+
 " }}}
 " Macros {{{
   :let @a='_m`"tyw$b"nywA^M^Rt^Rn^[b~biget^[OF() {^Mreturn ^Rn;^M|<80>kb}^Mvoid ^Rn^[b~biset^[OF( <80>kb^Rt^Rn^[b~binew^[bywA) {^M^Rn = ^R";^M}^M^[a'
