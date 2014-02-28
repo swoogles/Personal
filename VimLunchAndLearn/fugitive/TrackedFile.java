@@ -1,15 +1,17 @@
 public class TrackedFile
 {
+  cout << "A" << endl;
   public static void main(String[] args)
   {
-    go();
+    randomInts();
   }
 
-  public static go()
+  public static randomInts()
   {
     File file = new File("randInts.txt");
     Random r = new Random();
     final int LIMIT = 100;
+    cout << "B" << endl;
 
     for(int i = 0; i < LIMIT; i++)
     {
@@ -17,5 +19,6 @@ public class TrackedFile
     }
 
     file.close();
+  cout << "A" << endl;
   }
 }
