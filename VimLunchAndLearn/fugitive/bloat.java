@@ -1,3 +1,4 @@
+  // BAD CODE!!!
   public boolean isPrime(int num) {
     double LIMIT = Math.sqrt(num);
     boolean isPrime = 
@@ -9,4 +10,5 @@
     }
     return isPrime;
   }
+  // BAD CODE!!!
 

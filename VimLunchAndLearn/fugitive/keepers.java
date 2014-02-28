@@ -3,7 +3,6 @@
     st.start();
     int actualFactors = numFactors(num);
     st.stop();
-        "actual " + actualFactors);
     if(actualFactors == expectedFactors)
       System.out.println("PASSED");
     else
