@@ -260,6 +260,14 @@ execute pathogen#helptags()
   " Cscope bindings
   nnoremap <leader>ff :cs find f 
 
+  " gist-vim bindings
+  nnoremap <leader>jn :Gist<CR>
+  nnoremap <leader>jl :Gist -l<CR>
+  nnoremap <leader>jm :Gist -e -s"
+  nnoremap <leader>jd :Gist -d<CR> :bd<CR> :Gist -l<CR>
+
+
+
 " }}}
 " Abbreviations {{{
 
