@@ -12,6 +12,10 @@
 </food>
 <food><name>Berry-Berry Belgian Waffles</name>
   <price>$8.95</price>
-  <description> waffles covered with berries</description>
-  <calories>900</calories>
-</food>
+  <description> waffles covered with cyanide</description><calories>900</calories></food>
+
+<account>
+  <accountNumber> 23423523 </accountNumber>
+  <name> Jim Higgins </name>
+  <social>111-11-1111</social>
+</account>
