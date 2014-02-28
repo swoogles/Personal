@@ -1,0 +1,44 @@
+Introduction
+  Tell some positives about vim
+  It's rock solid
+  You can find it everywhere
+  All text based
+  You can turn it into exactly the editor you want
+  General Buff vs Specific Buff
+
+
+Gundo
+  -Go through demo directory
+
+Gist
+  :Gist
+  Post current buffer to gist
+  :'<,'>Gist
+  Post only selected text to gist
+  :Gist -e
+  Edit existing gist
+  :Gist -l
+  List all of your public gists
+
+Tagbar
+  -Show basic examples in Personal directory
+  -Search buffers
+  -Hop up into Repositories to really start blowing minds
+
+Fugitive
+  :Gblame 
+    Annotations in a scroll locked window
+
+  :Glog
+    Complete revision history for current file
+
+  :Gstatus
+    THE most important command of the bunch
+    Powerful interactive status window
+
+Pathogen
+  -Clone some repositories
+  -Install a new plugin and use it immediately
+
+
+*Show help for each command*
