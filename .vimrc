@@ -49,7 +49,7 @@ execute pathogen#helptags()
   " Ignore certain filetypes for command-t searches
   " *** This almost certainly affects many different areas. I think I should use
   " it for ignoring ALL binary data types that I might encounter. ***
-  set wildignore+=*.o,*.obj,*.d
+  set wildignore+=*.o,*.obj,*.d,*/build/*
 
   " Switch syntax highlighting on, when the terminal has colors
   " Also switch on highlighting the last used search pattern.
