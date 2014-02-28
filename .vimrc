@@ -51,6 +51,8 @@ execute pathogen#helptags()
   " it for ignoring ALL binary data types that I might encounter. ***
   set wildignore+=*.o,*.obj,*.d,*/build/*,*.pdf,*.out,*.dvi,*.aux,*.png,*.docx,*.doc,*.jpg,*.gif
 
+  let g:syntastic_mode_map = { 'mode': 'active' }
+
   " Switch syntax highlighting on, when the terminal has colors
   " Also switch on highlighting the last used search pattern.
   if &t_Co > 2 || has("gui_running")
@@ -266,6 +268,8 @@ execute pathogen#helptags()
   nnoremap <leader>jm :Gist -e -s"
   nnoremap <leader>jd :Gist -d<CR> :bd<CR> :Gist -l<CR>
 
+  " Syntastic 
+  cnoreabbrev syntog SyntasticToggleMode
 
 
 " }}}
