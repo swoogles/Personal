@@ -34,3 +34,6 @@
 [submodule ".vim/bundle/syntastic"]
 	path = .vim/bundle/syntastic
 	url = git@github.com:scrooloose/syntastic.git
+[submodule ".vim/bundle/browser"]
+	path = .vim/bundle/browser
+	url = git@github.com:mjbrownie/browser.vim.git
