@@ -49,7 +49,7 @@ execute pathogen#helptags()
   " Ignore certain filetypes for command-t searches
   " *** This almost certainly affects many different areas. I think I should use
   " it for ignoring ALL binary data types that I might encounter. ***
-  set wildignore+=*.o,*.obj,*.d,*/build/*
+  set wildignore+=*.o,*.obj,*.d,*/build/*,*.pdf,*.out,*.dvi,*.aux,*.png,*.docx,*.doc,*.jpg,*.gif
 
   " Switch syntax highlighting on, when the terminal has colors
   " Also switch on highlighting the last used search pattern.
@@ -78,7 +78,7 @@ execute pathogen#helptags()
 " }}}
 " Folds {{{
   set foldmethod=syntax
-  set foldlevelstart=1
+  set foldlevelstart=15
 
   " Indention based Folding + manual
   "augroup vimrc
