@@ -31,3 +31,6 @@
 [submodule ".vim/bundle/zoom-win"]
 	path = .vim/bundle/zoom-win
 	url = https://github.com/vim-scripts/ZoomWin.git
+[submodule ".vim/bundle/syntastic"]
+	path = .vim/bundle/syntastic
+	url = git@github.com:scrooloose/syntastic.git
