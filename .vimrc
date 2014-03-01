@@ -42,6 +42,9 @@ execute pathogen#helptags()
   let g:miniBufExplMapCTabSwitchBufs = 1
   let g:miniBufExplModSelTarget = 1 
 
+  " You complete me
+  let g:ycm_global_ycm_extra_conf = './.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+
   " Open new splits on the right
   set splitright
   set splitbelow 
