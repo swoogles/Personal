@@ -40,3 +40,6 @@
 [submodule ".vim/bundle/browser"]
 	path = .vim/bundle/browser
 	url = git@github.com:mjbrownie/browser.vim.git
+[submodule ".vim/bundle/vim-dispatch"]
+	path = .vim/bundle/vim-dispatch
+	url = git@github.com:tpope/vim-dispatch.git
