@@ -42,6 +42,9 @@ execute pathogen#helptags()
   let g:miniBufExplMapCTabSwitchBufs = 1
   let g:miniBufExplModSelTarget = 1 
 
+  " You complete me
+  let g:ycm_global_ycm_extra_conf = './.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+
   " Open new splits on the right
   set splitright
   set splitbelow 
@@ -51,6 +54,8 @@ execute pathogen#helptags()
   " it for ignoring ALL binary data types that I might encounter. ***
   set wildignore+=*.o,*.obj,*.d,*/build/*,*.pdf,*.out,*.dvi,*.aux,*.png,*.docx,*.doc,*.jpg,*.gif
 
+  let g:CommandTAlwaysShowDotFiles = 1
+  let g:CommandTScanDotDirectories = 1
   let g:syntastic_mode_map = { 'mode': 'active' }
 
   " Switch syntax highlighting on, when the terminal has colors
