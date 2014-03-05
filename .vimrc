@@ -24,6 +24,9 @@ execute pathogen#helptags()
   " Used for powerline
   set laststatus=2
 
+  " Show branch name in buffer status line
+  set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+
   set bs=2		" allow backspacing over everything in insert mode
   set ai			" always set autoindenting on
 
