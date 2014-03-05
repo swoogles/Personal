@@ -54,6 +54,8 @@ execute pathogen#helptags()
   " it for ignoring ALL binary data types that I might encounter. ***
   set wildignore+=*.o,*.obj,*.d,*/build/*,*.pdf,*.out,*.dvi,*.aux,*.png,*.docx,*.doc,*.jpg,*.gif
 
+  let g:CommandTAlwaysShowDotFiles = 1
+  let g:CommandTScanDotDirectories = 1
   let g:syntastic_mode_map = { 'mode': 'active' }
 
   " Switch syntax highlighting on, when the terminal has colors
