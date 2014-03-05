@@ -46,3 +46,6 @@
 [submodule ".vim/bundle/vim-vinegar"]
 	path = .vim/bundle/vim-vinegar
 	url = git@github.com:tpope/vim-vinegar.git
+[submodule ".vim/bundle/tskeleton_vim"]
+	path = .vim/bundle/tskeleton_vim
+	url = git@github.com:tomtom/tskeleton_vim.git
