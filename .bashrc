@@ -182,6 +182,9 @@ set -b						# causes output from background processes to be output right away, n
 
 # Functions
 
+# Generate gitignore files by passing in language(s) of choice
+function gi() { curl http://www.gitignore.io/api/$@ ;}
+
 # Get a brief wiki summary of the argument
 # Discovered here: http://www.catonmat.net/blog/another-ten-one-liners-from-commandlinefu-explained/
 # Source: https://dgl.cx/wikipedia-dns
