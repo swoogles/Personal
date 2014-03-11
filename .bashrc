@@ -212,6 +212,17 @@ mkdircd () {
   eval cd "\"$$#\"";
 }
 
+# Awesome function found here:
+# http://superuser.com/questions/39751/add-directory-to-path-if-its-not-already-there
+addpath ()
+{
+  if [[ "$PATH" =~ (^|:)"${1}"(:|$) ]]
+  then
+    return 0
+  fi
+  export PATH=${1}:$PATH
+}
+
 
 alias billding='ssh -p 7822 root@199.195.116.237'
 
