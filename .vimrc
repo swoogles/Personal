@@ -45,6 +45,20 @@ execute pathogen#helptags()
   let g:miniBufExplMapCTabSwitchBufs = 1
   let g:miniBufExplModSelTarget = 1 
 
+  set makeprg=vimAnt.sh
+
+   set efm=\ %#[javac]\ %#%f:%l:%c:%*\\d:%*\\d:\ %t%[%^:]%#:%m,
+              \%A\ %#[javac]\ %f:%l:\ %m,%-Z\ %#[javac]\ %p^,%-C%.%#
+
+  if ( &ft == "java" )
+    " Java syntax highlighting. Probably not necessary.
+    let java_highlight_all=1
+    let java_highlight_functions="style"
+    let java_allow_cpp_keywords=1
+    " Builtin completion. Goal is to get Java autocompleting
+    set complete=.,w,b,u,t,i
+  endif
+
   " You complete me
   let g:ycm_global_ycm_extra_conf = './.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
 
