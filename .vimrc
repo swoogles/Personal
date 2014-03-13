@@ -45,12 +45,13 @@ execute pathogen#helptags()
   let g:miniBufExplMapCTabSwitchBufs = 1
   let g:miniBufExplModSelTarget = 1 
 
-  set makeprg=vimAnt.sh
 
-   set efm=\ %#[javac]\ %#%f:%l:%c:%*\\d:%*\\d:\ %t%[%^:]%#:%m,
-              \%A\ %#[javac]\ %f:%l:\ %m,%-Z\ %#[javac]\ %p^,%-C%.%#
-
+   " This is currently commented because it's affecting all file types
   if ( &ft == "java" )
+    set makeprg=vimAnt.sh
+
+    set efm=\ %#[javac]\ %#%f:%l:%c:%*\\d:%*\\d:\ %t%[%^:]%#:%m,
+                \%A\ %#[javac]\ %f:%l:\ %m,%-Z\ %#[javac]\ %p^,%-C%.%#
     " Java syntax highlighting. Probably not necessary.
     let java_highlight_all=1
     let java_highlight_functions="style"
@@ -273,6 +274,15 @@ execute pathogen#helptags()
 
   :map <F2> :echo 'Current time is ' . strftime('%c')<CR>
   :map! <F3> a<C-R>=strftime('%c')<CR><Esc>
+
+  " C++ (Potentially several languages) building
+  nnoremap <leader>ma :Make! all<CR>
+  nnoremap <leader>mc :Make clean<CR>
+  nnoremap <leader>co :Copen<CR>
+
+  " ShapesLibrary. These are likely too specific and will be shortlived
+  nnoremap <leader>sl :! ./ShapesLibrary 
+
 
   " Fugitive
   nnoremap <leader>gs :Gstatus<CR>
