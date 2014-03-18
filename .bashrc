@@ -194,6 +194,10 @@ wiki() { dig +short txt $1.wp.dg.cx; }
 # This awk part might be better in a standalone script.
 cdu() { cd $( pwd | awk -v term="$1" ' BEGIN { FS="/"; found=0; } { for ( i = 1; i <= NF && found==0; ++i ) { path=path$i"/"; if ( $i ~ term ) {  found++; } } } END { print path; } ' ; ) ;}
 
+# This isn't close to finished at the moment
+# Going to finish moving the previous function out on its own first
+cdd() { cd $( pwd | awk -v term="$1" ' BEGIN { FS="/"; found=0; } { for ( i = NF; i >= 1 && found==0; --i ) { path=path$i"/"; if ( $i ~ term ) {  found++; } } } END { print path; } ' ; ) ;}
+
 netinfo ()
 {
   echo "--------------- Network Information ---------------"
