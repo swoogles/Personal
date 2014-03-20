@@ -196,7 +196,7 @@ cdu() { cd $( pwd | awk -v term="$1" ' BEGIN { FS="/"; found=0; } { for ( i = 1;
 
 # This isn't close to finished at the moment
 # Going to finish moving the previous function out on its own first
-cdd() { cd $( pwd | awk -v term="$1" ' BEGIN { FS="/"; found=0; } { for ( i = NF; i >= 1 && found==0; --i ) { path=path$i"/"; if ( $i ~ term ) {  found++; } } } END { print path; } ' ; ) ;}
+cdd() { echo "You haven\'t figured this out yet." ; }
 
 netinfo ()
 {

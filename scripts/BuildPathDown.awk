@@ -1,8 +1,7 @@
 #!/usr/bin/awk -f 
-BEGIN 
-{ 
-  FS="/"; 
-  found=0; 
+BEGIN { 
+  FS="/" ; 
+  found=0 ; 
 } 
 { 
   for ( i = 1; i <= NF && found==0; ++i ) 
@@ -14,7 +13,6 @@ BEGIN
     } 
   } 
 } 
-END 
-{ 
+END { 
   print path; 
 } 
