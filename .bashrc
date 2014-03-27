@@ -227,6 +227,8 @@ addpath ()
   export PATH=${1}:$PATH
 }
 
+addpath /opt/srpostgres/srpostgres_8.3
+
 
 alias billding='ssh -p 7822 root@199.195.116.237'
 
