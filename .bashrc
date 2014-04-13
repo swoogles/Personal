@@ -224,10 +224,10 @@ addpath ()
   then
     return 0
   fi
-  export PATH=${1}:$PATH
+  export PATH=$PATH:${1}
 }
 
-addpath /opt/srpostgres/srpostgres_8.3
+addpath /opt/srpostgres/srpostgres_8.3/bin
 
 
 alias billding='ssh -p 7822 root@199.195.116.237'
