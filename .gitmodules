@@ -49,3 +49,6 @@
 [submodule ".vim/bundle/tskeleton_vim"]
 	path = .vim/bundle/tskeleton_vim
 	url = git@github.com:tomtom/tskeleton_vim.git
+[submodule ".vim/bundle/vim-jdaddy"]
+	path = .vim/bundle/vim-jdaddy
+	url = git@github.com:tpope/vim-jdaddy.git
