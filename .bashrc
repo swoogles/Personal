@@ -170,7 +170,8 @@ alias lynx='lynx -vikeys'
 alias dbsr='psql -U srpostgres smilereminder'
 alias dbnm='psql -U srpostgres numbermapping'
 
-alias cdp='cd ~/Dropbox/Projects/ShapesLibrary/'
+alias cdp='cd ~/Repositories/Personal'
+alias cdP='cd ~/Repositories/Physics'
 
 alias billding='ssh -p 7822 root@199.195.116.237'
 
