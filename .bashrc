@@ -282,3 +282,6 @@ done
 
 alias cdr="cd ~/Repositories"
 alias ll="ls -al"
+
+# Activate git tab completion
+source ~/.git-completion.bash
