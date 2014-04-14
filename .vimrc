@@ -98,8 +98,9 @@ execute pathogen#helptags()
   :let @d=':! rm %_backup'
 " }}}
 " Themes {{{
-  colors zellner
-  colors torte
+  " colors zellner
+  " colors torte
+  colors morning
 " }}}
 " Folds {{{
   set foldmethod=syntax
