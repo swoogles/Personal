@@ -229,6 +229,7 @@ addpath ()
 }
 
 addpath /opt/srpostgres/srpostgres_8.3/bin
+addpath $HOME/scripts
 
 
 alias billding='ssh -p 7822 root@199.195.116.237'
