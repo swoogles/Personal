@@ -290,7 +290,8 @@ execute pathogen#helptags()
   nnoremap <leader>gl :Glog<CR>
 
   " Make session
-  nnoremap <leader>ms :mksession! ~/.current.vim<CR>
+  nnoremap <leader>ls :! cp ~/sessions/$(GitBranchName.sh).vim ~/.current.vim <CR> :so ~/.current.vim<CR> 
+  nnoremap <leader>ms :mksession! ~/.current.vim <CR> :! cp ~/.current.vim ~/sessions/$(GitBranchName.sh).vim <CR>
 
   " Cscope bindings
   nnoremap <leader>ff :cs find f 
