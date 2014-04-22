@@ -14,7 +14,7 @@
 	" Default options {{{
 		call EasyMotion#InitOptions({
 		\   'leader_key'      : '<Leader><Leader>'
-		\ , 'keys'            : 'asdfjkl;'
+		\ , 'keys'            : 'asdfghjkl;ASDFGHJKL'
 		\ , 'do_shade'        : 1
 		\ , 'do_mapping'      : 1
 		\ , 'grouping'        : 1
