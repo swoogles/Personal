@@ -228,6 +228,9 @@ addpath ()
   export PATH=$PATH:${1}
 }
 
+killfox() { kill -9 `pidof firefox`; }
+killjava() { kill -9 `pidof java`; }
+
 addpath /opt/srpostgres/srpostgres_8.3/bin
 addpath $HOME/scripts
 

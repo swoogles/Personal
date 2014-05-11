@@ -52,3 +52,6 @@
 [submodule ".vim/bundle/vim-jdaddy"]
 	path = .vim/bundle/vim-jdaddy
 	url = git@github.com:tpope/vim-jdaddy.git
+[submodule ".vim/bundle/vim-latex-suite"]
+	path = .vim/bundle/vim-latex-suite
+	url = git@github.com:gerw/vim-latex-suite.git
