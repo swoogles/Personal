@@ -13,6 +13,6 @@ PATH=$PATH:$HOME/bin
 export GRAILS_HOME=/usr/share/grails/grails-core                                                                                                                                                               
 PATH=$PATH:${GRAILS_HOME}/bin
 
-xmodmap ~/.speedswapper
+# xmodmap ~/.speedswapper
 
 export PATH

@@ -293,3 +293,5 @@ alias ll="ls -al"
 
 # Activate git tab completion
 source ~/.git-completion.bash
+
+xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
