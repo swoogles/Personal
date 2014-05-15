@@ -100,7 +100,8 @@ execute pathogen#helptags()
 " Themes {{{
   " colors zellner
   " colors torte
-  colors morning
+  " colors morning
+  colors chocolateliquor
 " }}}
 " Folds {{{
   set foldmethod=syntax
