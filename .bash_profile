@@ -15,4 +15,6 @@ PATH=$PATH:${GRAILS_HOME}/bin
 
 # xmodmap ~/.speedswapper
 
+xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+
 export PATH
