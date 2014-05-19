@@ -6,3 +6,4 @@ rm ~/.screenrc; ln .screenrc  ~/.screenrc
 rm ~/.bash_colors; ln .bash_colors ~/.bash_colors
 rm ~/.git-completion.bash; ln .git-completion.bash ~/.git-completion.bash
 rm ~/.pentadactylrc; ln .pentadactylrc ~/.pentadactylrc
+rm ~/.tmux.conf; ln .tmux.conf ~/.tmux.conf
