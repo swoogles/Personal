@@ -45,3 +45,19 @@ yi python-devel
 # From:
 # https://www.digitalocean.com/community/articles/how-to-install-ruby-2-1-0-on-centos-6-5-using-rvm
 sudo yum groupinstall -y development
+curl -L get.rvm.io | bash -s stable
+rvm reload
+rvm install 2.1.0 
+rvm install 1.9.3
+rvm use 1.9.3 --default
+
+
+# Install cmake
+# To fix this error:
+# /lib/ld-linux.so.2: bad ELF interpreter: No such file or directory
+sudo yum install glibc.i686
+
+wget http://www.cmake.org/files/v2.8/cmake-2.8.12.2-Linux-i386.sh
+# make/make install
+# *** THIS IS PROBABLY WRONG ***
+# Copy bin files and share/cmake##/Modules directory to /usr/local/bin
