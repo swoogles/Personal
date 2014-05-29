@@ -40,3 +40,8 @@ yi ruby-dev
 yi ruby-devel
 yi lua-devel
 yi python-devel
+
+# Setup RVM
+# From:
+# https://www.digitalocean.com/community/articles/how-to-install-ruby-2-1-0-on-centos-6-5-using-rvm
+sudo yum groupinstall -y development

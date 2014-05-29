@@ -295,3 +295,5 @@ alias ll="ls -al"
 source ~/.git-completion.bash
 
 xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

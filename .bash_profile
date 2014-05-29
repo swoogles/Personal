@@ -18,3 +18,7 @@ PATH=$PATH:${GRAILS_HOME}/bin
 xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 
 export PATH
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+source ~/.profile
