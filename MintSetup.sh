@@ -21,10 +21,13 @@ $INSTALL libxi-dev libxine-dev
 $INSTALL imagemagick
 $INSTALL libmagick++-dev
 
+$INSTALL python-dev
+
 
 # Ruby setup
 # Repo Version
-sudo apt-get install -y rake
+$INSTALL ruby-dev
+$INSTALL rake
 # RVM version
 curl -sSL https://get.rvm.io | bash -s stable --ruby
 ~/.rvm/bin/rvm install 1.9.3
