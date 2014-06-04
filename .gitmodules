@@ -33,25 +33,25 @@
 	url = https://github.com/vim-scripts/ZoomWin.git
 [submodule ".vim/bundle/syntastic"]
 	path = .vim/bundle/syntastic
-	url = git@github.com:scrooloose/syntastic.git
+	url = https://github.com/scrooloose/syntastic.git
 [submodule ".vim/bundle/YouCompleteMe"]
 	path = .vim/bundle/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git
 [submodule ".vim/bundle/browser"]
 	path = .vim/bundle/browser
-	url = git@github.com:mjbrownie/browser.vim.git
+	url = https://github.com/mjbrownie/browser.vim.git
 [submodule ".vim/bundle/vim-dispatch"]
 	path = .vim/bundle/vim-dispatch
-	url = git@github.com:tpope/vim-dispatch.git
+	url = https://github.com/tpope/vim-dispatch.git
 [submodule ".vim/bundle/vim-vinegar"]
 	path = .vim/bundle/vim-vinegar
-	url = git@github.com:tpope/vim-vinegar.git
+	url = https://github.com/tpope/vim-vinegar.git
 [submodule ".vim/bundle/tskeleton_vim"]
 	path = .vim/bundle/tskeleton_vim
-	url = git@github.com:tomtom/tskeleton_vim.git
+	url = https://github.com/tomtom/tskeleton_vim.git
 [submodule ".vim/bundle/vim-jdaddy"]
 	path = .vim/bundle/vim-jdaddy
-	url = git@github.com:tpope/vim-jdaddy.git
+	url = https://github.com/tpope/vim-jdaddy.git
 [submodule ".vim/bundle/vim-latex-suite"]
 	path = .vim/bundle/vim-latex-suite
-	url = git@github.com:gerw/vim-latex-suite.git
+	url = https://github.com/gerw/vim-latex-suite.git
