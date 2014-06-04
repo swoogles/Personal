@@ -1,5 +1,38 @@
-INSTALL="sudo apt-get install"
+INSTALL="sudo apt-get install -y"
 $INSTALL vim
+
+$INSTALL curl
+$INSTALL screen
+$INSTALL tmux
+$INSTALL g++
+$INSTALL libboost-all-dev
+#Instructions for setting up opengl here: www.wikihow.com/Install-Mesa-(openGL)-on-Linux-Mint
+$INSTALL freeglut3-dev
+$INSTALL cmake
+$INSTALL libglew-dev
+$INSTALL mesa-common-dev
+$INSTALL build-essential
+$INSTALL libglew1.5-dev libglm-dev
+$INSTALL libxmu-dev
+#To solve "could not find working GL lib" error
+$INSTALL libxi-dev libxine-dev
+
+
+$INSTALL imagemagick
+$INSTALL libmagick++-dev
+
+
+# Ruby setup
+# Repo Version
+sudo apt-get install -y rake
+# RVM version
+curl -sSL https://get.rvm.io | bash -s stable --ruby
+~/.rvm/bin/rvm install 1.9.3
+
+cd ~/Repositories/Personal
+./VimSetup.sh
+./MakeLinks.sh
+
 #Alternate bleeding edge install
 # git clone https://github.com/b4winckler/vim
 # ./configure --enable-cscope --prefix=/usr --with-features=huge --enable-pythoninterp --enable-luainterp
@@ -28,23 +61,14 @@ $INSTALL vim
   #
   # Can also use the url from vim-scripts repos
 
-$INSTALL screen
-$INSTALL g++
-$INSTALL libboost-all-dev
-#Instructions for setting up opengl here: www.wikihow.com/Install-Mesa-(openGL)-on-Linux-Mint
-$INSTALL freeglut3-dev
-$INSTALL cmake
-$INSTALL libglew-dev
-$INSTALL mesa-common-dev
-$INSTALL build-essential
-$INSTALL libglew1.5-dev libglm-dev
-$INSTALL libxmu-dev
-#To solve "could not find working GL lib" error
-$INSTALL libxi-dev libxine-dev
-
-
-$INSTALL imagemagick
-$INSTALL libmagick++-dev
+# Postgres setup
+sudo apt-get install postgresql libpq-dev
+# Change user "postgres" password to empty string
+sudo -u postgres psql -c "ALTER USER postgres with encrypted password '';" template1
+# Tell it to listen for connections from localhost
+sudo sed -i "s/#listen_addresses = 'localhost'/listen_addresses = 'localhost'/" /etc/postgresql/9.3/main/postgresql.conf
+# Configuration finished, restart to take effect
+sudo /etc/init.d/postgresql restart
 
 wget http://plib.sourceforge.net/dist/plib-1.8.5.tar.gz
 
