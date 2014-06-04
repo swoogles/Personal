@@ -1,3 +1,4 @@
+cd ~/Repositories/Personal
 rm ~/.speedswapper; ln .speedswapper ~/.speedswapper
 rm ~/.bashrc; ln .bashrc ~/.bashrc
 rm ~/.bash_profile; ln .bash_profile ~/.bash_profile
