@@ -295,3 +295,8 @@ alias ll="ls -al"
 source ~/.git-completion.bash
 
 xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# added by Anaconda 2.0.0 installer
+export PATH="/home/bfrasure/anaconda/bin:$PATH"
