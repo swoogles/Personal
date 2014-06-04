@@ -36,7 +36,7 @@
 	url = git@github.com:scrooloose/syntastic.git
 [submodule ".vim/bundle/YouCompleteMe"]
 	path = .vim/bundle/YouCompleteMe
-	url = git@github.com:Valloric/YouCompleteMe.git
+	url = https://github.com/Valloric/YouCompleteMe.git
 [submodule ".vim/bundle/browser"]
 	path = .vim/bundle/browser
 	url = git@github.com:mjbrownie/browser.vim.git
