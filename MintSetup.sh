@@ -43,6 +43,12 @@ cd ~/Repositories/Personal
 ./VimSetup.sh
 ./MakeLinks.sh
 
+# WineSetup
+sudo add-apt-repository ppa:ubuntu-wine/ppa
+sudo apt-get update
+$INSTALL wine1.6
+$INSTALL winetricks wine-mono4.5.2 wine-gecko2.24
+
 #Alternate bleeding edge install
 # git clone https://github.com/b4winckler/vim
 # ./configure --enable-cscope --prefix=/usr --with-features=huge --enable-pythoninterp --enable-luainterp
