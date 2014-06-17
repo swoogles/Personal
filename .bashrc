@@ -172,6 +172,7 @@ alias dbnm='psql -U srpostgres numbermapping'
 
 alias cdp='cd ~/Repositories/Personal'
 alias cdP='cd ~/Repositories/Physics'
+alias cdc='cd ~/Repositories/ClashOfClans'
 
 alias billding='ssh -p 7822 root@199.195.116.237'
 
