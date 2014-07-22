@@ -10,6 +10,8 @@ export JAVA_HOME=/usr/lib/jvm/java-openjdk
 
 PATH=$PATH:$HOME/bin
 
+PATH=$PATH:$HOME/scala-2.11.1/bin
+
 export GRAILS_HOME=/usr/share/grails/grails-core                                                                                                                                                               
 PATH=$PATH:${GRAILS_HOME}/bin
 
