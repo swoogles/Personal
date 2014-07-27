@@ -292,6 +292,7 @@ execute pathogen#helptags()
 
   " Make session
   nnoremap <leader>ls :! cp ~/sessions/$(GitBranchName.sh).vim ~/.current.vim <CR> :so ~/.current.vim<CR> 
+  " Expand this to save sessions from different repos inside different folders
   nnoremap <leader>ms :mksession! ~/.current.vim <CR> :! cp ~/.current.vim ~/sessions/$(GitBranchName.sh).vim <CR>
 
   " Cscope bindings
