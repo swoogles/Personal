@@ -17,6 +17,14 @@ $INSTALL libxmu-dev
 #To solve "could not find working GL lib" error
 $INSTALL libxi-dev libxine-dev
 $INSTALL rpm
+$INSTALL scala
+
+# Node/Angular setup
+# From http://developwithguru.com/how-to-install-node-js-and-npm-in-ubuntu-or-mint/
+sudo sudo add-apt-repository ppa:chris-lea/node.js #or add-apt-repository ppa:richarvey/nodejs
+sudo apt-get update
+sudo apt-get install nodejs 
+sudo npm install -g bower
 
 
 $INSTALL imagemagick
