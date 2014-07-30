@@ -18,6 +18,7 @@ $INSTALL libxmu-dev
 $INSTALL libxi-dev libxine-dev
 $INSTALL rpm
 $INSTALL scala
+$INSTALL mercurial
 
 # Node/Angular setup
 # From http://developwithguru.com/how-to-install-node-js-and-npm-in-ubuntu-or-mint/
@@ -37,7 +38,10 @@ $PIP_INSTALL --upgrade pip
 $PIP_INSTALL --upgrade virtualenv 
 # For pygame
 $INSTALL libsdl1.2-dev libsmpeg-dev libsdl-mixer1.2-dev libsdl-image1.2-dev libsdl-ttf2.0-dev
+# Currently, this requires hitting enter. If I address the last dependencies, this will probably disappear.
 $PIP_INSTALL hg+http://bitbucket.org/pygame/pygame
+$PIP_INSTALL numpy
+$PIP_INSTALL webcolors
 
 # For installing RPMs in a better way?
 $INSTALL alien
