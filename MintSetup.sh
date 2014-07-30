@@ -1,6 +1,7 @@
 INSTALL="sudo apt-get install -y"
 $INSTALL vim
 
+$INSTALL ctags
 $INSTALL curl
 $INSTALL screen
 $INSTALL tmux
