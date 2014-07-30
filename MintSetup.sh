@@ -32,7 +32,7 @@ $INSTALL libmagick++-dev
 
 $INSTALL python-dev
 $INSTALL python3-pip python3-dev build-essential 
-$PIP_INSTALL = "sudo pip install"
+PIP_INSTALL="sudo pip install"
 $PIP_INSTALL --upgrade pip 
 $PIP_INSTALL --upgrade virtualenv 
 # For pygame
