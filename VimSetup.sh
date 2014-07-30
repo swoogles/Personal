@@ -1,3 +1,6 @@
+# After getting current vim source...
+# ./configure --with-features=huge --enable-pythoninterp --enable-rubyinterp --with-tlib=ncurses > ~/junk.txt
+
 git submodule update --init --recursive
 cp -R .vim* ~/
 cd ~/.vim/bundle/command-t
