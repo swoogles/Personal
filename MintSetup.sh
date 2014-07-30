@@ -1,4 +1,5 @@
-INSTALL="sudo apt-get install -y"
+APT="sudo apt-get"
+INSTALL="$APT install -y"
 $INSTALL vim
 
 $INSTALL ctags
@@ -24,8 +25,8 @@ $INSTALL mercurial
 # Node/Angular setup
 # From http://developwithguru.com/how-to-install-node-js-and-npm-in-ubuntu-or-mint/
 sudo sudo add-apt-repository ppa:chris-lea/node.js #or add-apt-repository ppa:richarvey/nodejs
-sudo apt-get update
-sudo apt-get install nodejs 
+$APT update
+$APT install nodejs 
 sudo npm install -g bower
 
 
