@@ -44,6 +44,8 @@ $INSTALL libsdl1.2-dev libsmpeg-dev libsdl-mixer1.2-dev libsdl-image1.2-dev libs
 $PIP_INSTALL hg+http://bitbucket.org/pygame/pygame
 $PIP_INSTALL numpy
 $PIP_INSTALL webcolors
+$PIP_INSTALL django
+$PIP_INSTALL virtualenvwrapper
 
 # For installing RPMs in a better way?
 $INSTALL alien
