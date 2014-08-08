@@ -303,6 +303,5 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH="/home/bfrasure/anaconda/bin:$PATH"
 
 # For python virtual environments
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Repositories/Zeke
-source /usr/local/bin/virtualenvwrapper.sh
+export WORKON_HOME=$HOME/Envs
+source /usr/local/bin/virtualenvwrapper_lazy.sh

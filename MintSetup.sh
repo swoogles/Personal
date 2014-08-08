@@ -33,6 +33,8 @@ sudo npm install -g bower
 $INSTALL imagemagick
 $INSTALL libmagick++-dev
 
+# Needed for scipy
+$INSTALL gfortran libopenblas-dev liblapack-dev
 $INSTALL python-dev
 $INSTALL python3-pip python3-dev build-essential 
 PIP_INSTALL="sudo pip install"
@@ -46,6 +48,8 @@ $PIP_INSTALL numpy
 $PIP_INSTALL webcolors
 $PIP_INSTALL django
 $PIP_INSTALL virtualenvwrapper
+$PIP_INSTALL cython
+$PIP_INSTALL scipy
 
 # For installing RPMs in a better way?
 $INSTALL alien
