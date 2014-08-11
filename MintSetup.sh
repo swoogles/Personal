@@ -33,6 +33,14 @@ sudo npm install -g bower
 $INSTALL imagemagick
 $INSTALL libmagick++-dev
 
+# Graph Tool package. Discovered this for Python, but it could be useful in C/C++ too.
+# Add these lines to /etc/apt/sources.list
+DISTRIBUTION=trusty
+echo "deb http://downloads.skewed.de/apt/$DISTRIBUTION $DISTRIBUTION universe" >> /etc/apt/sources.list
+echo "deb-src http://downloads.skewed.de/apt/$DISTRIBUTION $DISTRIBUTION universe" >> /etc/apt/sources.list
+$APT update
+$INSTALL python3-graph-tool
+
 # Needed for scipy
 $INSTALL gfortran libopenblas-dev liblapack-dev
 $INSTALL python-dev
