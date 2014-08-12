@@ -3,7 +3,10 @@
 loadplugins '\.(js|penta)$'
 group user
 
-# More accessible hintkeys
 set hintkeys=asdfg;lkjh
+
+:map , <Leader>
+:map <Leader>b :bmark<CR>
+:map <Leader>G :open google.com<CR>
 
 " vim: set ft=pentadactyl:
