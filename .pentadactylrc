@@ -7,6 +7,6 @@ set hintkeys=asdfg;lkjh
 
 :map , <Leader>
 :map <Leader>b :bmark<CR>
-:map <Leader>G :open google.com<CR>
+:map <Leader>G :tabopen google.com<CR>
 
 " vim: set ft=pentadactyl:
