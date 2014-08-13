@@ -1,15 +1,17 @@
 import java.io.File
 import java.util.ArrayList
 
-def getSubDirectories(file:File):Array[File] = {
+def getSubDirectories(file:File):Option[Array[File]] = {
   if ( file.isDirectory )
-    file.listFiles.filter(_.isDirectory)
+    Some(file.listFiles.filter(_.isDirectory))
+    //file.listFiles.filter(_.isDirectory).flatMap(getSubDirectories(_))
   else
-    new Array[File](0)
+    None
 
 }
 
 val subdirectories = getSubDirectories( new File(".") )
+subdirectories.foreach(println)
 
 
 
