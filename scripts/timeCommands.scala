@@ -45,37 +45,17 @@ val clean = Seq("clean")
 val compile = Seq("compile")
 val dist = Seq("dist")
 
-val cmdClean = activator ++ clean
-//val cmdCompile:Seq[String] = activator ++ compile
-val cmdCompile:Seq[String] = createCommand(activator,compile)
-
 val targetDir = "./target/universal/"
 val zipFile = "srxsubscriber-1.0.zip"
 val unzip = Seq("unzip")
 val zipLocation = Seq(targetDir+zipFile)
 val unzipLocationFlag = Seq("-d")
 val unzipLocation = Seq(targetDir)
-//val unzipLocation = Seq(".")
-//val unzipLocation = Seq()
 val zipParams = zipLocation++unzipLocationFlag++unzipLocation
 
 for ( i <- 0 to 0 ) {
   //var cmdStatus = runFullCommand(activator,clean)
-  //cmdStatus = runFullCommand(activator,dist)
-  //println(cmdStatus)
   //var timeInSeconds = getWord(cmdStatus, 3)
   //println("Build time: " + timeInSeconds + " seconds")
-  zipParams.foreach(println)
-  var cmdStatus = runFullCommand(unzip,zipParams)
+  runFullCommand(unzip,zipParams)
 }
-
-//for ( i <- 0 to 1 ) {
-  //val cmdDist = activator ++ dist
-  //val cleanOutput = cmdClean.lineStream
-  ////cmdDist.lineStream.foreach(println)
-  //val distOutput = cmdDist.lineStream
-  //val lastLine = distOutput.last
-  //println(lastLine )
-  //var timeInSeconds = getWord(lastLine, 3)
-  //println("Dist time: " + timeInSeconds + " seconds")
-//}
