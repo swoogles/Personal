@@ -18,14 +18,6 @@ def getWord( line:String, index:Int ):String = {
   line.split("\\s+")(index)
 }
 
-def createCommand( command:Seq[String], arguments:Seq[String] ):Seq[String] = {
-  command++arguments
-}
-
-def runCommand( command:Seq[String] ):String = {
-  command.lineStream.last
-}
-
 def runFullCommand( command:Seq[String], arguments:Seq[String] ):String = {
   val fullCommand = (command++arguments)
   println("Full Command: " + fullCommand )
@@ -34,9 +26,6 @@ def runFullCommand( command:Seq[String], arguments:Seq[String] ):String = {
 
 
 val files = sourceFilesAt(".")
-//files.foreach(println)
-
-    //val cmd = Seq("find", baseDir, "-name", "*.scala", "-type", "f")
 
 //case class Activator(command:String
 
