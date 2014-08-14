@@ -1,4 +1,6 @@
 import scala.sys.process._
+import scala.sys.process.Process
+
 //"ls" #| "grep .scala" #&& Seq("sh", "-c", "scalac *.scala") #|| "echo nothing found" lines
 
 // This uses ! to get the exit code
@@ -43,8 +45,20 @@ val unzipLocation = Seq(targetDir)
 val zipParams = zipLocation++unzipLocationFlag++unzipLocation
 
 for ( i <- 0 to 0 ) {
-  //var cmdStatus = runFullCommand(activator,clean)
-  //var timeInSeconds = getWord(cmdStatus, 3)
-  //println("Build time: " + timeInSeconds + " seconds")
-  runFullCommand(unzip,zipParams)
+  //runFullCommand(activator,clean)
+  //runFullCommand(activator,dist)
+  //runFullCommand(unzip,zipParams)
 }
+
+val playServer = Process("./target/universal/srxsubscriber-1.0/bin/srxsubscriber").run
+
+println("Sleeping")
+Thread.sleep(15000)
+println("Waking")
+
+playServer.destroy
+
+println("Running after killing the server")
+Thread.sleep(15000)
+
+Process("ls", Seq("-oa"))!
