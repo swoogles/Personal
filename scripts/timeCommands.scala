@@ -1,5 +1,6 @@
 import scala.sys.process._
 import scala.sys.process.Process
+import com.billding.SystemCommands
 
 //"ls" #| "grep .scala" #&& Seq("sh", "-c", "scalac *.scala") #|| "echo nothing found" lines
 
@@ -18,12 +19,6 @@ def sourceFilesAt(baseDir: String): Stream[String] = {
 
 def getWord( line:String, index:Int ):String = {
   line.split("\\s+")(index)
-}
-
-def runFullCommand( command:Seq[String], arguments:Seq[String] ):String = {
-  val fullCommand = (command++arguments)
-  println("Full Command: " + fullCommand )
-  fullCommand.lineStream.last
 }
 
 
@@ -48,6 +43,7 @@ for ( i <- 0 to 0 ) {
   //runFullCommand(activator,clean)
   //runFullCommand(activator,dist)
   //runFullCommand(unzip,zipParams)
+  SystemCommands.runFullCommand(activator,compile)
 }
 
 val playServer = Process("./target/universal/srxsubscriber-1.0/bin/srxsubscriber").run
