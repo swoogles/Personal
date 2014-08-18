@@ -28,6 +28,8 @@ sudo sudo add-apt-repository ppa:chris-lea/node.js #or add-apt-repository ppa:ri
 $APT update
 $APT install nodejs 
 sudo npm install -g bower
+sudo npm install -g grunt
+sudo npm install -g grunt-cli
 
 
 $INSTALL imagemagick
