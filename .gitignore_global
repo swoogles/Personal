@@ -37,3 +37,9 @@ ehthumbs.db
 Thumbs.db
 
 *.swp
+
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
