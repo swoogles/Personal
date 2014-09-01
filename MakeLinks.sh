@@ -1,12 +1,12 @@
 cd ~/Repositories/Personal
-rm ~/.speedswapper; ln .speedswapper ~/.speedswapper
-rm ~/.bashrc; ln .bashrc ~/.bashrc
-rm ~/.bash_profile; ln .bash_profile ~/.bash_profile
-rm ~/.vimrc; ln .vimrc  ~/.vimrc 
-rm ~/.screenrc; ln .screenrc  ~/.screenrc 
-rm ~/.bash_colors; ln .bash_colors ~/.bash_colors
-rm ~/.git-completion.bash; ln .git-completion.bash ~/.git-completion.bash
-rm ~/.gitignore_global; ln .gitignore_global ~/.gitignore_global
-rm ~/.pentadactylrc; ln .pentadactylrc ~/.pentadactylrc
-rm ~/.tmux.conf; ln .tmux.conf ~/.tmux.conf
-rm -R ~/scripts; mkdir ~/scripts; cp -R scripts ~/
+rm -f ~/.speedswapper; ln .speedswapper ~/.speedswapper
+rm -f ~/.bashrc; ln .bashrc ~/.bashrc
+rm -f ~/.bash_profile; ln .bash_profile ~/.bash_profile
+rm -f ~/.vimrc; ln .vimrc  ~/.vimrc 
+rm -f ~/.screenrc; ln .screenrc  ~/.screenrc 
+rm -f ~/.bash_colors; ln .bash_colors ~/.bash_colors
+rm -f ~/.git-completion.bash; ln .git-completion.bash ~/.git-completion.bash
+rm -f ~/.gitignore_global; ln .gitignore_global ~/.gitignore_global
+rm -f ~/.pentadactylrc; ln .pentadactylrc ~/.pentadactylrc
+rm -f ~/.tmux.conf; ln .tmux.conf ~/.tmux.conf
+rm -Rf ~/scripts; mkdir ~/scripts; cp -R scripts ~/
