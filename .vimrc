@@ -280,7 +280,12 @@ execute pathogen#helptags()
   " C++ (Potentially several languages) building
   nnoremap <leader>ma :Make! all<CR>
   nnoremap <leader>mc :Make clean<CR>
-  nnoremap <leader>co :Copen<CR>
+  nnoremap <leader>Co :Copen<CR>
+
+  " Unimpared buffer list
+  nnoremap <leader>co :copen<CR>
+
+  nnoremap <leader>co :copen<CR>
 
   " ShapesLibrary. These are likely too specific and will be shortlived
   nnoremap <leader>sl :! ./ShapesLibrary 
@@ -289,6 +294,7 @@ execute pathogen#helptags()
   " Fugitive
   nnoremap <leader>gs :Gstatus<CR>
   nnoremap <leader>gl :Glog<CR>
+  nnoremap <leader>gL :Glog --<CR>
 
   " Make session
   nnoremap <leader>ms :! echo "boobs"; echo $(GitOriginUrl.sh); mkdir ~/sessions/$(GitOriginUrl.sh)/; cp ~/sessions/$(GitOriginUrl.sh)/$(GitBranchName.sh).vim ~/.current.vim <CR> :so ~/.current.vim<CR> 
