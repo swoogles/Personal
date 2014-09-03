@@ -21,6 +21,7 @@ $INSTALL libxi-dev libxine-dev
 $INSTALL rpm
 $INSTALL scala
 $INSTALL mercurial
+$INSTALL gnuplot gnuplot-x11
 
 # Node/Angular setup
 # From http://developwithguru.com/how-to-install-node-js-and-npm-in-ubuntu-or-mint/
