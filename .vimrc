@@ -73,7 +73,7 @@ execute pathogen#helptags()
   let cTypes="*.o,*.obj,*.d"
   " This last var should eventually be discarded as everything will be
   " correctly placed into categories
-  let otherTypes="*/build/*,*.out"
+  let otherTypes="*/build/*,*.out,*swp"
 
   execute "set wildignore=".imgTypes
   execute "set wildignore+=".docTypes
