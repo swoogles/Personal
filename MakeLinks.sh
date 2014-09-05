@@ -7,7 +7,7 @@ rm -f ~/.screenrc; ln .screenrc  ~/.screenrc
 rm -f ~/.bash_colors; ln .bash_colors ~/.bash_colors
 rm -f ~/.gitconfig; ln .gitconfig ~/.gitconfig
 rm -f ~/.git-completion.bash; ln .git-completion.bash ~/.git-completion.bash
-rm -f ~/.gitignore_global; ln .gitignore_global ~/.gitignore_global
+rm -f ~/.gitignore; ln .gitignore ~/.gitignore
 rm -f ~/.pentadactylrc; ln .pentadactylrc ~/.pentadactylrc
 rm -f ~/.tmux.conf; ln .tmux.conf ~/.tmux.conf
 rm -Rf ~/scripts; mkdir ~/scripts; cp -R scripts ~/
