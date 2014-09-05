@@ -70,7 +70,20 @@ execute pathogen#helptags()
   " Ignore certain filetypes for command-t searches
   " *** This almost certainly affects many different areas. I think I should use
   " it for ignoring ALL binary data types that I might encounter. ***
-  set wildignore+=*.o,*.obj,*.d,*/build/*,*.pdf,*.out,*.dvi,*.aux,*.png,*.docx,*.doc,*.jpg,*.gif,*.class,*.cache
+  let imgTypes="*.JPG,*.gif,*.png"
+  let docTypes="*.pdf,*.docx,*.doc,*.aux,*.dvi"
+  let javaTypes="*.class,*.cache"
+  let cTypes="*.o,*.obj,*.d"
+  " This last var should eventually be discarded as everything will be
+  " correctly placed into categories
+  let otherTypes="*/build/*,*.out"
+
+  execute "set wildignore=".imgTypes
+  execute "set wildignore+=".docTypes
+  execute "set wildignore+=".javaTypes
+  execute "set wildignore+=".cTypes
+  execute "set wildignore+=".otherTypes
+
 
   let g:CommandTAlwaysShowDotFiles = 1
   let g:CommandTScanDotDirectories = 1
