@@ -9,15 +9,13 @@ execute pathogen#helptags()
 " Options {{{
   " Use Vim settings, rather then Vi settings (much better!).
   " This must be first, because it changes other options as a side effect.
-  " Begin my lines - ordinary
+
   set autoindent
   set expandtab
   set sw=2
   set sta
   set ts=2
   set et
-  " End of my lines -ordinary
-
 
   set nocompatible
 
@@ -46,7 +44,6 @@ execute pathogen#helptags()
   let g:miniBufExplModSelTarget = 1 
 
 
-   " This is currently commented because it's affecting all file types
   if ( &ft == "java" )
     set makeprg=vimAnt.sh
 
@@ -260,7 +257,6 @@ execute pathogen#helptags()
   map H ^
   map L $
 
-  " cmap w!! %!sudo tee > /dev/null %
   cmap w!! w !sudo dd of=%
 
   " Make p in Visual mode replace the selected text with the "" register.
@@ -299,10 +295,6 @@ execute pathogen#helptags()
   nnoremap <leader>co :copen<CR>
 
   nnoremap <leader>co :copen<CR>
-
-  " ShapesLibrary. These are likely too specific and will be shortlived
-  nnoremap <leader>sl :! ./ShapesLibrary 
-
 
   " Fugitive
   nnoremap <leader>gs :Gstatus<CR>
