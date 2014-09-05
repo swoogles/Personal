@@ -168,7 +168,7 @@ alias cdot='cd /media/ffcf93ba-7e63-4a29-ae33-cab0b6537424/opt/apache-tomcat-7.0
 alias lynx='lynx -vikeys'
 
 alias dbsr='psql -U srpostgres smilereminder'
-alias dbnm='psql -U srpostgres numbermapping'
+alias dbfw='psql -U srpostgres flyway'
 
 alias cdp='cd ~/Repositories/Personal'
 alias cdP='cd ~/Repositories/Physics'
