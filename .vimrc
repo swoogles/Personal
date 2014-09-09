@@ -305,6 +305,8 @@ execute pathogen#helptags()
   " nnoremap <leader>ms :! echo "boobs"; echo $(GitOriginUrl.sh); mkdir ~/sessions/$(GitOriginUrl.sh)/; cp ~/sessions/$(GitOriginUrl.sh)/$(GitBranchName.sh).vim ~/.current.vim <CR> :so ~/.current.vim<CR> 
   " Expand this to save sessions from different repos inside different folders
   nnoremap <leader>ms :mksession! ~/.current.vim <CR> :! cp ~/.current.vim ~/sessions/$(GitBranchName.sh).vim <CR>
+  nnoremap <leader>ls :! cp ~/sessions/$(GitBranchName.sh).vim ~/.current.vim <CR>:source ~/.current.vim <CR>
+
 
   " Cscope bindings
   nnoremap <leader>ff :cs find f 
