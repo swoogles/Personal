@@ -300,6 +300,8 @@ execute pathogen#helptags()
   nnoremap <leader>gs :Gstatus<CR>
   nnoremap <leader>gl :Glog<CR>
   nnoremap <leader>gL :Glog --<CR>
+  nnoremap <leader>go :Git checkout 
+  nnoremap <leader>gb :Git branch
 
   " Make session
   " nnoremap <leader>ms :! echo "boobs"; echo $(GitOriginUrl.sh); mkdir ~/sessions/$(GitOriginUrl.sh)/; cp ~/sessions/$(GitOriginUrl.sh)/$(GitBranchName.sh).vim ~/.current.vim <CR> :so ~/.current.vim<CR> 
