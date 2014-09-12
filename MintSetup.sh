@@ -65,6 +65,12 @@ $PIP_INSTALL scipy
 # For installing RPMs in a better way?
 $INSTALL alien
 
+# For instant terminal sharing
+sudo apt-get install python-software-properties && \
+sudo add-apt-repository ppa:nviennot/tmate      && \
+sudo apt-get update                             && \
+sudo apt-get install tmate
+
 
 # Ruby setup
 # Repo Version
