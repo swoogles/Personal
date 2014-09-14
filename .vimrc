@@ -301,6 +301,7 @@ execute pathogen#helptags()
 
   " Fugitive
   nnoremap <leader>gs :Gstatus<CR>
+  nnoremap <leader>ge :Gedit<CR>
   nnoremap <leader>gl :Glog<CR>
   nnoremap <leader>gL :Glog --<CR>
   nnoremap <leader>go :Git checkout 
