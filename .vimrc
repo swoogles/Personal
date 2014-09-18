@@ -105,6 +105,9 @@ execute pathogen#helptags()
 " Macros {{{
   :let @a='_m`"tyw$b"nywA^M^Rt^Rn^[b~biget^[OF() {^Mreturn ^Rn;^M|<80>kb}^Mvoid ^Rn^[b~biset^[OF( <80>kb^Rt^Rn^[b~binew^[bywA) {^M^Rn = ^R";^M}^M^[a'
 
+  " Convert single line old Play SQL statements into inerpolated version
+  :let @i='^f(cl""f{i$f"lcl""ldt.'
+
   " Make quick backup of current file
   :let @b=':! cp % %_backup'
   " Delete backup file
