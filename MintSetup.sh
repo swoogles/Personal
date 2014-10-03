@@ -36,6 +36,10 @@ sudo npm install -g grunt-cli
 $INSTALL imagemagick
 $INSTALL libmagick++-dev
 
+
+$INSTALL gtk-recordmydesktop
+$INSTALL oggvideotools
+
 # Graph Tool package. Discovered this for Python, but it could be useful in C/C++ too.
 # Add these lines to /etc/apt/sources.list
 DISTRIBUTION=trusty
