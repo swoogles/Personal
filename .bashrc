@@ -148,6 +148,7 @@ alias ..5="cd ../../../../.."
 #Hop to key directories
 alias cdsr='cd ~/NetBeansProjects/smilereminder3/'
 alias cdsrx='cd ~/NetBeansProjects/smilereminder3/srxproj/srxSubscriber/'
+alias cdfw='cd ~/NetBeansProjects/smilereminder3/flyway'
 
 #More Key directories
 alias cdcmd='cd ~/CommandLine/'
