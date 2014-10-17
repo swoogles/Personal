@@ -64,3 +64,6 @@
 [submodule ".vim/bundle/vim-abolish"]
 	path = .vim/bundle/vim-abolish
 	url = https://github.com/tpope/vim-abolish
+[submodule ".vim/bundle/vim-scala-worksheet"]
+	path = .vim/bundle/vim-scala-worksheet
+	url = https://github.com/sombr/vim-scala-worksheet.git
