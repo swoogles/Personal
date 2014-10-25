@@ -35,7 +35,7 @@ execute pathogen#helptags()
   set hidden "Remember undo after quitting
 
   " ctags options
-  set tags=tags;/
+  set tags=./.tags,.tags,./tags,tags
 
   "MiniBufExplorer options
   let g:miniBufExplMapWindowNavVim = 1
@@ -307,6 +307,7 @@ execute pathogen#helptags()
   nnoremap <leader>gl :Glog<CR>
   nnoremap <leader>gL :Glog --<CR>
   nnoremap <leader>go :Git checkout 
+  nnoremap <leader>gos :Git checkout SRP-
   nnoremap <leader>gb :Git branch
 
   " Make session
