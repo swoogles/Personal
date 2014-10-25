@@ -1,0 +1,9 @@
+--Smoother lines by using unicode
+\pset linestyle unicode 
+
+--Borders on top/bottom of columns
+\pset border 2
+
+--Automatically turn on expanded display if results will not fit on 1 row
+\x auto
+
