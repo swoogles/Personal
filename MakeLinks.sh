@@ -9,6 +9,7 @@ rm -f ~/.gitconfig; ln .gitconfig ~/.gitconfig
 rm -f ~/.git-completion.bash; ln .git-completion.bash ~/.git-completion.bash
 rm -f ~/.gitignore; ln .gitignore ~/.gitignore
 rm -f ~/.pentadactylrc; ln .pentadactylrc ~/.pentadactylrc
+rm -f ~/.psqlrc; ln .psqlrc ~/.psqlrc
 rm -f ~/.tmux.conf; ln .tmux.conf ~/.tmux.conf
 rm -Rf ~/scripts; mkdir ~/scripts; cp -R scripts ~/
 rm -Rf ~/.vim; mkdir ~/.vim; cp -R .vim ~/
