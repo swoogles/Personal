@@ -2,6 +2,7 @@ cd ~/Repositories/Personal
 rm -f ~/.speedswapper; ln .speedswapper ~/.speedswapper
 rm -f ~/.bashrc; ln .bashrc ~/.bashrc
 rm -f ~/.bash_profile; ln .bash_profile ~/.bash_profile
+rm -f ~/.ctags; ln .ctags ~/.ctags
 rm -f ~/.vimrc; ln .vimrc  ~/.vimrc 
 rm -f ~/.screenrc; ln .screenrc  ~/.screenrc 
 rm -f ~/.bash_colors; ln .bash_colors ~/.bash_colors
