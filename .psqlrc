@@ -7,3 +7,5 @@
 --Automatically turn on expanded display if results will not fit on 1 row
 \x auto
 
+--Show hostname in prompt
+\set PROMPT1 '%/@%`hostname -s`%R%#%x '
