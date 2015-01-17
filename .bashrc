@@ -265,6 +265,15 @@ alias billding='ssh -p 7822 root@199.195.116.237'
 alias vimsesh="vim -S ~/vim_sessions/`git rev-parse --abbrev-ref HEAD`.vim"
 alias vimcur="vim -S ~/.current.vim"
 
+vim()
+{
+  # osx users, use stty -g
+  local STTYOPTS="$(stty --save)"
+  stty stop '' -ixoff
+  command vim "$@"
+  stty "$STTYOPTS"
+}
+
 vimBranch() {
   vim -S ~/sessions/$(GitBranchName.sh).vim
 }
