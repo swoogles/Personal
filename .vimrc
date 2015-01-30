@@ -116,7 +116,8 @@ execute pathogen#helptags()
   " colors zellner
   " colors torte
   " colors morning
-  colors chocolateliquor
+  " colors chocolateliquor
+  colors asu1dark
 " }}}
 " Folds {{{
   set foldmethod=manual
