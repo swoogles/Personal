@@ -73,3 +73,6 @@
 [submodule ".vim/bundle/vim-surround"]
 	path = .vim/bundle/vim-surround
 	url = https://github.com/tpope/vim-surround.git
+[submodule ".vim/bundle/vim-eunuch"]
+	path = .vim/bundle/vim-eunuch
+	url = https://github.com/tpope/vim-eunuch.git
