@@ -490,6 +490,12 @@ function! SCTags()
   endif
 endfunction
 
+function! NewHelpKey()
+  nnoremap K <C-]>
+  let g:tagbar_ctags_bin = "sctags"
+endfunction
+
 if has("autocmd")
   autocmd FileType scala call SCTags()
+  autocmd FileType scala call NewHelpKey()
 endif
