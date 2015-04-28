@@ -149,17 +149,12 @@ alias ..5="cd ../../../../.."
 alias cdsr='cd ~/NetBeansProjects/smilereminder3/'
 alias cdsrx='cd ~/NetBeansProjects/smilereminder3/srxproj/srxSubscriber/'
 alias cdfw='cd ~/NetBeansProjects/smilereminder3/flyway'
-
-#More Key directories
-alias cdcmd='cd ~/CommandLine/'
-alias cdfeed='cd ~/Feed/'
-alias cdjaxb='cd ~/NetBeansProjects/smilereminder3/appProfile/src/java/com/communitect/framework/feed'
-alias cdapi='cd ~/API'
+alias cdo='cd ~/OnlineScheduling'
 
 alias cdtom='cd '$tomcatHome
 alias cdlogs='cdtom; cd logs' 
 
-alias cds='cd ~/scripts'
+alias cds='cd ~/Repositorie/Personal/scripts'
 #alias cdlogs='cd '${tomcatHome}/logs
 
 alias cdjunk='cd ~/junkDir'
@@ -174,6 +169,7 @@ alias dbfw='psql -U srpostgres flyway'
 alias cdp='cd ~/Repositories/Personal'
 alias cdP='cd ~/Repositories/Physics'
 alias cdc='cd ~/Repositories/ClashOfClans'
+alias cdg='cd ~/Repositories/GitRepoParser'
 
 alias billding='ssh -p 7822 root@199.195.116.237'
 
