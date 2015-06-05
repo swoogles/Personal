@@ -321,6 +321,10 @@ execute pathogen#helptags()
   nnoremap <leader>go :Git checkout 
   nnoremap <leader>gos :Git checkout SRP-
   nnoremap <leader>gb :Git branch
+  " Colon is used MUCH more than semicolon. This is a tiny change, but 
+  " oh-so-impactful over the next few decades.
+  nnoremap ; :
+  nnoremap : ; 
 
   " Make session
   " nnoremap <leader>ms :! echo "boobs"; echo $(GitOriginUrl.sh); mkdir ~/sessions/$(GitOriginUrl.sh)/; cp ~/sessions/$(GitOriginUrl.sh)/$(GitBranchName.sh).vim ~/.current.vim <CR> :so ~/.current.vim<CR> 
