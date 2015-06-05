@@ -321,6 +321,9 @@ execute pathogen#helptags()
   nnoremap <leader>go :Git checkout 
   nnoremap <leader>gos :Git checkout SRP-
   nnoremap <leader>gb :Git branch
+  nnoremap <leader>gd :Gdiff<CR>
+  nnoremap <leader>gvd :Gvdiff
+
   " Colon is used MUCH more than semicolon. This is a tiny change, but 
   " oh-so-impactful over the next few decades.
   nnoremap ; :
