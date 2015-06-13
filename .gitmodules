@@ -82,3 +82,6 @@
 [submodule ".vim/bundle/vim-easytags"]
 	path = .vim/bundle/vim-easytags
 	url = git@github.com:xolox/vim-easytags.git
+[submodule ".vim/bundle/bufkill"]
+	path = .vim/bundle/bufkill
+	url = git@github.com:vim-scripts/bufkill.vim.git
