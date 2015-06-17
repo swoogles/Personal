@@ -510,3 +510,5 @@ if has("autocmd")
   autocmd FileType scala call SCTags()
   autocmd FileType scala call NewHelpKey()
 endif
+
+let g:easytags_async = 1
