@@ -270,10 +270,6 @@ execute pathogen#helptags()
   nnoremap j gj
   nnoremap k gk
 
-  " Using H & L to move to beginning and end of line respectively
-  map H ^
-  map L $
-
   cmap w!! w !sudo dd of=%
 
   " Make p in Visual mode replace the selected text with the "" register.
@@ -353,6 +349,7 @@ execute pathogen#helptags()
   cnoreabbrev syntog SyntasticToggleMode
 
   " Quick window switching
+  nnoremap <leader>w <C-w>
   nnoremap <C-h> <C-w>h
   nnoremap <C-j> <C-w>j
   nnoremap <C-k> <C-w>k
