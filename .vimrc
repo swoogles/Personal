@@ -376,6 +376,9 @@ execute pathogen#helptags()
 
   nnoremap <C-l> <C-w>l
 
+  nnoremap <leader>n :cnext<CR>
+  nnoremap <leader>p :cprev<CR>
+
 " }}}
 " Abbreviations {{{
 
