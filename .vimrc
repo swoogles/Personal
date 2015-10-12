@@ -362,6 +362,8 @@ execute pathogen#helptags()
   nnoremap <leader>jm :Gist -e -s"
   nnoremap <leader>jd :Gist -d<CR> :bd<CR> :Gist -l<CR>
 
+  nnoremap <leader>sb :GrepBufs 
+
   " Syntastic 
   cnoreabbrev syntog SyntasticToggleMode
 
@@ -370,6 +372,8 @@ execute pathogen#helptags()
   nnoremap <C-h> <C-w>h
   nnoremap <C-j> <C-w>j
   nnoremap <C-k> <C-w>k
+  nnoremap <C-l> <C-w>l
+
   nnoremap <C-l> <C-w>l
 
 " }}}
