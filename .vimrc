@@ -179,6 +179,23 @@ execute pathogen#helptags()
     call remove(a:diffed_buffers, 0, -1)
   endfunction
 
+  function! BuffersList()
+    let all = range(0, bufnr('$'))
+    let res = []
+    for b in all
+      if buflisted(b)
+        call add(res, bufname(b))
+      endif
+    endfor
+    return res
+  endfunction
+
+  function! GrepBuffers (expression)
+    exec 'vimgrep/'.a:expression.'/ '.join(BuffersList())
+  endfunction
+
+  command! -nargs=+ GrepBufs call GrepBuffers(<q-args>)
+
 " }}}
 " Cscope {{{
 
