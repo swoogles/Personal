@@ -18,6 +18,7 @@ import sys.process._
 
 case class NumberedLine(line: String, number: Int)
 val tupledNumberedLine = NumberedLine.apply _
+case class NumberedFileContent(file: Path, content: Vector[NumberedLine])
 
 val home = root/'home/'bfrasure
 def ammoScript = home/'Repositories/'Personal/"scripts"/'Ammonite/"findTopicExampleByAuthor.scala"
@@ -38,7 +39,9 @@ def filesExcludingBuildDir = filteredFiles |? {!_.segments.contains("build")} to
 
 
 //def allFileContents: Seq[(Path, Vector[NumberedLine])] = filteredFiles map { file => (file, tupledNumberedLine.tupled(read.lines(file) zipWithIndex)) }
-def allFileContents: Seq[(Path, Vector[NumberedLine])] = filteredFiles map { file => (file, read.lines(file).zipWithIndex.map(tupledNumberedLine.tupled)) }
+def allFileContents: Seq[NumberedFileContent] = filteredFiles map { file => (file, read.lines(file).zipWithIndex.map(tupledNumberedLine.tupled)) } map { case (x:Path,y:Vector[NumberedLine]) => NumberedFileContent(x,y) }
+//def allFileContents: Seq[(Path, Vector[NumberedLine])] = filteredFiles map { file => (file, read.lines(file).zipWithIndex.map(tupledNumberedLine.tupled)) }
 
 // This returns: (fileName, (matchingLine, lineNum)*)
-def searchForTerm(searchTerm: String): Seq[(Path, Vector[NumberedLine])] = allFileContents map { case (file: Path,  results: Vector[NumberedLine]) => (file, results filter (_.line.toUpperCase.contains(searchTerm.toUpperCase)))  } filter (!_._2.isEmpty)
+//def searchForTerm(searchTerm: String): Seq[(Path, Vector[NumberedLine])] = allFileContents map { case (file: Path,  results: Vector[NumberedLine]) => (file, results filter (_.line.toUpperCase.contains(searchTerm.toUpperCase)))  } filter (!_._2.isEmpty)
+def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = allFileContents map { nfc => NumberedFileContent(nfc.file, nfc.content.filter (_.line.toUpperCase.contains(searchTerm.toUpperCase)))  } filter (!_.content.isEmpty)
