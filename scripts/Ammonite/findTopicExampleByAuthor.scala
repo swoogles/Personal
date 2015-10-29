@@ -35,4 +35,4 @@ def filesExcludingBuildDir = filteredFiles |? {!_.segments.contains("build")} to
 def allFileContents: Seq[(Path, Vector[(String, Int)])] = filteredFiles map { file => (file, read.lines(file) zipWithIndex) }
 
 // This returns: (fileName, (matchingLine, lineNum)*)
-def searchForTerm(searchTerm: String): Seq[(Path, Vector[(String, Int)])] = allFileContents map { case (file: Path,  results: Vector[(String, Int)]) => (file, results filter (_._1.contains(searchTerm)))  } filter (!_._2.isEmpty)
+def searchForTerm(searchTerm: String): Seq[(Path, Vector[(String, Int)])] = allFileContents map { case (file: Path,  results: Vector[(String, Int)]) => (file, results filter (_._1.toUpperCase.contains(searchTerm.toUpperCase)))  } filter (!_._2.isEmpty)
