@@ -15,7 +15,6 @@ import sys.process._
  * 4. Search for topic and approved author on same line
  * 5. Present results in a pleasing way
  */
-
 val home = root/'home/'bfrasure
 def ammoScript = home/'Repositories/'Personal/"scripts"/'Ammonite/"findTopicExampleByAuthor.scala"
 def vimAmmo = %vim ammoScript
@@ -25,17 +24,15 @@ val extensionsOfInterest = List(".jsp", ".java", ".js")
 
 val badExtensions = List(".swp", ".jar")
 
-def filteredFiles = ls.rec! wd |? {file=>extensionsOfInterest.exists(file.last.contains) && !badExtensions.exists(file.last.contains) && !file.segments.exists(segment => segment == "tiny_mce" || segment == "tinymce")
-};
+def filterExtension(file: Path): Boolean = {extensionsOfInterest.exists(file.last.contains) && !badExtensions.exists(file.last.contains)}
+
+def filterTinyMCE(file: Path): Boolean = {!file.segments.exists(segment => segment == "tiny_mce" || segment == "tinymce")}
+
+def filteredFiles = ls.rec! wd |? {file=> filterExtension(file) && filterTinyMCE(file) }
 
 def filesExcludingBuildDir = filteredFiles |? {!_.segments.contains("build")} toStream
 
-def allAppSubscriberFiles = ls.rec! wd toStream
+def allFileContents: Seq[(Path, Vector[(String, Int)])] = filteredFiles map { file => (file, read.lines(file) zipWithIndex) }
 
-def searchTerm = "jersey"
-
-def allFileContents = filteredFiles map { file => println("File: " + file); (file, read.lines(file)) }
-
-def searchTermMatches: Seq[(Path, Vector[String])] = allFileContents map { case (file, content) => (file, content.filter(line=>line.contains(searchTerm)))  } filter (!_._2.isEmpty)
-
-//def linesWithFileNamesAndCnts = filteredFiles map {
+// This returns: (fileName, (matchingLine, lineNum)*)
+def searchForTerm(searchTerm: String): Seq[(Path, Vector[(String, Int)])] = allFileContents map { case (file: Path,  results: Vector[(String, Int)]) => (file, results filter (_._1.contains(searchTerm)))  } filter (!_._2.isEmpty)
