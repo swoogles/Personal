@@ -15,6 +15,10 @@ import sys.process._
  * 4. Search for topic and approved author on same line
  * 5. Present results in a pleasing way
  */
+
+case class NumberedLine(line: String, number: Int)
+val tupledNumberedLine = NumberedLine.apply _
+
 val home = root/'home/'bfrasure
 def ammoScript = home/'Repositories/'Personal/"scripts"/'Ammonite/"findTopicExampleByAuthor.scala"
 def vimAmmo = %vim ammoScript
@@ -32,7 +36,9 @@ def filteredFiles = ls.rec! wd |? {file=> filterExtension(file) && filterTinyMCE
 
 def filesExcludingBuildDir = filteredFiles |? {!_.segments.contains("build")} toStream
 
-def allFileContents: Seq[(Path, Vector[(String, Int)])] = filteredFiles map { file => (file, read.lines(file) zipWithIndex) }
+
+//def allFileContents: Seq[(Path, Vector[NumberedLine])] = filteredFiles map { file => (file, tupledNumberedLine.tupled(read.lines(file) zipWithIndex)) }
+def allFileContents: Seq[(Path, Vector[NumberedLine])] = filteredFiles map { file => (file, read.lines(file).zipWithIndex.map(tupledNumberedLine.tupled)) }
 
 // This returns: (fileName, (matchingLine, lineNum)*)
-def searchForTerm(searchTerm: String): Seq[(Path, Vector[(String, Int)])] = allFileContents map { case (file: Path,  results: Vector[(String, Int)]) => (file, results filter (_._1.toUpperCase.contains(searchTerm.toUpperCase)))  } filter (!_._2.isEmpty)
+def searchForTerm(searchTerm: String): Seq[(Path, Vector[NumberedLine])] = allFileContents map { case (file: Path,  results: Vector[NumberedLine]) => (file, results filter (_.line.toUpperCase.contains(searchTerm.toUpperCase)))  } filter (!_._2.isEmpty)
