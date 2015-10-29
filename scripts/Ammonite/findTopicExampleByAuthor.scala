@@ -16,7 +16,9 @@ import sys.process._
  * 5. Present results in a pleasing way
  */
 
-case class NumberedLine(line: String, number: Int)
+case class NumberedLine(line: String, number: Int) {
+  def containsIgnoreCase(key: String): Boolean = { line.toUpperCase.contains(key.toUpperCase) }
+}
 val tupledNumberedLine = NumberedLine.apply _
 case class NumberedFileContent(file: Path, content: Vector[NumberedLine])
 
@@ -36,12 +38,6 @@ def filterTinyMCE(file: Path): Boolean = {!file.segments.exists(segment => segme
 def filteredFiles = ls.rec! wd |? {file=> filterExtension(file) && filterTinyMCE(file) }
 
 def filesExcludingBuildDir = filteredFiles |? {!_.segments.contains("build")} toStream
-
-
-//def allFileContents: Seq[(Path, Vector[NumberedLine])] = filteredFiles map { file => (file, tupledNumberedLine.tupled(read.lines(file) zipWithIndex)) }
 def allFileContents: Seq[NumberedFileContent] = filteredFiles map { file => (file, read.lines(file).zipWithIndex.map(tupledNumberedLine.tupled)) } map { case (x:Path,y:Vector[NumberedLine]) => NumberedFileContent(x,y) }
-//def allFileContents: Seq[(Path, Vector[NumberedLine])] = filteredFiles map { file => (file, read.lines(file).zipWithIndex.map(tupledNumberedLine.tupled)) }
-
 // This returns: (fileName, (matchingLine, lineNum)*)
-//def searchForTerm(searchTerm: String): Seq[(Path, Vector[NumberedLine])] = allFileContents map { case (file: Path,  results: Vector[NumberedLine]) => (file, results filter (_.line.toUpperCase.contains(searchTerm.toUpperCase)))  } filter (!_._2.isEmpty)
-def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = allFileContents map { nfc => NumberedFileContent(nfc.file, nfc.content.filter (_.line.toUpperCase.contains(searchTerm.toUpperCase)))  } filter (!_.content.isEmpty)
+def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = allFileContents map { nfc => NumberedFileContent(nfc.file, nfc.content.filter (_.containsIgnoreCase(searchTerm)))  } filter (!_.content.isEmpty)
