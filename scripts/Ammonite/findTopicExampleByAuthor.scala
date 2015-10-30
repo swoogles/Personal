@@ -19,7 +19,6 @@ import sys.process._
 case class NumberedLine(line: String, number: Int) {
   def containsIgnoreCase(key: String): Boolean = { line.toUpperCase.contains(key.toUpperCase) }
 }
-val tupledNumberedLine = NumberedLine.apply _
 case class NumberedFileContent(file: Path, content: Vector[NumberedLine])
 
 val home = root/'home/'bfrasure
@@ -39,7 +38,7 @@ def filteredFiles = ls.rec! wd |? {file=> filterExtension(file) && filterTinyMCE
 
 def filesExcludingBuildDir = filteredFiles |? {!_.segments.contains("build")} toStream
 
-def allFileContents: Seq[NumberedFileContent] = filesExcludingBuildDir map { file => (file, read.lines(file).zipWithIndex.map(tupledNumberedLine.tupled)) } map { case (x:Path,y:Vector[NumberedLine]) => NumberedFileContent(x,y) }
+def allFileContents: Seq[NumberedFileContent] = filesExcludingBuildDir map { file => (file, read.lines(file).zipWithIndex.map{tup => NumberedLine(tup._1,tup._2)}) } map { case (x:Path,y:Vector[NumberedLine]) => NumberedFileContent(x,y) }
 
 // This returns: (fileName, (matchingLine, lineNum)*)
 def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = allFileContents map { nfc => NumberedFileContent(nfc.file, nfc.content.filter (_.containsIgnoreCase(searchTerm)))  } filter (!_.content.isEmpty)
