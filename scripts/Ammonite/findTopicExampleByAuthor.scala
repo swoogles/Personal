@@ -16,40 +16,66 @@ import sys.process._
  * 5. Present results in a pleasing way
  */
 
-case class NumberedLine(line: String, number: Int) {
-  def containsIgnoreCase(key: String): Boolean = { line.toUpperCase.contains(key.toUpperCase) }
+case class NumberedLine(number: Int, line: String) {
+  def containsIgnoreCase(key: String): Boolean = 
+    line.toUpperCase.contains(key.toUpperCase)
 }
 case class NumberedFileContent(file: Path, content: Vector[NumberedLine])
 
-val home = root/'home/'bfrasure
-def ammoScript = home/'Repositories/'Personal/"scripts"/'Ammonite/"findTopicExampleByAuthor.scala"
-def vimAmmo = %vim ammoScript
-def appendScript(newLine: String) = { write.append(ammoScript, "\n" + newLine) }
+val home = 
+  root/'home/'bfrasure
 
-val extensionsOfInterest = List(".jsp", ".java", ".js")
+def ammoScript = 
+  home/'Repositories/'Personal/"scripts"/'Ammonite/"findTopicExampleByAuthor.scala"
 
-val badExtensions = List(".swp", ".jar")
+def vimAmmo = 
+  %vim ammoScript
 
-def filterExtension(file: Path): Boolean = {extensionsOfInterest.exists(file.last.contains) && !badExtensions.exists(file.last.contains)}
+def appendScript(newLine: String) = 
+  { write.append(ammoScript, "\n" + newLine) }
 
-def filterTinyMCE(file: Path): Boolean = {!file.segments.exists(segment => segment == "tiny_mce" || segment == "tinymce")}
+val extensionsOfInterest = 
+  List(".jsp", ".java", ".js")
 
-def filteredFiles = ls.rec! wd |? {file=> filterExtension(file) && filterTinyMCE(file) }
+val badExtensions = 
+  List(".swp", ".jar")
 
-def filesExcludingBuildDir = filteredFiles |? {!_.segments.contains("build")} toStream
+def filterExtension(file: Path): Boolean = 
+  extensionsOfInterest.exists(file.last.contains) && !badExtensions.exists(file.last.contains)
 
-def allFileContents: Seq[NumberedFileContent] = filesExcludingBuildDir map { file => (file, read.lines(file).zipWithIndex.map{tup => NumberedLine(tup._1,tup._2)}) } map { case (x:Path,y:Vector[NumberedLine]) => NumberedFileContent(x,y) }
+def filterTinyMCE(file: Path): Boolean = 
+  !file.segments.exists(segment => segment == "tiny_mce" || segment == "tinymce")
+
+def filteredFiles = 
+  ls.rec! wd |? { file=> filterExtension(file) && filterTinyMCE(file) }
+
+def filesExcludingBuildDir = 
+  filteredFiles |? {!_.segments.contains("build")} toStream
+
+def allFileContents: Seq[NumberedFileContent] = 
+  filesExcludingBuildDir 
+  .map { file => (file, read.lines(file).zipWithIndex
+    .map{ tup => NumberedLine(tup._2,tup._1)}) 
+  } map { case (x:Path,y:Vector[NumberedLine]) => NumberedFileContent(x,y) }
 
 // This returns: (fileName, (matchingLine, lineNum)*)
-def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = allFileContents map { nfc => NumberedFileContent(nfc.file, nfc.content.filter (_.containsIgnoreCase(searchTerm)))  } filter (!_.content.isEmpty)
+def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = 
+  allFileContents 
+  .map { nfc => NumberedFileContent(nfc.file, nfc.content
+    .filter (_.containsIgnoreCase(searchTerm)))  
+  } filter (!_.content.isEmpty)
 
 val desiredAuthor = "bill"
 
 def coalesceBlame(matchingFiles: Seq[NumberedFileContent]) = {
   matchingFiles map { nfc =>
-    val blameResults: CommandResult = %%git ('blame, "--date", "short", "-e", nfc.file)
-    val blameLines: Seq[String] = blameResults.toList
-    val matchesWithAuthor = matchingFiles.map{ nfc => nfc.content.map{ nl => 
+    val blameResults: CommandResult = 
+      %%git ('blame, "--date", "short", "-e", nfc.file)
+    val blameLines: Seq[String] = 
+      blameResults.toList
+    val matchesWithAuthor = 
+      matchingFiles
+      .map{ nfc => nfc.content.map{ nl => 
       //blameLines(nl.number).contains(desiredAuthor) // actual function desired
       (nl.number, blameLines(nl.number)) // just for debugging at the moment
       } 
