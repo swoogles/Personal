@@ -38,6 +38,27 @@ def filterTinyMCE(file: Path): Boolean = {!file.segments.exists(segment => segme
 def filteredFiles = ls.rec! wd |? {file=> filterExtension(file) && filterTinyMCE(file) }
 
 def filesExcludingBuildDir = filteredFiles |? {!_.segments.contains("build")} toStream
-def allFileContents: Seq[NumberedFileContent] = filteredFiles map { file => (file, read.lines(file).zipWithIndex.map(tupledNumberedLine.tupled)) } map { case (x:Path,y:Vector[NumberedLine]) => NumberedFileContent(x,y) }
+
+def allFileContents: Seq[NumberedFileContent] = filesExcludingBuildDir map { file => (file, read.lines(file).zipWithIndex.map(tupledNumberedLine.tupled)) } map { case (x:Path,y:Vector[NumberedLine]) => NumberedFileContent(x,y) }
+
 // This returns: (fileName, (matchingLine, lineNum)*)
 def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = allFileContents map { nfc => NumberedFileContent(nfc.file, nfc.content.filter (_.containsIgnoreCase(searchTerm)))  } filter (!_.content.isEmpty)
+
+val desiredAuthor = "bill"
+
+def coalesceBlame(matchingFiles: Seq[NumberedFileContent]) = {
+  matchingFiles map { nfc =>
+    val blameResults: CommandResult = %%git ('blame, "--date", "short", "-e", nfc.file)
+    val blameLines: Seq[String] = blameResults.toList
+    val matchesWithAuthor = matchingFiles.map{ nfc => nfc.content.map{ nl => 
+      //blameLines(nl.number).contains(desiredAuthor) // actual function desired
+      (nl.number, blameLines(nl.number)) // just for debugging at the moment
+      } 
+    }
+    matchesWithAuthor
+    //%%git ('blame, nfc.file)
+    //blameResults.toString.split("\n")
+  }
+}
+
+def blameOutput = searchForTerm("jersey") map {nfc=> %%git ('blame, nfc.file) }
