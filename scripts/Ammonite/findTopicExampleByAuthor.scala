@@ -22,32 +22,24 @@ case class NumberedLine(number: Int, line: String) {
 }
 case class NumberedFileContent(file: Path, content: Vector[NumberedLine])
 
-val home = 
-  root/'home/'bfrasure
-
-def ammoScript = 
-  home/'Repositories/'Personal/"scripts"/'Ammonite/"findTopicExampleByAuthor.scala"
-
-def vimAmmo = 
-  %vim ammoScript
+val home = root/'home/'bfrasure
+def ammoScript = home/'Repositories/'Personal/"scripts"/'Ammonite/"findTopicExampleByAuthor.scala"
+def vimAmmo = %vim ammoScript
+val extensionsOfInterest = List(".jsp", ".java", ".js")
+val badExtensions = List(".swp", ".jar")
 
 def appendScript(newLine: String) = 
   { write.append(ammoScript, "\n" + newLine) }
 
-val extensionsOfInterest = 
-  List(".jsp", ".java", ".js")
 
-val badExtensions = 
-  List(".swp", ".jar")
-
-def filterExtension(file: Path): Boolean = 
+def hasAnApprovedExtension(file: Path): Boolean = 
   extensionsOfInterest.exists(file.last.contains) && !badExtensions.exists(file.last.contains)
 
-def filterTinyMCE(file: Path): Boolean = 
+def isNotATinyMCEFile(file: Path): Boolean = 
   !file.segments.exists(segment => segment == "tiny_mce" || segment == "tinymce")
 
 def filteredFiles = 
-  ls.rec! wd |? { file=> filterExtension(file) && filterTinyMCE(file) }
+  ls.rec! wd |? { file=> hasAnApprovedExtension(file) && isNotATinyMCEFile(file) }
 
 def filesExcludingBuildDir = 
   filteredFiles |? {!_.segments.contains("build")} toStream
@@ -58,7 +50,6 @@ def allFileContents: Seq[NumberedFileContent] =
     .map{ tup => NumberedLine(tup._2,tup._1)}) 
   } map { case (x:Path,y:Vector[NumberedLine]) => NumberedFileContent(x,y) }
 
-// This returns: (fileName, (matchingLine, lineNum)*)
 def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = 
   allFileContents 
   .map { nfc => NumberedFileContent(nfc.file, nfc.content
@@ -68,22 +59,21 @@ def searchForTerm(searchTerm: String): Seq[NumberedFileContent] =
 val desiredAuthor = "bill"
 
 def coalesceBlame(matchingFiles: Seq[NumberedFileContent]) = {
+
   matchingFiles map { nfc =>
     val blameResults: CommandResult = 
       %%git ('blame, "--date", "short", "-e", nfc.file)
+
     val blameLines: Seq[String] = 
       blameResults.toList
+
     val matchesWithAuthor = 
-      matchingFiles
-      .map{ nfc => nfc.content.map{ nl => 
-      //blameLines(nl.number).contains(desiredAuthor) // actual function desired
-      (nl.number, blameLines(nl.number)) // just for debugging at the moment
-      } 
-    }
-    matchesWithAuthor
-    //%%git ('blame, nfc.file)
-    //blameResults.toString.split("\n")
-  }
+      nfc.content.filter{ nl => 
+        blameLines(nl.number).contains(desiredAuthor) 
+      }.map(nl => (nl.number, blameLines(nl.number)))
+
+    (nfc.file, matchesWithAuthor)
+  } filter { !_._2.isEmpty }
 }
 
 def blameOutput = searchForTerm("jersey") map {nfc=> %%git ('blame, nfc.file) }
