@@ -58,6 +58,8 @@ def searchForTerm(searchTerm: String): Seq[NumberedFileContent] =
 
 val desiredAuthor = "bill"
 
+val desiredAuthors = List("bill", "tylero")
+
 def coalesceBlame(matchingFiles: Seq[NumberedFileContent]) = {
 
   matchingFiles map { nfc =>
@@ -67,12 +69,19 @@ def coalesceBlame(matchingFiles: Seq[NumberedFileContent]) = {
     val blameLines: Seq[String] = 
       blameResults.toList
 
-    val matchesWithAuthor = 
+    //val matchesWithAuthor = 
+    //  nfc.content.filter{ nl => 
+    //    blameLines(nl.number).contains(desiredAuthor) 
+    //  }.map(nl => (nl.number, blameLines(nl.number)))
+
+    val matchesDesiredAuthors = 
       nfc.content.filter{ nl => 
-        blameLines(nl.number).contains(desiredAuthor) 
+        desiredAuthors.exists(blameLines(nl.number).contains) 
       }.map(nl => (nl.number, blameLines(nl.number)))
 
-    (nfc.file, matchesWithAuthor)
+
+    //(nfc.file, matchesWithAuthor)
+    (nfc.file, matchesDesiredAuthors)
   } filter { !_._2.isEmpty }
 }
 
