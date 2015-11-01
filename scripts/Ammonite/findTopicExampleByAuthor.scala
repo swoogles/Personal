@@ -4,6 +4,9 @@ import ammonite.repl.Repl._
 //import ammonite.ops.ImplicitWd._
 import sys.process._
 
+import scala.util.Failure
+import scala.util.Success
+import scala.util.Try
 /*
  * Overal goal:
  * Find all mentions of a particular topic in a project by a white list of authors
@@ -15,6 +18,11 @@ import sys.process._
  * 4. Search for topic and approved author on same line
  * 5. Present results in a pleasing way
  */
+
+object Git {
+  def blame(file: Path): CommandResult = 
+    %%git ('blame, "--date", "short", "-e", file)
+}
 
 case class NumberedLine(number: Int, line: String) {
   def containsIgnoreCase(key: String): Boolean = 
@@ -44,11 +52,34 @@ def filteredFiles =
 def filesExcludingBuildDir = 
   filteredFiles |? {!_.segments.contains("build")} toStream
 
-def allFileContents: Seq[NumberedFileContent] = 
-  filesExcludingBuildDir 
-  .map { file => (file, read.lines(file).zipWithIndex
-    .map{ tup => NumberedLine(tup._2,tup._1)}) 
-  } map { case (x:Path,y:Vector[NumberedLine]) => NumberedFileContent(x,y) }
+def readFileAndHandleExceptions(file: Path): Try[Vector[(String, Int)]] = {
+  Try {
+    read.lines(file).zipWithIndex
+  }
+  //catch { 
+  //  case ex: java.nio.charset.MalformedInputException =>
+  //    println("Hit a bad file. Oh well. Just keep moving.")
+  //    Failure(ex)
+  //}
+}
+
+
+
+// Should try/catch
+// file: /home/bfrasure/NetBeansProjects/smilereminder3/flashProjects/fusionCharts/Contents/JS/dtree.js
+// java.nio.charset.MalformedInputException: Input length = 1
+//         java.nio.charset.CoderResult.throwException(CoderResult.java:281)
+//                 sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:339)
+//                         sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)
+def allFileContents: Seq[NumberedFileContent] =  {
+  val successfullyReadFiles = filesExcludingBuildDir 
+  .flatMap { file => println("file: " + file); readFileAndHandleExceptions(file) match { 
+    case Success(contents) => Some(file, contents map { tup => NumberedLine(tup._2,tup._1) } )
+    case Failure(ex) => None
+  }
+  } 
+  successfullyReadFiles map { case (x:Path,y:Vector[NumberedLine]) => NumberedFileContent(x,y) }
+}
 
 def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = 
   allFileContents 
@@ -56,33 +87,19 @@ def searchForTerm(searchTerm: String): Seq[NumberedFileContent] =
     .filter (_.containsIgnoreCase(searchTerm)))  
   } filter (!_.content.isEmpty)
 
-val desiredAuthor = "bill"
-
-val desiredAuthors = List("bill", "tylero")
+val desiredAuthors = List("bill", "tylero", "scott", "jay", "garrett", "brian", "david")
 
 def coalesceBlame(matchingFiles: Seq[NumberedFileContent]) = {
 
   matchingFiles map { nfc =>
-    val blameResults: CommandResult = 
-      %%git ('blame, "--date", "short", "-e", nfc.file)
-
-    val blameLines: Seq[String] = 
-      blameResults.toList
-
-    //val matchesWithAuthor = 
-    //  nfc.content.filter{ nl => 
-    //    blameLines(nl.number).contains(desiredAuthor) 
-    //  }.map(nl => (nl.number, blameLines(nl.number)))
+    val blameResults: CommandResult = Git.blame(nfc.file)
+    val blameLines: Seq[String] = blameResults.toList
 
     val matchesDesiredAuthors = 
       nfc.content.filter{ nl => 
         desiredAuthors.exists(blameLines(nl.number).contains) 
-      }.map(nl => (nl.number, blameLines(nl.number)))
+      }.map(nl => blameLines(nl.number))
 
-
-    //(nfc.file, matchesWithAuthor)
-    (nfc.file, matchesDesiredAuthors)
-  } filter { !_._2.isEmpty }
+    matchesDesiredAuthors
+  } filter { !_.isEmpty }
 }
-
-def blameOutput = searchForTerm("jersey") map {nfc=> %%git ('blame, nfc.file) }
