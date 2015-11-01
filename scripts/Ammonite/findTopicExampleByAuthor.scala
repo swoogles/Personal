@@ -53,8 +53,20 @@ def hasAnApprovedExtension(file: Path): Boolean =
 def isNotATinyMCEFile(file: Path): Boolean = 
   !file.segments.exists(segment => segment == "tiny_mce" || segment == "tinymce")
 
+def filt: Path=>Boolean = isNotATinyMCEFile
+
+def pathFilters: List[Path=>Boolean] = 
+  List(
+    hasAnApprovedExtension, 
+    isNotATinyMCEFile, 
+    !_.startsWith(distDir) 
+  )
+
+//def filteredFiles = 
+//  ls.rec! wd |? { file=> hasAnApprovedExtension(file) && isNotATinyMCEFile(file) && !file.startsWith(distDir)}
+
 def filteredFiles = 
-  ls.rec! wd |? { file=> hasAnApprovedExtension(file) && isNotATinyMCEFile(file) && !file.startsWith(distDir)}
+  ls.rec! wd |? { file=> pathFilters.forall(filt=>filt(file))}
 
 def filesExcludingBuildDir = 
   filteredFiles |? {!_.segments.contains("build")} toStream
