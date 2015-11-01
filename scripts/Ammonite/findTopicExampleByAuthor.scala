@@ -22,6 +22,12 @@ import scala.util.Try
 object Git {
   def blame(file: Path): CommandResult = 
     %%git ('blame, "--date", "short", "-e", file)
+
+  def log(): Int = 
+    %git ('log)
+
+  def today(): Int = 
+    %git ('today)
 }
 
 case class NumberedLine(number: Int, line: String) {
@@ -84,7 +90,7 @@ val desiredAuthors = List("bill", "tylero", "scott", "jay", "garrett", "brian", 
 def coalesceBlame(matchingFiles: Seq[NumberedFileContent]) = {
 
   matchingFiles map { nfc =>
-    val blameResults: CommandResult = Git.blame(nfc.file)
+    val blameResults: CommandResult = Git.blame(nfc.file) // This fails if a noncommitted file is searched
     val blameLines: Seq[String] = blameResults.toList
 
     val matchesDesiredAuthors = 
