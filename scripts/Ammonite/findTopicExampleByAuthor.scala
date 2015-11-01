@@ -35,6 +35,7 @@ def ammoScript = home/'Repositories/'Personal/"scripts"/'Ammonite/"findTopicExam
 def vimAmmo = %vim ammoScript
 val extensionsOfInterest = List(".jsp", ".java", ".js")
 val badExtensions = List(".swp", ".jar")
+val distDir: Path = 'dist
 
 def appendScript(newLine: String) = 
   { write.append(ammoScript, "\n" + newLine) }
@@ -47,7 +48,7 @@ def isNotATinyMCEFile(file: Path): Boolean =
   !file.segments.exists(segment => segment == "tiny_mce" || segment == "tinymce")
 
 def filteredFiles = 
-  ls.rec! wd |? { file=> hasAnApprovedExtension(file) && isNotATinyMCEFile(file) }
+  ls.rec! wd |? { file=> hasAnApprovedExtension(file) && isNotATinyMCEFile(file) && !file.startsWith(distDir)}
 
 def filesExcludingBuildDir = 
   filteredFiles |? {!_.segments.contains("build")} toStream
@@ -62,15 +63,6 @@ def readFileAndHandleExceptions(file: Path): Try[Vector[(String, Int)]] = {
   //    Failure(ex)
   //}
 }
-
-
-
-// Should try/catch
-// file: /home/bfrasure/NetBeansProjects/smilereminder3/flashProjects/fusionCharts/Contents/JS/dtree.js
-// java.nio.charset.MalformedInputException: Input length = 1
-//         java.nio.charset.CoderResult.throwException(CoderResult.java:281)
-//                 sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:339)
-//                         sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)
 def allFileContents: Seq[NumberedFileContent] =  {
   val successfullyReadFiles = filesExcludingBuildDir 
   .flatMap { file => println("file: " + file); readFileAndHandleExceptions(file) match { 
