@@ -66,7 +66,11 @@ def pathFilters: List[Path=>Boolean] =
 //  ls.rec! wd |? { file=> hasAnApprovedExtension(file) && isNotATinyMCEFile(file) && !file.startsWith(distDir)}
 
 def filteredFiles = 
-  ls.rec! wd |? { file=> pathFilters.forall(filt=>filt(file))}
+  ls.rec! wd |? { file=> 
+    pathFilters.forall(filt=>
+      filt(file)
+    )
+  }
 
 def filesExcludingBuildDir = 
   filteredFiles |? {!_.segments.contains("build")} toStream
@@ -99,7 +103,7 @@ def searchForTerm(searchTerm: String): Seq[NumberedFileContent] =
 
 val desiredAuthors = List("bill", "tylero", "scott", "jay", "garrett", "brian", "david")
 
-def coalesceBlame(matchingFiles: Seq[NumberedFileContent]) = {
+def attachBlameInformation(matchingFiles: Seq[NumberedFileContent]): Seq[Vector[String]] = {
 
   matchingFiles map { nfc =>
     val blameResults: CommandResult = Git.blame(nfc.file) // This fails if a noncommitted file is searched
@@ -113,3 +117,5 @@ def coalesceBlame(matchingFiles: Seq[NumberedFileContent]) = {
     matchesDesiredAuthors
   } filter { !_.isEmpty }
 }
+
+def fullSearch = searchForTerm _ andThen attachBlameInformation
