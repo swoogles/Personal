@@ -118,4 +118,29 @@ def attachBlameInformation(matchingFiles: Seq[NumberedFileContent]): Seq[Vector[
   } filter { !_.isEmpty }
 }
 
-def fullSearch = searchForTerm _ andThen attachBlameInformation
+case class BlameFields(hash: String, author: String, commitDate: String, lineNumber: String, lineContent: String) 
+object BlameFields {
+  def apply(rawLine: String): BlameFields = {
+    val pieces = rawLine.split("\\s+")
+    val hash = pieces(0)
+    val author = pieces(1)
+    val commitDate = pieces(2)
+    val lineNumber = pieces(3)
+    val lineContent = blameString.split("\\s+").drop(4).reduce(_+ " " + _)
+    BlameFields(hash, author, commitDate, lineNumber, lineContent)
+  }
+}
+
+
+def extractBlameFields( blameFiles: Seq[Vector[String]] ) = {
+  blameFiles 
+    .map { blameLines =>
+      blameLines
+        .map { blameLine =>
+          BlameFields(blameLine)
+        }
+  }
+}
+
+def fullSearch = 
+  searchForTerm _ andThen attachBlameInformation andThen extractBlameFields
