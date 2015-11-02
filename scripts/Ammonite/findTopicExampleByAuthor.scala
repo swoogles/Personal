@@ -23,12 +23,11 @@ case class BlameFields(hash: String, author: String, commitDate: String, lineNum
 object BlameFields {
   def apply(rawLine: String): BlameFields = {
     val pieces = rawLine.split("\\s+")
-    val hash = pieces(0)
-    val author = pieces(1)
-    val commitDate = pieces(2)
-    val lineNumber = pieces(3)
-    val blameLineContent = pieces.drop(3).reduce(_+ " " + _)
-    BlameFields(hash, author, commitDate, lineNumber, blameLineContent)
+    pieces.toList match {
+      case hash :: author :: commitDate :: lineNumber :: remainingContentWords =>
+        val blameLineContent = lineNumber :: remainingContentWords reduce(_+ " " + _)
+        BlameFields(hash, author, commitDate, lineNumber, blameLineContent)
+      }
   }
   def apply(rawLines: Vector[String]): Vector[BlameFields] = {
     rawLines map { BlameFields(_) }
