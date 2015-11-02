@@ -70,8 +70,6 @@ def hasAnApprovedExtension(file: Path): Boolean =
 def isNotATinyMCEFile(file: Path): Boolean = 
   !file.segments.exists(segment => segment == "tiny_mce" || segment == "tinymce")
 
-def filt: Path=>Boolean = isNotATinyMCEFile
-
 def pathFilters: List[Path=>Boolean] = 
   List(
     hasAnApprovedExtension, 
@@ -105,7 +103,7 @@ val allFileContents: Seq[NumberedFileContent] = allFileContentsAttempts.collect{
 
 def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = 
   allFileContents 
-  .map { nfc => NumberedFileContent(nfc.file, nfc.content
+    .map { case NumberedFileContent(file, content) => NumberedFileContent(file, content
     .filter (_.containsIgnoreCase(searchTerm)))
   } filter (!_.content.isEmpty)
 
@@ -113,15 +111,11 @@ val desiredAuthors = List("bill", "tylero", "scott", "jay", "garrett", "brian", 
 
 def attachBlameInformation(matchingFiles: Seq[NumberedFileContent]): Seq[Vector[BlameFields]] = {
 
-  matchingFiles map { nfc =>
-    val blameResults: Seq[BlameFields] = Git.blame(nfc.file) // This fails if a noncommitted file is searched
-
-    val matchesDesiredAuthors = 
-      nfc.content.filter{ nl => 
-        desiredAuthors.exists(blameResults(nl.number).author.contains) 
-      }.map(nl => blameResults(nl.number))
-
-    matchesDesiredAuthors
+  matchingFiles map { case NumberedFileContent(file, content) =>
+    val blameResults: Seq[BlameFields] = Git.blame(file) // This fails if a noncommitted file is searched
+    content.filter{ case NumberedLine(number,_) => 
+      desiredAuthors.exists(blameResults(number).author.contains) 
+    }.map{case NumberedLine(number, _) => blameResults(number)}
   } filter { !_.isEmpty }
 }
 
