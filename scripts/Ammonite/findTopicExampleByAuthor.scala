@@ -19,9 +19,27 @@ import scala.util.Try
  * 5. Present results in a pleasing way
  */
 
+case class BlameFields(hash: String, author: String, commitDate: String, lineNumber: String, lineContent: String) 
+object BlameFields {
+  def apply(rawLine: String): BlameFields = {
+    val pieces = rawLine.split("\\s+")
+    val hash = pieces(0)
+    val author = pieces(1)
+    val commitDate = pieces(2)
+    val lineNumber = pieces(3)
+    val lineContent = blameString.split("\\s+").drop(4).reduce(_+ " " + _)
+    BlameFields(hash, author, commitDate, lineNumber, lineContent)
+  }
+  def apply(rawLines: Vector[String]): Vector[BlameFields] = {
+    rawLines map { BlameFields(_) }
+  }
+}
+
 object Git {
-  def blame(file: Path): CommandResult = 
-    %%git ('blame, "--date", "short", "-e", file)
+  def blame(file: Path): Vector[BlameFields] = {
+    val commandResult = %%git ('blame, "--date", "short", "-e", file)
+    commandResult.toVector.map { BlameFields(_) }
+  }
 
   def log(): Int = 
     %git ('log)
@@ -44,8 +62,7 @@ val badExtensions = List(".swp", ".jar")
 val distDir: Path = 'dist
 
 def appendScript(newLine: String) = 
-  { write.append(ammoScript, "\n" + newLine) }
-
+  write.append(ammoScript, "\n" + newLine)
 
 def hasAnApprovedExtension(file: Path): Boolean = 
   extensionsOfInterest.exists(file.last.contains) && !badExtensions.exists(file.last.contains)
@@ -62,12 +79,9 @@ def pathFilters: List[Path=>Boolean] =
     !_.startsWith(distDir) 
   )
 
-//def filteredFiles = 
-//  ls.rec! wd |? { file=> hasAnApprovedExtension(file) && isNotATinyMCEFile(file) && !file.startsWith(distDir)}
-
 def filteredFiles = 
   ls.rec! wd |? { file=> 
-    pathFilters.forall(filt=>
+    pathFilters.forall( filt=>
       filt(file)
     )
   }
@@ -75,22 +89,18 @@ def filteredFiles =
 def filesExcludingBuildDir = 
   filteredFiles |? {!_.segments.contains("build")} toStream
 
-def readFileAndHandleExceptions(file: Path): Try[Vector[(String, Int)]] = {
+def readFileAndHandleExceptions(file: Path): Try[Vector[(String, Int)]] =
   Try {
     read.lines(file).zipWithIndex
   }
-  //catch { 
-  //  case ex: java.nio.charset.MalformedInputException =>
-  //    println("Hit a bad file. Oh well. Just keep moving.")
-  //    Failure(ex)
-  //}
-}
+
 def allFileContents: Seq[NumberedFileContent] =  {
-  val successfullyReadFiles = filesExcludingBuildDir 
-  .flatMap { file => println("file: " + file); readFileAndHandleExceptions(file) match { 
-    case Success(contents) => Some(file, contents map { tup => NumberedLine(tup._2,tup._1) } )
-    case Failure(ex) => None
-  }
+  val successfullyReadFiles = 
+    filesExcludingBuildDir 
+    .flatMap { file => println("file: " + file); readFileAndHandleExceptions(file) match { 
+      case Success(contents) => Some(file, contents map { tup => NumberedLine(tup._2,tup._1) } )
+      case Failure(ex) => None
+    }
   } 
   successfullyReadFiles map { case (x:Path,y:Vector[NumberedLine]) => NumberedFileContent(x,y) }
 }
@@ -98,49 +108,24 @@ def allFileContents: Seq[NumberedFileContent] =  {
 def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = 
   allFileContents 
   .map { nfc => NumberedFileContent(nfc.file, nfc.content
-    .filter (_.containsIgnoreCase(searchTerm)))  
+    .filter (_.containsIgnoreCase(searchTerm)))
   } filter (!_.content.isEmpty)
 
 val desiredAuthors = List("bill", "tylero", "scott", "jay", "garrett", "brian", "david")
 
-def attachBlameInformation(matchingFiles: Seq[NumberedFileContent]): Seq[Vector[String]] = {
+def attachBlameInformation(matchingFiles: Seq[NumberedFileContent]): Seq[Vector[BlameFields]] = {
 
   matchingFiles map { nfc =>
-    val blameResults: CommandResult = Git.blame(nfc.file) // This fails if a noncommitted file is searched
-    val blameLines: Seq[String] = blameResults.toList
+    val blameResults: Seq[BlameFields] = Git.blame(nfc.file) // This fails if a noncommitted file is searched
 
     val matchesDesiredAuthors = 
       nfc.content.filter{ nl => 
-        desiredAuthors.exists(blameLines(nl.number).contains) 
-      }.map(nl => blameLines(nl.number))
+        desiredAuthors.exists(blameResults(nl.number).author.contains) 
+      }.map(nl => blameResults(nl.number))
 
     matchesDesiredAuthors
   } filter { !_.isEmpty }
 }
 
-case class BlameFields(hash: String, author: String, commitDate: String, lineNumber: String, lineContent: String) 
-object BlameFields {
-  def apply(rawLine: String): BlameFields = {
-    val pieces = rawLine.split("\\s+")
-    val hash = pieces(0)
-    val author = pieces(1)
-    val commitDate = pieces(2)
-    val lineNumber = pieces(3)
-    val lineContent = blameString.split("\\s+").drop(4).reduce(_+ " " + _)
-    BlameFields(hash, author, commitDate, lineNumber, lineContent)
-  }
-}
-
-
-def extractBlameFields( blameFiles: Seq[Vector[String]] ) = {
-  blameFiles 
-    .map { blameLines =>
-      blameLines
-        .map { blameLine =>
-          BlameFields(blameLine)
-        }
-  }
-}
-
 def fullSearch = 
-  searchForTerm _ andThen attachBlameInformation andThen extractBlameFields
+  searchForTerm _ andThen attachBlameInformation
