@@ -27,8 +27,8 @@ object BlameFields {
     val author = pieces(1)
     val commitDate = pieces(2)
     val lineNumber = pieces(3)
-    val lineContent = blameString.split("\\s+").drop(4).reduce(_+ " " + _)
-    BlameFields(hash, author, commitDate, lineNumber, lineContent)
+    val blameLineContent = pieces.drop(3).reduce(_+ " " + _)
+    BlameFields(hash, author, commitDate, lineNumber, blameLineContent)
   }
   def apply(rawLines: Vector[String]): Vector[BlameFields] = {
     rawLines map { BlameFields(_) }
@@ -76,7 +76,8 @@ def pathFilters: List[Path=>Boolean] =
   List(
     hasAnApprovedExtension, 
     isNotATinyMCEFile, 
-    !_.startsWith(distDir) 
+    !_.startsWith(distDir),
+    !_.segments.contains("build")
   )
 
 def filteredFiles = 
@@ -86,24 +87,21 @@ def filteredFiles =
     )
   }
 
-def filesExcludingBuildDir = 
-  filteredFiles |? {!_.segments.contains("build")} toStream
-
 def readFileAndHandleExceptions(file: Path): Try[Vector[(String, Int)]] =
   Try {
     read.lines(file).zipWithIndex
   }
 
-def allFileContents: Seq[NumberedFileContent] =  {
-  val successfullyReadFiles = 
-    filesExcludingBuildDir 
-    .flatMap { file => println("file: " + file); readFileAndHandleExceptions(file) match { 
-      case Success(contents) => Some(file, contents map { tup => NumberedLine(tup._2,tup._1) } )
-      case Failure(ex) => None
+def allFileContentsAttempts: Seq[Try[NumberedFileContent]] =
+  filteredFiles 
+  .map { file =>
+    val readResult: Try[Vector[(String, Int)]] = readFileAndHandleExceptions(file) 
+    readResult map { contents => 
+      NumberedFileContent(file, contents map { tup => NumberedLine(tup._2,tup._1) } )
     }
-  } 
-  successfullyReadFiles map { case (x:Path,y:Vector[NumberedLine]) => NumberedFileContent(x,y) }
-}
+  }
+
+val allFileContents: Seq[NumberedFileContent] = allFileContentsAttempts.collect{case Success(contents) => contents}
 
 def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = 
   allFileContents 
