@@ -35,9 +35,9 @@ object BlameFields {
 }
 
 object Git {
-  def blame(file: Path): Vector[BlameFields] = {
+  def blame(file: Path): Seq[BlameFields] = {
     val commandResult = %%git ('blame, "--date", "short", "-e", file)
-    commandResult.toVector.map { BlameFields(_) }
+    commandResult.map { BlameFields(_) }
   }
 
   def log(): Int = 
@@ -66,13 +66,13 @@ def appendScript(newLine: String) =
 def hasAnApprovedExtension(file: Path): Boolean = 
   extensionsOfInterest.exists(file.last.contains) && !badExtensions.exists(file.last.contains)
 
-def isNotATinyMCEFile(file: Path): Boolean = 
+def notATinyMCEFile(file: Path): Boolean = 
   !file.segments.exists(segment => segment == "tiny_mce" || segment == "tinymce")
 
 def pathFilters: List[Path=>Boolean] = 
   List(
     hasAnApprovedExtension, 
-    isNotATinyMCEFile, 
+    notATinyMCEFile, 
     !_.startsWith(distDir),
     !_.segments.contains("build")
   )
@@ -91,20 +91,20 @@ def readFileAndHandleExceptions(file: Path): Try[Vector[(String, Int)]] =
 
 def allFileContentsAttempts: Seq[Try[NumberedFileContent]] =
   filteredFiles 
-  .map { file =>
-    val readResult: Try[Vector[(String, Int)]] = readFileAndHandleExceptions(file) 
-    readResult map { contents => 
-      NumberedFileContent(file, contents map { tup => NumberedLine(tup._2,tup._1) } )
+    .map { file =>
+      val readResult: Try[Vector[(String, Int)]] = readFileAndHandleExceptions(file) 
+      readResult map { contents => 
+        NumberedFileContent(file, contents map { tup => NumberedLine(tup._2,tup._1) } )
+      }
     }
-  }
 
 val allFileContents: Seq[NumberedFileContent] = allFileContentsAttempts.collect{case Success(contents) => contents}
 
 def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = 
   allFileContents 
     .map { case NumberedFileContent(file, content) => NumberedFileContent(file, content
-    .filter (_.containsIgnoreCase(searchTerm)))
-  } filter (!_.content.isEmpty)
+      .filter (_.containsIgnoreCase(searchTerm)))
+    } filter (!_.content.isEmpty)
 
 val desiredAuthors = List("bill", "tylero", "scott", "jay", "garrett", "brian", "david")
 
