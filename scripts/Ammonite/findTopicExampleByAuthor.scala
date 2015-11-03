@@ -87,19 +87,17 @@ def filteredFiles =
 def readFileAndHandleExceptions(file: Path): Try[Vector[(String, Int)]] =
   Try { read.lines(file).zipWithIndex }
 
-def allFileContentsAttempts: Seq[Try[NumberedFileContent]] =
+def successlyReadFiles: Seq[NumberedFileContent] =
   filteredFiles 
     .map { file =>
       val readResult: Try[Vector[(String, Int)]] = readFileAndHandleExceptions(file) 
       readResult map { contents => 
         NumberedFileContent(file, contents map { tup => NumberedLine(tup._2,tup._1) } )
       }
-    }
-
-val allFileContents: Seq[NumberedFileContent] = allFileContentsAttempts.collect{case Success(contents) => contents}
+    }.collect{case Success(contents) => contents}
 
 def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = 
-  allFileContents 
+  successlyReadFiles 
     .map { case NumberedFileContent(file, content) => NumberedFileContent(file, content
       .filter (_.containsIgnoreCase(searchTerm)))
     } filter (!_.content.isEmpty)
