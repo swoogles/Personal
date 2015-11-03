@@ -85,9 +85,7 @@ def filteredFiles =
   }
 
 def readFileAndHandleExceptions(file: Path): Try[Vector[(String, Int)]] =
-  Try {
-    read.lines(file).zipWithIndex
-  }
+  Try { read.lines(file).zipWithIndex }
 
 def allFileContentsAttempts: Seq[Try[NumberedFileContent]] =
   filteredFiles 
@@ -109,7 +107,6 @@ def searchForTerm(searchTerm: String): Seq[NumberedFileContent] =
 val desiredAuthors = List("bill", "tylero", "scott", "jay", "garrett", "brian", "david")
 
 def attachBlameInformation(matchingFiles: Seq[NumberedFileContent]): Seq[Vector[BlameFields]] = {
-
   matchingFiles map { case NumberedFileContent(file, content) =>
     val blameResults: Seq[BlameFields] = Git.blame(file) // This fails if a noncommitted file is searched
     content.filter{ case NumberedLine(number,_) => 
@@ -118,5 +115,16 @@ def attachBlameInformation(matchingFiles: Seq[NumberedFileContent]): Seq[Vector[
   } filter { !_.isEmpty }
 }
 
+def calculateMostProlificAuthor(blameFields: Seq[Vector[BlameFields]] ) = {
+  val results: Map[String, Seq[BlameFields]] = 
+  blameFields.flatten groupBy { case line =>
+    line.author // returns  Map[String, Seq[BlameFields]]
+  }
+  (results map { mapByAuthor => (mapByAuthor._1, mapByAuthor._2.length)} toSeq).sortBy{_._2}.reverse
+}
+
 def fullSearch = 
   searchForTerm _ andThen attachBlameInformation
+
+def authorRanking = 
+  searchForTerm _ andThen attachBlameInformation andThen calculateMostProlificAuthor
