@@ -1,7 +1,7 @@
 import ammonite.ops._
 import ammonite.repl.Repl._
 import ammonite.repl.Repl._
-//import ammonite.ops.ImplicitWd._
+import ammonite.ops.ImplicitWd._
 import sys.process._
 
 import scala.util.Failure
@@ -58,7 +58,6 @@ def ammoScript = home/'Repositories/'Personal/"scripts"/'Ammonite/"findTopicExam
 def vimAmmo = %vim ammoScript
 val extensionsOfInterest = List(".jsp", ".java", ".js")
 val badExtensions = List(".swp", ".jar")
-val distDir: Path = 'dist
 
 def appendScript(newLine: String) = 
   write.append(ammoScript, "\n" + newLine)
@@ -73,12 +72,12 @@ def pathFilters: List[Path=>Boolean] =
   List(
     hasAnApprovedExtension, 
     notATinyMCEFile, 
-    !_.startsWith(distDir),
+    !_.segments.contains("dist"),
     !_.segments.contains("build")
   )
 
 def filteredFiles = 
-  ls.rec! wd |? { file=> 
+  (ls.rec!).filter{ file=> 
     pathFilters.forall( filt=>
       filt(file)
     )
