@@ -1,7 +1,7 @@
 import ammonite.ops._
 import ammonite.repl.Repl._
 import ammonite.repl.Repl._
-import ammonite.ops.ImplicitWd._
+//import ammonite.ops.ImplicitWd._
 import sys.process._
 
 import scala.util.Failure
@@ -19,6 +19,13 @@ import scala.util.Try
  * 5. Present results in a pleasing way
  */
 
+def camelToUnderscores(name: String) = "[A-Z\\d]".r.replaceAllIn(name, {m =>
+    "_" + m.group(0).toLowerCase()
+})
+def underscoreToCamel(name: String) = "_([a-z\\d])".r.replaceAllIn(name, {m =>
+    m.group(1).toUpperCase()
+})
+
 case class BlameFields(hash: String, author: String, commitDate: String, lineNumber: String, lineContent: String) 
 object BlameFields {
   def apply(rawLine: String): BlameFields = {
@@ -35,6 +42,7 @@ object BlameFields {
 }
 
 object Git {
+  import ammonite.ops.ImplicitWd._
   def blame(file: Path): Seq[BlameFields] = {
     val commandResult = %%git ('blame, "--date", "short", "-e", file)
     commandResult.map { BlameFields(_) }
@@ -49,13 +57,21 @@ object Git {
 
 case class NumberedLine(number: Int, line: String) {
   def containsIgnoreCase(key: String): Boolean = 
-    line.toUpperCase.contains(key.toUpperCase)
+    //line.toUpperCase.contains(key.toUpperCase)
+    underscoreToCamel(line).toUpperCase.contains(underscoreToCamel(key).toUpperCase)
 }
 case class NumberedFileContent(file: Path, content: Vector[NumberedLine])
 
+
 val home = root/'home/'bfrasure
 def ammoScript = home/'Repositories/'Personal/"scripts"/'Ammonite/"findTopicExampleByAuthor.scala"
-def vimAmmo = %vim ammoScript
+val appSubscriberDir: Path = root/'home/'bfrasure/'NetBeansProjects/'smilereminder3/'appSubscriber
+val smilereminder3Dir: Path = root/'home/'bfrasure/'NetBeansProjects/'smilereminder3
+
+def vimAmmo = {
+  import ammonite.ops.ImplicitWd._
+  %vim ammoScript
+}
 val extensionsOfInterest = List(".jsp", ".java", ".js")
 val badExtensions = List(".swp", ".jar")
 
@@ -76,12 +92,14 @@ def pathFilters: List[Path=>Boolean] =
     !_.segments.contains("build")
   )
 
-def filteredFiles = 
-  (ls.rec!).filter{ file=> 
+def filteredFiles = {
+  //import ammonite.ops.ImplicitWd._
+  (ls.rec! smilereminder3Dir).filter{ file=> 
     pathFilters.forall( filt=>
       filt(file)
     )
   }
+}
 
 def readFileAndHandleExceptions(file: Path): Try[Vector[(String, Int)]] =
   Try { read.lines(file).zipWithIndex }
@@ -98,7 +116,7 @@ def successlyReadFiles: Seq[NumberedFileContent] =
 def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = 
   successlyReadFiles 
     .map { case NumberedFileContent(file, content) => NumberedFileContent(file, content
-      .filter (_.containsIgnoreCase(searchTerm)))
+      .filter {_.containsIgnoreCase(searchTerm)})
     } filter (!_.content.isEmpty)
 
 val desiredAuthors = List("bill", "tylero", "scott", "jay", "garrett", "brian", "david")
@@ -125,3 +143,52 @@ def fullSearch =
 
 def authorRanking = 
   searchForTerm _ andThen attachBlameInformation andThen calculateMostProlificAuthor
+
+//****************** NEW SCRIPT******************
+/* Goal: detect duplicate lines in source files
+ * 1. Don't get too clever with near matches, but handle obvious ignorables like whitespace lines
+ * 2. Find most repetitive author <- Careful with the results of this one...
+ * 3. Find term that's used most ofen on these lines
+ *    -Filter out language constructs. Too much noise there.
+ */
+
+val whiteSpace = 
+  "\\s+"
+
+def stdSpacing(line: String): String =
+  line.trim.replaceAll(whiteSpace, " ")
+
+def unassociatedContent(nfcs: Seq[NumberedFileContent]): Seq[String] = 
+  nfcs || (_.content.map{ x=>stdSpacing(x.line)}) |? (!_.isEmpty)
+  
+def countedResults(lines: Seq[String]): Map[String, Int] = 
+  lines.groupBy{ x => x} | {x=>(x._1, x._2.length)}
+
+def sortedResults = 
+  countedResults(unassociatedContent(successlyReadFiles)).toList.sortBy{ - _._2 }
+
+def extractImportedClass(importLine: String) =
+  importLine.replace("import","").replace(";","").trim
+
+def mostImportedClasses = 
+  sortedResults |? (_._1.contains("import")) | (tup => (extractImportedClass(tup._1), tup._2))
+
+def mostImportedCommunitectClasses = 
+  mostImportedClasses |? (_._1.contains("communitect"))
+
+def duplicateLines = 
+  successlyReadFiles
+
+
+/* First forays into scraping the list of engineers off of the intranet site. */
+// 
+//load.ivy("org.jsoup" %% "jsoup" % "1.8.3")
+// After this, I was able to figure out how to connect to a page and download the contents purely through the REPL
+//val intranetConn = org.jsoup.Jsoup.connect("http://intranet.communitect.com/")
+//val intranetContent = intranetConn.get
+// Unfortunately at this point I realized all the content is happening behind some JS that could make it hard to access the data
+//Looks like the JavaFX WebView might be the right way to go here. Since JSoup is only meant to parse HTML, you need a more
+//full browser to interact with heavy JS sites.
+// Scalafx should wrap things up in a pleasing way.
+//load.ivy( "org.scalafx" %% "scalafx" % "8.0.60-R9")
+//import scalafx.scene.web.WebView
