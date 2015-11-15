@@ -36,7 +36,7 @@ object BlameFields {
         BlameFields(hash, author, commitDate, lineNumber, blameLineContent)
       }
   }
-  def apply(rawLines: Vector[String]): Vector[BlameFields] = {
+  def apply(rawLines: Stream[String]): Stream[BlameFields] = {
     rawLines map { BlameFields(_) }
   }
 }
@@ -60,7 +60,7 @@ case class NumberedLine(number: Int, line: String) {
     //line.toUpperCase.contains(key.toUpperCase)
     underscoreToCamel(line).toUpperCase.contains(underscoreToCamel(key).toUpperCase)
 }
-case class NumberedFileContent(file: Path, content: Vector[NumberedLine])
+case class NumberedFileContent(file: Path, content: Stream[NumberedLine])
 
 
 val home = root/'home/'bfrasure
@@ -93,21 +93,21 @@ def pathFilters: List[Path=>Boolean] =
   )
 
 def filteredFiles = {
-  //import ammonite.ops.ImplicitWd._
   (ls.rec! smilereminder3Dir).filter{ file=> 
+  //(ls.rec! appSubscriberDir).filter{ file=> 
     pathFilters.forall( filt=>
       filt(file)
     )
   }
 }
 
-def readFileAndHandleExceptions(file: Path): Try[Vector[(String, Int)]] =
-  Try { read.lines(file).zipWithIndex }
+def readFileAndHandleExceptions(file: Path): Try[Stream[(String, Int)]] =
+  Try { read.lines(file).zipWithIndex.toStream }
 
 def successlyReadFiles: Stream[NumberedFileContent] =
   filteredFiles 
     .map { file =>
-      val readResult: Try[Vector[(String, Int)]] = readFileAndHandleExceptions(file) 
+      val readResult: Try[Stream[(String, Int)]] = readFileAndHandleExceptions(file) 
       readResult map { contents => 
         NumberedFileContent(file, contents map { tup => NumberedLine(tup._2,tup._1) } )
       }
@@ -126,7 +126,7 @@ def fullContent( bah: String): Stream[NumberedFileContent] =
 
 val desiredAuthors = List("bill", "tylero", "scott", "jay", "garrett", "brian", "david")
 
-def attachBlameInformation(matchingFiles: Stream[NumberedFileContent]): Stream[Vector[BlameFields]] = {
+def attachBlameInformation(matchingFiles: Stream[NumberedFileContent]): Stream[Stream[BlameFields]] = {
   matchingFiles map { case NumberedFileContent(file, content) =>
     val blameResults: Stream[BlameFields] = Git.blame(file) // This fails if a noncommitted file is searched
     content.filter{ case NumberedLine(number,_) => 
@@ -135,7 +135,7 @@ def attachBlameInformation(matchingFiles: Stream[NumberedFileContent]): Stream[V
   } filter { !_.isEmpty }
 }
 
-def calculateMostProlificAuthor(blameFields: Stream[Vector[BlameFields]] ) = {
+def calculateMostProlificAuthor(blameFields: Stream[Stream[BlameFields]] ) = {
   val results: Map[String, Stream[BlameFields]] = 
   blameFields.flatten groupBy { case line =>
     line.author // returns  Map[String, Stream[BlameFields]]
@@ -200,3 +200,25 @@ def duplicateLines =
 // Scalafx should wrap things up in a pleasing way.
 //load.ivy( "org.scalafx" %% "scalafx" % "8.0.60-R9")
 //import scalafx.scene.web.WebView
+//
+def groupedByDate() = 
+  (fullBlameContent("bah") || (_ map (_.commitDate.take(4))) groupBy { case year => year }  map { tup => (tup._1, tup._2.length) } toSeq).sortBy(_._1)
+
+// appSubscriber groupedByDate results
+//res4: Seq[(String, Int)] = ArrayBuffer(("2007", 6581), ("2008", 806), ("2009", 661), ("2010", 4760), ("2011", 3787), ("2012", 4019), ("2013", 28852), ("2014", 52357), ("2015", 10983))
+
+// full smilereminder3 stats
+// Number of lines that were contributed in a given year
+//groupedByDate map { x => (x._1, x._2, (x._2.toFloat/res12*100).toInt + "%") }
+//res19: Seq[(String, Int, String)] = ArrayBuffer(
+//  ("2006", 35111, "8%"),
+//  ("2007", 15848, "3%"),
+//  ("2008", 4508, "1%"),
+//  ("2009", 12779, "3%"),
+//  ("2010", 33055, "8%"),
+//  ("2011", 29100, "7%"),
+//  ("2012", 32700, "8%"),
+//  ("2013", 87250, "21%"),
+//  ("2014", 84817, "21%"),
+//  ("2015", 66555, "16%")
+//)
