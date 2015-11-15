@@ -43,9 +43,9 @@ object BlameFields {
 
 object Git {
   import ammonite.ops.ImplicitWd._
-  def blame(file: Path): Seq[BlameFields] = {
+  def blame(file: Path): Stream[BlameFields] = {
     val commandResult = %%git ('blame, "--date", "short", "-e", file)
-    commandResult.map { BlameFields(_) }
+    commandResult.map { BlameFields(_) } toStream
   }
 
   def log(): Int = 
@@ -104,42 +104,50 @@ def filteredFiles = {
 def readFileAndHandleExceptions(file: Path): Try[Vector[(String, Int)]] =
   Try { read.lines(file).zipWithIndex }
 
-def successlyReadFiles: Seq[NumberedFileContent] =
+def successlyReadFiles: Stream[NumberedFileContent] =
   filteredFiles 
     .map { file =>
       val readResult: Try[Vector[(String, Int)]] = readFileAndHandleExceptions(file) 
       readResult map { contents => 
         NumberedFileContent(file, contents map { tup => NumberedLine(tup._2,tup._1) } )
       }
-    }.collect{case Success(contents) => contents}
+    }.collect{case Success(contents) => contents}.toStream
 
-def searchForTerm(searchTerm: String): Seq[NumberedFileContent] = 
+def searchForTerm(searchTerm: String): Stream[NumberedFileContent] = 
   successlyReadFiles 
     .map { case NumberedFileContent(file, content) => NumberedFileContent(file, content
       .filter {_.containsIgnoreCase(searchTerm)})
     } filter (!_.content.isEmpty)
 
+def fullContent( bah: String): Stream[NumberedFileContent] = 
+  successlyReadFiles 
+    .map { case NumberedFileContent(file, content) => NumberedFileContent(file, content)
+    } filter (!_.content.isEmpty)
+
 val desiredAuthors = List("bill", "tylero", "scott", "jay", "garrett", "brian", "david")
 
-def attachBlameInformation(matchingFiles: Seq[NumberedFileContent]): Seq[Vector[BlameFields]] = {
+def attachBlameInformation(matchingFiles: Stream[NumberedFileContent]): Stream[Vector[BlameFields]] = {
   matchingFiles map { case NumberedFileContent(file, content) =>
-    val blameResults: Seq[BlameFields] = Git.blame(file) // This fails if a noncommitted file is searched
+    val blameResults: Stream[BlameFields] = Git.blame(file) // This fails if a noncommitted file is searched
     content.filter{ case NumberedLine(number,_) => 
       desiredAuthors.exists(blameResults(number).author.contains) 
     }.map{case NumberedLine(number, _) => blameResults(number)}
   } filter { !_.isEmpty }
 }
 
-def calculateMostProlificAuthor(blameFields: Seq[Vector[BlameFields]] ) = {
-  val results: Map[String, Seq[BlameFields]] = 
+def calculateMostProlificAuthor(blameFields: Stream[Vector[BlameFields]] ) = {
+  val results: Map[String, Stream[BlameFields]] = 
   blameFields.flatten groupBy { case line =>
-    line.author // returns  Map[String, Seq[BlameFields]]
+    line.author // returns  Map[String, Stream[BlameFields]]
   }
   (results map { mapByAuthor => (mapByAuthor._1, mapByAuthor._2.length)} toSeq).sortBy{_._2}.reverse
 }
 
 def fullSearch = 
   searchForTerm _ andThen attachBlameInformation
+
+def fullBlameContent = 
+  fullContent _ andThen attachBlameInformation
 
 def authorRanking = 
   searchForTerm _ andThen attachBlameInformation andThen calculateMostProlificAuthor
