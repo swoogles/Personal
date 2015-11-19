@@ -65,8 +65,10 @@ case class NumberedFileContent(file: Path, content: Stream[NumberedLine])
 
 val home = root/'home/'bfrasure
 def ammoScript = home/'Repositories/'Personal/"scripts"/'Ammonite/"findTopicExampleByAuthor.scala"
-val appSubscriberDir: Path = root/'home/'bfrasure/'NetBeansProjects/'smilereminder3/'appSubscriber
-val smilereminder3Dir: Path = root/'home/'bfrasure/'NetBeansProjects/'smilereminder3
+val smileDir: Path = home/'NetBeansProjects/'smilereminder3
+val appSubscriberDir: Path = smileDir/'appSubscriber
+val testDir: Path = smileDir/'srbiz/'test
+val targetDir = testDir
 
 def vimAmmo = {
   import ammonite.ops.ImplicitWd._
@@ -93,13 +95,19 @@ def pathFilters: List[Path=>Boolean] =
   )
 
 def filteredFiles = {
-  (ls.rec! smilereminder3Dir).filter{ file=> 
+  (ls.rec! targetDir).filter{ file=> 
   //(ls.rec! appSubscriberDir).filter{ file=> 
     pathFilters.forall( filt=>
       filt(file)
     )
   }
 }
+
+def filesGroupedByExtension =
+  (ls.rec! targetDir ) groupBy { case file => file.ext }
+
+//(filesGroupedByExtension | { case (key, value) => (key, value.length) }).toSeq.sortBy { -_._2 }
+//ammonite.ops.write(cwd/"ammOutput.txt" , pprint.tokenize(res9).mkString)
 
 def readFileAndHandleExceptions(file: Path): Try[Stream[(String, Int)]] =
   Try { read.lines(file).zipWithIndex.toStream }
@@ -123,6 +131,29 @@ def fullContent( bah: String): Stream[NumberedFileContent] =
   successlyReadFiles 
     .map { case NumberedFileContent(file, content) => NumberedFileContent(file, content)
     } filter (!_.content.isEmpty)
+
+def contentUniqueLineMap() = 
+  fullContent("bah") | { x => (x.file, x.content.groupBy { y => stdSpacing(y.line) } map { case (key, value) => (key, value.length ) } ) }
+
+//Map[String, Stream[Int]]
+def sortMapByNumberOfValueElements[A](map: Map[String, Int]): Stream[(String, Int)] =
+ map.toStream.sortBy{-_._2}
+
+def isLineSignificant(lineOfCode: String) =
+  lineOfCode.count{ Character.isLetter(_) } > 5
+
+def hasSignificantDuplicates( tup: (Path, Stream[(String, Int)])): Boolean =
+  (!tup._2.isEmpty)
+
+
+def fileContentRankedByMostDuplicatedLine = 
+  // Must be duplicated at least three times to show up in results
+  contentUniqueLineMap | {x => (x._1, sortMapByNumberOfValueElements(x._2).filter{x=>isLineSignificant(x._1) && x._2 > 2}) } |? hasSignificantDuplicates
+  //contentUniqueLineMap.toSeq.sortBy{-_._2._2 }
+
+def numberOfMostDuplicatedLineOccurances = 
+  fileContentRankedByMostDuplicatedLine | { x => (x._1, x._2.take(1).map {_._2 }.head )}
+
 
 val desiredAuthors = List("bill", "tylero", "scott", "jay", "garrett", "brian", "david")
 
