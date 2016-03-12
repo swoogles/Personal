@@ -20,12 +20,14 @@ Plugin 'tpope/vim-jdaddy' " Helpful JSON commands
 Plugin 'airblade/vim-gitgutter'
 Plugin 'dscleaver/sbt-quickfix'
 Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdtree'
 Plugin 'wincent/command-t' " Fuzzy searching
 Plugin 'sjl/gundo.vim' " Visual undo tree
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-easytags' "Generate tags for the file you're in
 Plugin 'tmhedberg/matchit' " Match HTML tags like braces/parens
 Plugin 'derekwyatt/vim-scala'
+Plugin 'Valloric/YouCompleteMe'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
@@ -361,6 +363,9 @@ filetype plugin indent on    " required
 
   " Super-powered undo!
   nnoremap <leader>u :GundoToggle<CR>
+
+  " NERD Tree Toggle
+  nnoremap <leader>nt :NERDTreeToggle<CR>  
 
   " Spacebar for folds!
   nnoremap <space> za
