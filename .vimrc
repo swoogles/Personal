@@ -1,10 +1,71 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-eunuch' " Various OS commands
+Plugin 'tpope/vim-fugitive' "Git Client
+Plugin 'tpope/vim-dispatch' " Async jobs
+Plugin 'tpope/vim-jdaddy' " Helpful JSON commands
+Plugin 'airblade/vim-gitgutter'
+Plugin 'dscleaver/sbt-quickfix'
+Plugin 'scrooloose/syntastic'
+Plugin 'wincent/command-t' " Fuzzy searching
+Plugin 'sjl/gundo.vim' " Visual undo tree
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-easytags' "Generate tags for the file you're in
+Plugin 'tmhedberg/matchit' " Match HTML tags like braces/parens
+Plugin 'derekwyatt/vim-scala'
+
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'L9'
+Plugin 'hier'
+Plugin 'rainbow_parentheses.vim'
+" Git plugin not hosted on GitHub
+" Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+" Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+
+
 " My vimrc
 " Bill Frasure
 "
 " It grows stronger every day.
 
-execute pathogen#infect()
-execute pathogen#helptags()
+" execute pathogen#infect()
+" execute pathogen#helptags()
 
 " Options {{{
   " Use Vim settings, rather then Vi settings (much better!).
@@ -23,7 +84,7 @@ execute pathogen#helptags()
   set laststatus=2
 
   " Show branch name in buffer status line
-  set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+  " set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
   set bs=2		" allow backspacing over everything in insert mode
   set ai			" always set autoindenting on
@@ -266,16 +327,16 @@ execute pathogen#helptags()
 
   :nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
 
-  " If the current buffer has never been saved, it will have no name,
-  " call the file browser to save it, otherwise just save it.
-  command -nargs=0 -bar Update if &modified 
-                             \|    if empty(bufname('%'))
-                             \|        browse confirm write
-                             \|    else
-                             \|        confirm write
-                             \|    endif
-                             \|endif
-  nnoremap <silent> <C-S> :<C-u>Update<CR>
+  " " If the current buffer has never been saved, it will have no name,
+  " " call the file browser to save it, otherwise just save it.
+  " command -nargs=0 -bar Update if &modified 
+  "                            \|    if empty(bufname('%'))
+  "                            \|        browse confirm write
+  "                            \|    else
+  "                            \|        confirm write
+  "                            \|    endif
+  "                            \|endif
+  " nnoremap <silent> <C-S> :<C-u>Update<CR>
 
   " Don't use Ex mode, use Q for formatting
   map Q gq
@@ -464,7 +525,7 @@ execute pathogen#helptags()
     \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
     \gV:call setreg('"', old_reg, old_regtype)<CR>
 
-  function s:MkNonExDir(file, buf)
+  function! s:MkNonExDir(file, buf)
     if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
       let dir=fnamemodify(a:file, ':h')
       if !isdirectory(dir)
