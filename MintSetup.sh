@@ -22,6 +22,14 @@ $INSTALL rpm
 $INSTALL scala
 $INSTALL mercurial
 $INSTALL gnuplot gnuplot-x11
+$INSTALL vpnc
+$INSTALL openssh-server
+
+# Java 8 steps
+sudo add-apt-repository ppa:openjdk-r/ppa
+sudo apt-get update
+$INSTALL openjdk-8-jdk
+sudo update-alternatives --config java
 
 # Node/Angular setup
 # From http://developwithguru.com/how-to-install-node-js-and-npm-in-ubuntu-or-mint/
@@ -45,7 +53,7 @@ $INSTALL oggvideotools
 DISTRIBUTION=trusty
 echo "deb http://downloads.skewed.de/apt/$DISTRIBUTION $DISTRIBUTION universe" >> /etc/apt/sources.list
 echo "deb-src http://downloads.skewed.de/apt/$DISTRIBUTION $DISTRIBUTION universe" >> /etc/apt/sources.list
-$APT update
+$APT update -y
 $INSTALL python3-graph-tool
 
 # Needed for scipy
