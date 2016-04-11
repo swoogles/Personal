@@ -13,6 +13,7 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
+Plugin 'tpope/vim-abolish' " Coersion and other helpful text tricks
 Plugin 'tpope/vim-eunuch' " Various OS commands
 Plugin 'tpope/vim-fugitive' "Git Client
 Plugin 'tpope/vim-dispatch' " Async jobs
