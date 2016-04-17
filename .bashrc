@@ -311,3 +311,7 @@ export PATH="/home/bfrasure/anaconda/bin:$PATH"
 # For python virtual environments
 export WORKON_HOME=$HOME/Envs
 source /usr/local/bin/virtualenvwrapper_lazy.sh
+
+# Trying to fix sbt proxy not well-configured error
+export JAVA_OPTS="$JAVA_OPTS -Dhttp.proxyHost=proxy -Dhttp.proxyPort=port -Dhttps.proxyHost=proxy -Dhttps.proxyPort=port"
+
