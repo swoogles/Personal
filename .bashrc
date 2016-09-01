@@ -312,6 +312,9 @@ export PATH="/home/bfrasure/anaconda/bin:$PATH"
 export WORKON_HOME=$HOME/Envs
 source /usr/local/bin/virtualenvwrapper_lazy.sh
 
-# Trying to fix sbt proxy not well-configured error
-export JAVA_OPTS="$JAVA_OPTS -Dhttp.proxyHost=proxy -Dhttp.proxyPort=port -Dhttps.proxyHost=proxy -Dhttps.proxyPort=port"
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
 
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/bfrasure/.sdkman"
+[[ -s "/home/bfrasure/.sdkman/bin/sdkman-init.sh" ]] && source "/home/bfrasure/.sdkman/bin/sdkman-init.sh"
