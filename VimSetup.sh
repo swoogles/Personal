@@ -1,5 +1,9 @@
 # After getting current vim source...
-# ./configure --with-features=huge --enable-pythoninterp --enable-rubyinterp --with-tlib=ncurses > ~/junk.txt
+./configure --with-features=huge --enable-pythoninterp --enable-rubyinterp --with-tlib=ncurses \
+            --enable-pythoninterp \
+            --enable-python3interp
+
+sudo apt-get install libncurses5-dev grc
 
 git submodule update --init --recursive
 cp -R .vim* ~/
