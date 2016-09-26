@@ -24,6 +24,11 @@ $INSTALL mercurial
 $INSTALL gnuplot gnuplot-x11
 $INSTALL vpnc
 $INSTALL openssh-server
+$INSTALL xclip
+
+# Chrome
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo gdebi google-chrome-stable_current_amd64.deb
 
 # Java 8 steps
 sudo add-apt-repository ppa:openjdk-r/ppa
