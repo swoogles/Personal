@@ -6,3 +6,6 @@ resolvers ++= Seq(
     )
 
 addSbtPlugin("net.ceedubs" %% "sbt-ctags" % "0.1.0")
+
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "1.2.0")
+
