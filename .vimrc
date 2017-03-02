@@ -13,22 +13,27 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
+Plugin 'airblade/vim-gitgutter'
+Plugin 'aklt/plantuml-syntax'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'dscleaver/sbt-quickfix'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/vim-slumlord'
+Plugin 'sjl/gundo.vim' " Visual undo tree
+" Plugin 'spiiph/vim-space' " This kills my colon for some weird reason
+Plugin 'tmhedberg/matchit' " Match HTML tags like braces/parens
 Plugin 'tpope/vim-abolish' " Coersion and other helpful text tricks
+Plugin 'tpope/vim-dispatch' " Async jobs
 Plugin 'tpope/vim-eunuch' " Various OS commands
 Plugin 'tpope/vim-fugitive' "Git Client
-Plugin 'tpope/vim-dispatch' " Async jobs
 Plugin 'tpope/vim-jdaddy' " Helpful JSON commands
-Plugin 'airblade/vim-gitgutter'
-Plugin 'dscleaver/sbt-quickfix'
-Plugin 'scrooloose/syntastic'
-Plugin 'scrooloose/nerdtree'
-Plugin 'wincent/command-t' " Fuzzy searching
-Plugin 'sjl/gundo.vim' " Visual undo tree
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags' "Generate tags for the file you're in
-Plugin 'tmhedberg/matchit' " Match HTML tags like braces/parens
-Plugin 'derekwyatt/vim-scala'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'wincent/command-t' " Fuzzy searching
+Plugin 'xolox/vim-easytags' "Generate tags for the file you're in
+Plugin 'xolox/vim-misc'
+
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
@@ -625,3 +630,5 @@ function! Smart_TabComplete()
 endfunction
 
 inoremap <tab> <c-r>=Smart_TabComplete()<CR>
+
+" :VundleUpdate
