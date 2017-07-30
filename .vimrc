@@ -33,6 +33,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'wincent/command-t' " Fuzzy searching
 Plugin 'xolox/vim-easytags' "Generate tags for the file you're in
 Plugin 'xolox/vim-misc'
+Plugin 'lervag/vimtex'
 
 
 " plugin from http://vim-scripts.org/vim/scripts.html
@@ -300,38 +301,40 @@ filetype plugin indent on    " required
 " }}}
 " vim-latex {{{
 
-  function! LatexSuite()
-    source ~/.vim/ftplugin/tex_latexSuite.vim
-  endfunction
-  " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
-  filetype plugin on
-
-  " IMPORTANT: grep will sometimes skip displaying the file name if you
-  " search in a singe file. This will confuse Latex-Suite. Set your grep
-  " program to always generate a file-name.
-  set grepprg=grep\ -nH\ $*
-
-  " OPTIONAL: This enables automatic indentation as you type.
-  filetype indent on
-
-  " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-  " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-  " The following changes the default filetype back to 'tex':
-  let g:tex_flavor='latex'
-
-" }}}
-" WindowsShit {{{
-  " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-  " let &guioptions = substitute(&guioptions, "t", "", "g")
-
-  " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
-  " can be called correctly.
-  set shellslash
+"   function! LatexSuite()
+"     source ~/.vim/ftplugin/tex_latexSuite.vim
+"   endfunction
+"   " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
+"   filetype plugin on
+" 
+"   " IMPORTANT: grep will sometimes skip displaying the file name if you
+"   " search in a singe file. This will confuse Latex-Suite. Set your grep
+"   " program to always generate a file-name.
+"   set grepprg=grep\ -nH\ $*
+" 
+"   " OPTIONAL: This enables automatic indentation as you type.
+"   filetype indent on
+" 
+"   " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+"   " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+"   " The following changes the default filetype back to 'tex':
+"   let g:tex_flavor='latex'
+" 
+" " }}}
+" " WindowsShit {{{
+"   " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
+"   " let &guioptions = substitute(&guioptions, "t", "", "g")
+" 
+"   " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+"   " can be called correctly.
+"   set shellslash
 "}}}
 " Key Mappings {{{
 
   " The door to level 3 vimming
   let mapleader = ","
+  let maplocalleader = "\\"
+
 
   :nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
 
@@ -630,5 +633,11 @@ function! Smart_TabComplete()
 endfunction
 
 inoremap <tab> <c-r>=Smart_TabComplete()<CR>
+
+let &rtp = '~/.vim/bundle/vimtex,' . &rtp
+let &rtp .= ',~/.vim/bundle/vimtex/after'
+" let g:vimtex_view_method = 'okular'
+
+
 
 " :VundleUpdate
