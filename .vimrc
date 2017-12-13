@@ -157,6 +157,7 @@ filetype plugin indent on    " required
 
   let g:CommandTAlwaysShowDotFiles = 1
   let g:CommandTScanDotDirectories = 1
+  let g:CommandTMaxFiles=200000
   let g:syntastic_mode_map = { 'mode': 'active' }
 
   " Switch syntax highlighting on, when the terminal has colors
@@ -641,3 +642,6 @@ let &rtp .= ',~/.vim/bundle/vimtex/after'
 
 
 " :VundleUpdate
+
+" TODO Shortcut/function for "Git checkout $someBranch; :CommandTFlush
+" So I'm not looking at the previous branch's file list
