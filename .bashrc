@@ -231,6 +231,8 @@ killjava() { kill -9 `pidof java`; }
 
 addpath /opt/srpostgres/srpostgres_8.3/bin
 addpath $HOME/scripts
+addpath $HOME/apache-maven-3.3.9
+addpath /home/bfrasure/.local/bin
 
 
 alias billding='ssh -p 7822 root@199.195.116.237'
@@ -318,3 +320,6 @@ export PATH="/usr/local/heroku/bin:$PATH"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/bfrasure/.sdkman"
 [[ -s "/home/bfrasure/.sdkman/bin/sdkman-init.sh" ]] && source "/home/bfrasure/.sdkman/bin/sdkman-init.sh"
+
+# added by Anaconda3 4.2.0 installer
+export PATH="/home/bfrasure/anaconda3/bin:$PATH"
