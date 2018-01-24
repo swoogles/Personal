@@ -27,8 +27,6 @@ HISTCONTROL=ignoredups:ignorespace
 export EDITOR=/usr/bin/vim
 #export EDITOR=/usr/bin/mcedit
 
-export PRINTER=Xerox-Phaser-8560DN
-
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=50000
 export HISTFILESIZE=50000
@@ -79,18 +77,6 @@ PROMPT_COMMAND="history -a; history -n;"
 # Show a timestamp with every history entry
 export HISTTIMEFORMAT="%d/%m/%y %T "
 
-# For some news readers it makes sense to specify the NEWSSERVER variable here
-#export NEWSSERVER=your.news.server
-
-# If you want to use a Palm device with Linux, uncomment the two lines below.
-# For some (older) Palm Pilots, you might need to set a lower baud rate
-# e.g. 57600 or 38400; lowest is 9600 (very slow!)
-#
-#export PILOTPORT=/dev/pilot
-#export PILOTRATE=115200
-
-#export CATALINA_BASE=~/.netbeans/7.0/apache-tomcat-7.0.14.0_base/
-
 test -s ~/.alias && . ~/.alias || true
 
 #Use VIM instead of VI
@@ -102,13 +88,6 @@ alias vi=vim
 #Safe Versions
 alias 'rmrf'='~/scripts/rmEnhanced.sh'
 
-#Tomcat commands
-# tomcatHome="/home/$USER/apache-tomcat-7.0.14/"
-tomcatHome="/home/$USER/.netbeans/7.1.2/apache-tomcat-7.0.22.0_base"
-tomcatCmd='/opt/apache-tomcat-7.0.14/bin/'
-alias tcStart="sudo ${tomcatCmd}catalina.sh run"
-alias tcStop="sudo ${tomcatCmd}catalina.sh stop"
-
 homeDir="/home/$USER/"
 alias Billd="${homeDir}scripts/Billd.sh"
 
@@ -117,8 +96,6 @@ alias Billd="${homeDir}scripts/Billd.sh"
 
 #Get on HPU
 alias linus="ssh $USER@linus-public.highpoint.edu"
-#Get on Zeus
-alias zeus="ssh $USER@zeus"
 
 #Git alias's
 alias gs='git status '
@@ -146,16 +123,9 @@ alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
 
 #Hop to key directories
-alias cdsr='cd ~/NetBeansProjects/smilereminder3/'
-alias cdsrx='cd ~/NetBeansProjects/smilereminder3/srxproj/srxSubscriber/'
-alias cdfw='cd ~/NetBeansProjects/smilereminder3/flyway'
-alias cdo='cd ~/OnlineScheduling'
-
-alias cdtom='cd '$tomcatHome
-alias cdlogs='cdtom; cd logs' 
+alias cdd="cd $REPO_DEV"
 
 alias cds='cd ~/Repositorie/Personal/scripts'
-#alias cdlogs='cd '${tomcatHome}/logs
 
 alias cdjunk='cd ~/junkDir'
 
@@ -195,7 +165,7 @@ cdu() { cd $( pwd | awk -v term="$1" ' BEGIN { FS="/"; found=0; } { for ( i = 1;
 
 # This isn't close to finished at the moment
 # Going to finish moving the previous function out on its own first
-cdd() { echo "You haven\'t figured this out yet." ; }
+# cdd() { echo "You haven\'t figured this out yet." ; }
 
 netinfo ()
 {
@@ -229,9 +199,7 @@ addpath ()
 killfox() { kill -9 `pidof firefox`; }
 killjava() { kill -9 `pidof java`; }
 
-addpath /opt/srpostgres/srpostgres_8.3/bin
 addpath $HOME/scripts
-addpath $HOME/apache-maven-3.3.9
 addpath /home/bfrasure/.local/bin
 
 
@@ -278,16 +246,6 @@ vimBranch() {
 
 alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 
-#CentOS aliases
-alias yi="sudo yum install"
-alias yu="sudo yum update"
-alias ycu="sudo yum check-update"
-alias yr="sudo yum remove"
-alias yl="sudo yum list"
-alias yrl="sudo yum repolist"
-alias yh="sudo yum history"
-alias yhi="sudo yum history info"
-
 declare -a aliases=(\
   'gs="git status "'\
   'ga="git add "')
@@ -307,19 +265,5 @@ xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-# added by Anaconda 2.0.0 installer
-export PATH="/home/bfrasure/anaconda/bin:$PATH"
-
-# For python virtual environments
-export WORKON_HOME=$HOME/Envs
-source /usr/local/bin/virtualenvwrapper_lazy.sh
-
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/bfrasure/.sdkman"
-[[ -s "/home/bfrasure/.sdkman/bin/sdkman-init.sh" ]] && source "/home/bfrasure/.sdkman/bin/sdkman-init.sh"
-
-# added by Anaconda3 4.2.0 installer
-export PATH="/home/bfrasure/anaconda3/bin:$PATH"
