@@ -1,11 +1,11 @@
 ! Swap caps lock and escape
-remove lock =  Caps_Lock
-keycode 0x42 = Caps_Lock
-keycode 0x9 = Escape
-add Lock = Caps_Lock
+! remove lock =  Caps_Lock
+! keycode 0x42 = Caps_Lock
+! keycode 0x9 = Escape
+! add Lock = Caps_Lock
 
 ! This is the old swap method, in case I encounter a machine that doesn't match the keycodes defined above
-! remove Lock = Caps_Lock
-! keysym Escape = Caps_Lock
-! keysym Caps_Lock = Escape
-! add Lock = Caps_Lock
+remove Lock = Caps_Lock
+keysym Escape = Caps_Lock
+keysym Caps_Lock = Escape
+add Lock = Caps_Lock
