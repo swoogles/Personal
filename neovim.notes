@@ -1,0 +1,14 @@
+Installation Instructions:
+  https://github.com/neovim/neovim/wiki/Installing-Neovim
+
+Neovim Python:
+  https://github.com/zchee/deoplete-jedi/wiki/Setting-up-Python-for-Neovim
+
+Neovim Ruby:
+  https://github.com/alexgenco/neovim-ruby
+
+Needed to add
+  /home/bill.frasure/.gem/ruby/2.3.0/bin
+to my user's PATH
+
+https://launchpad.net/%7Eneovim-ppa/+archive/ubuntu/stable
