@@ -14,3 +14,4 @@ rm -f ~/.psqlrc; ln .psqlrc ~/.psqlrc
 rm -f ~/.tmux.conf; ln .tmux.conf ~/.tmux.conf
 rm -Rf ~/scripts; mkdir ~/scripts; cp -R scripts ~/
 rm -Rf ~/.vim; mkdir ~/.vim; cp -R .vim ~/
+rm -Rf ~/.ammonite; mkdir ~/.ammonite; cp -R .ammonite ~/
