@@ -8,6 +8,15 @@ object TextManipulation {
   def underscoreToCamel(name: String) = "_([a-z\\d])".r.replaceAllIn(name, {m =>
     m.group(1).toUpperCase()
   })
+
+	val whiteSpace =
+		"\\s+"
+
+	def stdSpacing(line: String): String =
+		line
+			.trim
+			.replaceAll(whiteSpace, " ")
+
 }
 
 case class NumberedLine(number: Int, line: String) {

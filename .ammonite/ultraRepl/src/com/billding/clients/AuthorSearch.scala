@@ -1,7 +1,5 @@
 package ultraRepl.com.billding
 
-import ultraRepl.libraries.Text
-
 import ammonite.ops.{Path, home, ls, read}
 import sys.process._
 
@@ -107,7 +105,7 @@ object AuthorSearch {
 
   def unassociatedContent(nfcs: Seq[NumberedFileContent]): Seq[String] = 
     nfcs
-      .flatMap(_.content.map{ x=>Text.stdSpacing(x.line)})
+      .flatMap(_.content.map{ x=>TextManipulation.stdSpacing(x.line)})
       .filter(!_.isEmpty)
     
   def countedResults(lines: Seq[String]): Map[String, Int] = 

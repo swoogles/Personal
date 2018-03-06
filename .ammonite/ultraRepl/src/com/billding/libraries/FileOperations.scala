@@ -1,8 +1,8 @@
 package ultraRepl.com.billding
+
 import ammonite.ops.{Path, home, ls, read}
 
 import ultraRepl.com.billding.{NumberedLine, NumberedFileContent}
-import ultraRepl.libraries.Text.stdSpacing
 import scala.util.Success
 import scala.util.Try
 
@@ -43,7 +43,7 @@ class FileOperations(dir: Path, pathFilters: List[Path=>Boolean]) {
 
   def contentUniqueLineMap()(implicit wd: Path) = 
     fullContent("blahdeblah")
-      .map { x => (x.file, x.content.groupBy { y => stdSpacing(y.line) }
+      .map { x => (x.file, x.content.groupBy { y => TextManipulation.stdSpacing(y.line) }
                              .map { case (key, value) => (key, value.length ) } ) // TODO There's got to be a simpler way.
       }
 

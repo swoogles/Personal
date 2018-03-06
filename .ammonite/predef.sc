@@ -14,7 +14,8 @@ ammonite.shell.Configure(interp, repl, wd)
 // This requires ultraRepl to be "mill assembly"'ed
 import $cp.out.ultraRepl.assembly.dest.out
 
-import $file.scripts.cmtCommandCenter, cmtCommandCenter.Cmt
+// Reenable once I figure out how to make this co-exist with new amm project
+// import $file.scripts.cmtCommandCenter, cmtCommandCenter.Cmt
 
 import ultraRepl.com.billding.git
 import ultraRepl.com.billding.Gradle
