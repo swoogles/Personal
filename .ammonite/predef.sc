@@ -20,9 +20,7 @@ import $cp.out.ultraRepl.assembly.dest.out
 import ultraRepl.com.billding.git
 import ultraRepl.com.billding.Gradle
 import ultraRepl.com.billding.Docker
-
-// import $file.scripts.findTopicExampleByAuthor, findTopicExampleByAuthor._
-import $file.scripts.Setup, Setup.main
+import ultraRepl.com.billding.Setup
 
 def ll = %ls("-l")
 
