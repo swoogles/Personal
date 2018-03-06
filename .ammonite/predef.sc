@@ -11,20 +11,21 @@ import ammonite.ops._
 import ammonite.shell._
 ammonite.shell.Configure(interp, repl, wd)
 
+// Maybe this can work if it happens in a separate module that's pre-loaded?
+//%mill("ultraRepl.assembly")
 // This requires ultraRepl to be "mill assembly"'ed
 import $cp.out.ultraRepl.assembly.dest.out
 
 // Reenable once I figure out how to make this co-exist with new amm project
 // import $file.scripts.cmtCommandCenter, cmtCommandCenter.Cmt
 
-import ultraRepl.com.billding.git
-import ultraRepl.com.billding.Gradle
-import ultraRepl.com.billding.Docker
-import ultraRepl.com.billding.Setup
-
+import com.billding.clients.Git
+import com.billding.clients.Gradle
+import com.billding.clients.Docker
 // TODO Cmt-specific. Figure out how to completely separate.
 // I think it can just be a second project akin to the primary ultraRepl one
-import ultraRepl.com.billding.Setup
+import com.billding.clients.Setup
+
 
 def ll = %ls("-l")
 

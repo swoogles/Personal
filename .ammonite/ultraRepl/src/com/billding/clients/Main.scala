@@ -1,10 +1,7 @@
-package ultraRepl
-
-import ultraRepl.com.billding.TextManipulation
-import ultraRepl.com.billding.FileOperations
-import ultraRepl.com.billding.git
+package com.billding.clients
 
 import ammonite.ops._
+import com.billding.libraries.{FileOperations, TextManipulation}
 
 object UltraRepl{
   def main(args: Array[String]): Unit = {

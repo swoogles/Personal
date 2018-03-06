@@ -1,11 +1,7 @@
-package ultraRepl.com.billding
+package com.billding.libraries
 
-import ammonite.ops.{Path, home, ls, read}
-import sys.process._
-
-import scala.util.Failure
-import scala.util.Success
-import scala.util.Try
+import ammonite.ops.{Path, home}
+import com.billding.clients.{BlameFields, Git}
 
 /*
  * Overal goal:
@@ -85,13 +81,13 @@ object AuthorSearch {
 
   def fullBlameContent(implicit wd: Path): (String) => Stream[Stream[BlameFields]] = 
     (fileOperations.fullContent _)
-      .andThen(git.attachBlameToMultipleFiles)
+      .andThen(Git.attachBlameToMultipleFiles)
 
-  def fullSearch: String => Stream[Stream[BlameFields]] = 
+  def fullSearch(implicit wd: Path): String => Stream[Stream[BlameFields]] =
     fileOperations.searchForTerm
-      .andThen(git.attachBlameToMultipleFiles)
+      .andThen(Git.attachBlameToMultipleFiles)
 
-  val authorRanking: String => Seq[(String, Int)] = 
+  def authorRanking(implicit wd: Path): String => Seq[(String, Int)] =
     fullSearch
       .andThen(calculateMostProlificAuthor)
 

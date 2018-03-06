@@ -1,4 +1,4 @@
-package ultraRepl.com.billding
+package com.billding.clients
 
 import ammonite.ops._
 import ammonite.ops.ImplicitWd._

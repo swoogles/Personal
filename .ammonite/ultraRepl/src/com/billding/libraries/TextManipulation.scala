@@ -1,4 +1,5 @@
-package ultraRepl.com.billding
+package com.billding.libraries
+
 import ammonite.ops.Path
 
 object TextManipulation {

@@ -1,8 +1,7 @@
-package ultraRepl.com.billding
+package com.billding.libraries
 
 import ammonite.ops.{Path, home, ls, read}
 
-import ultraRepl.com.billding.{NumberedLine, NumberedFileContent}
 import scala.util.Success
 import scala.util.Try
 

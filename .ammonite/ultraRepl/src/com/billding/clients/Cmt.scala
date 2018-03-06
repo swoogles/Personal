@@ -1,4 +1,4 @@
-package ultraRepl.com.billding
+package com.billding.clients
 
 import Bash.{backgroundCommand, backgroundSudoCommand}
 

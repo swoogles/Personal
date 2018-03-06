@@ -1,37 +1,37 @@
-package ultraRepl.com.billding
+package com.billding.clients
 
 import ammonite.ops._
-// import ammonite.repl.Repl._
-import ammonite.ops.ImplicitWd._
+import com.billding.libraries.{NumberedFileContent, NumberedLine}
 import java.time.LocalDate
 
-object git extends Client {
+object Git extends Client {
   implicit class SuperString(s: String) {
-    def containsAny(other: Seq[String]) = 
+    def containsAny(other: Seq[String]): Boolean =
       other.exists(s.contains)
   }
 
 // This is so that emails aren't added to the public repo.
-  val desiredAuthors =
-    read.lines! home / "gitCoworkers.txt"
+  def desiredAuthors() =
+    read.lines! (home / "gitCoworkers.txt")
+
 
   val client = new ClientBuilder("git")
   def execute(args: String*): Unit = client.execute(args: _*)
 
-  def log =
+  def log: Unit =
     c("log")
 
-  def status =
+  def status: Unit =
     c("status")
 
   object checkout extends Client {
     val cmd = client.subclient("checkout")
     def execute(args: String*): Unit = cmd.execute(args: _*)
-    def existingBranch(branch: String) = cmd(branch)
+    def existingBranch(branch: String): Unit = cmd(branch)
     def newBranch(branch: String) = cmd("-b", branch)
   }
 
-  def checkoutBase(args: String*) =
+  def checkoutBase(args: String*)(implicit wd: Path) =
     %git("checkout" +: args)
 
   object branch extends Client {
@@ -41,10 +41,10 @@ object git extends Client {
       cmd("-D", branch)
   }
 
-  def blameInteractive(file: Path) =
+  def blameInteractive(file: Path)(implicit wd: Path) =
     %git('blame, file.toString)
 
-  def blame(file: Path): Stream[BlameFields] = {
+  def blame(file: Path)(implicit wd: Path): Stream[BlameFields] = {
     // Need the -e option to show emails, so that author doesn't contain whitespace
     val commandResult = %%git ('blame, "--date", "short", "-e", file)
     commandResult
@@ -54,13 +54,13 @@ object git extends Client {
       .toStream
   }
 
-  def attachBlameInformation(matchingFiles: NumberedFileContent): Option[Stream[BlameFields]] = {
+  def attachBlameInformation(matchingFiles: NumberedFileContent)(implicit wd: Path): Option[Stream[BlameFields]] = {
     val NumberedFileContent(file, content) = matchingFiles
-      val blameResults: Stream[BlameFields] = git.blame(file) // This fails if a noncommitted file is searched
+      val blameResults: Stream[BlameFields] = Git.blame(file) // This fails if a noncommitted file is searched
       // TODO Ensure directory is clean before starting any specific operations.
       val authoredResults = 
         content.filter{ case NumberedLine(number,_) => 
-          blameResults(number).author.containsAny(desiredAuthors) 
+          blameResults(number).author.containsAny(desiredAuthors())
         }.map{case NumberedLine(number, _) => blameResults(number)}
       if (authoredResults.isEmpty)
         None
@@ -68,7 +68,7 @@ object git extends Client {
         Some(authoredResults)
   }
 
-  def attachBlameToMultipleFiles = 
+  def attachBlameToMultipleFiles(implicit wd: Path) =
     (streamOfFileContents: Stream[NumberedFileContent]) => 
       streamOfFileContents
         .map(attachBlameInformation)
