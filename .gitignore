@@ -44,3 +44,8 @@ Thumbs.db
 
 # Vim
 cscope.files
+
+.ammonite/cache
+.ammonite/history
+.ammonite/out
+.ammonite/session
