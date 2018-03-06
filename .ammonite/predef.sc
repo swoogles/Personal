@@ -11,15 +11,14 @@ import ammonite.ops._
 import ammonite.shell._
 ammonite.shell.Configure(interp, repl, wd)
 
-// Verify this shiz.
-// Verified! Woohoo!
+// This requires ultraRepl to be "mill assembly"'ed
 import $cp.out.ultraRepl.assembly.dest.out
 
-import $file.scripts.Docker, Docker.docker
-import $file.scripts.Gradle, Gradle.gradle
 import $file.scripts.cmtCommandCenter, cmtCommandCenter.Cmt
 
 import ultraRepl.com.billding.git
+import ultraRepl.com.billding.Gradle
+import ultraRepl.com.billding.Docker
 
 // import $file.scripts.findTopicExampleByAuthor, findTopicExampleByAuthor._
 import $file.scripts.Setup, Setup.main
