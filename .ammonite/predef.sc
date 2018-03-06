@@ -22,6 +22,10 @@ import ultraRepl.com.billding.Gradle
 import ultraRepl.com.billding.Docker
 import ultraRepl.com.billding.Setup
 
+// TODO Cmt-specific. Figure out how to completely separate.
+// I think it can just be a second project akin to the primary ultraRepl one
+import ultraRepl.com.billding.Setup
+
 def ll = %ls("-l")
 
 def searchInFileTypes(term: String, extensions: String*) =  {
