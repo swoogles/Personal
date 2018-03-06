@@ -1,5 +1,6 @@
-import $file.bash, bash.{backgroundCommand, backgroundSudoCommand}
-import $file.Client, Client.{Client, ClientBuilder}
+package ultraRepl.com.billding
+
+import Bash.{backgroundCommand, backgroundSudoCommand}
 
 import ammonite.ops.{%, %%, home, Path, RelPath}
 
@@ -51,3 +52,4 @@ object Cmt {
     def repos() = browser("https://bitbucket.collectivemedicaltech.com/projects")
   }
 }
+
