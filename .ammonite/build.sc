@@ -16,8 +16,7 @@ object ultraRepl extends PublishModule {
     url = "https://github.com/swoogles/ammLibs",
     // licenses = Seq(License.MIT),
     licenses = Seq(),
-    // TODO submit PR to correct "VersionControl" references, when it should be "SCM"
-    scm = SCM("swoogles", "ammLibs"),
+    versionControl = VersionControl.github("swoogles", "ammLibs"),
     developers = Seq(
       Developer("swoogles", "Bill Frasure","https://github.com/swoogles")
         )
