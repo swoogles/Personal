@@ -74,15 +74,12 @@ object Git extends Client {
         .map(attachBlameInformation)
         .flatten
 
-
 }
 
 case class BlameFields(hash: String, author: String, commitDate: LocalDate, lineNumber: String, lineContent: String) 
 object BlameFields {
   def parse(rawLine: String): BlameFields = {
-    println("fullLine: " + rawLine)
     val pieces = rawLine.split("\\s+")
-    println("numPieces: " + pieces.length)
     pieces.toList match {
       case hash :: author :: lineNumber :: commitDateString :: remainingContentWords =>
         val commitDate = java.time.LocalDate.parse(commitDateString)

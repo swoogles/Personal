@@ -29,32 +29,32 @@ object Gradle extends Client {
     c("ear")
 
   object Projects {
-    val EDIECOMMONS = GradleProject("EDIECOMMONS")
-    val EDIEEAR = GradleProject("EDIEEAR")
-    val EDIEEJB = GradleProject("EDIEEJB")
-    val EDIEHAR = GradleProject("EDIEHAR")
-    val EDIEREST = GradleProject("EDIEREST")
-    val EDIEWEB = GradleProject("EDIEWEB")
-    val HL7 = GradleProject("HL7")
-    val Mappers = GradleProject("Mappers")
-    val MLLPEJB = GradleProject("MLLPEJB")
-    val Records = GradleProject("Records")
+    val EDIECOMMONS = Project("EDIECOMMONS")
+    val EDIEEAR = Project("EDIEEAR")
+    val EDIEEJB = Project("EDIEEJB")
+    val EDIEHAR = Project("EDIEHAR")
+    val EDIEREST = Project("EDIEREST")
+    val EDIEWEB = Project("EDIEWEB")
+    val HL7 = Project("HL7")
+    val Mappers = Project("Mappers")
+    val MLLPEJB = Project("MLLPEJB")
+    val Records = Project("Records")
+  }
+  sealed case class Project(name: String) {
+    def test()(implicit wd: Path) =
+      Gradle.c(s":$name:test")
+
+    def integrationTest()(implicit wd: Path) =
+      Gradle.c(s":$name:integrationTest")
+
+    def complexTask(stages: List[String]) =
+      Gradle.c(
+        stages.map(stage => s":$name:$stage")
+      )
+
+    def findbugs()(implicit wd: Path) =
+      complexTask(Gradle.findBugsStages)
+
   }
 }
 
-case class GradleProject(name: String) {
-  def test()(implicit wd: Path) =
-    Gradle.c(s":$name:test")
-
-  def integrationTest()(implicit wd: Path) =
-    Gradle.c(s":$name:integrationTest")
-
-  def complexTask(stages: List[String]) =
-    Gradle.c(
-      stages.map(stage => s":$name:$stage")
-    )
-
-  def findbugs()(implicit wd: Path) =
-    complexTask(Gradle.findBugsStages)
-
-}
