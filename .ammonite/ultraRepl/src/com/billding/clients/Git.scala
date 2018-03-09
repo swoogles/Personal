@@ -5,17 +5,8 @@ import com.billding.libraries.{NumberedFileContent, NumberedLine}
 import java.time.LocalDate
 
 object Git extends Client {
-  implicit class SuperString(s: String) {
-    def containsAny(other: Seq[String]): Boolean =
-      other.exists(s.contains)
-  }
 
-// This is so that emails aren't added to the public repo.
-  def desiredAuthors() =
-    read.lines! (home / "gitCoworkers.txt")
-
-
-  val client = new ClientBuilder("git")
+  private val client = new ClientBuilder("git")
   def execute(args: String*): Unit = client.execute(args: _*)
 
   def log: Unit =
@@ -24,18 +15,19 @@ object Git extends Client {
   def status: Unit =
     c("status")
 
-  object checkout extends Client {
-    val cmd = client.subclient("checkout")
-    def execute(args: String*): Unit = cmd.execute(args: _*)
-    def existingBranch(branch: String): Unit = cmd(branch)
-    def newBranch(branch: String) = cmd("-b", branch)
+  object checkout {
+    private val subClient = client.subclient("checkout")
+    def existingBranch(branch: String): Unit = subClient.execute(branch)
+    def newBranch(branch: String) = subClient("-b", branch)
   }
 
-  def checkoutBase(args: String*)(implicit wd: Path) =
-    %git("checkout" +: args)
+  object rebase {
+    private val cmd = client.subclient("rebase")
+    def apply(branch: String): Unit = cmd.execute(branch)
+  }
 
-  object branch extends Client {
-    val cmd = client.subclient("branch")
+  object branch {
+    private val cmd: Client = client.subclient("branch")
     def execute(args: String*): Unit = cmd.execute(args: _*)
     def delete(branch: String) =
       cmd("-D", branch)
@@ -54,26 +46,37 @@ object Git extends Client {
       .toStream
   }
 
+}
+
+object AdvancedGit {
+  // This is so that emails aren't added to the public repo.
+  def desiredAuthors() =
+    read.lines! (home / "gitCoworkers.txt")
+
+  implicit class SuperString(s: String) {
+    def containsAny(other: Seq[String]): Boolean =
+      other.exists(s.contains)
+  }
+
   def attachBlameInformation(matchingFiles: NumberedFileContent)(implicit wd: Path): Option[Stream[BlameFields]] = {
     val NumberedFileContent(file, content) = matchingFiles
-      val blameResults: Stream[BlameFields] = Git.blame(file) // This fails if a noncommitted file is searched
-      // TODO Ensure directory is clean before starting any specific operations.
-      val authoredResults = 
-        content.filter{ case NumberedLine(number,_) => 
-          blameResults(number).author.containsAny(desiredAuthors())
-        }.map{case NumberedLine(number, _) => blameResults(number)}
-      if (authoredResults.isEmpty)
-        None
-      else
-        Some(authoredResults)
+    val blameResults: Stream[BlameFields] = Git.blame(file) // This fails if a noncommitted file is searched
+    // TODO Ensure directory is clean before starting any specific operations.
+    val authoredResults =
+    content.filter{ case NumberedLine(number,_) =>
+      blameResults(number).author.containsAny(desiredAuthors())
+    }.map{case NumberedLine(number, _) => blameResults(number)}
+    if (authoredResults.isEmpty)
+      None
+    else
+      Some(authoredResults)
   }
 
   def attachBlameToMultipleFiles(implicit wd: Path) =
-    (streamOfFileContents: Stream[NumberedFileContent]) => 
+    (streamOfFileContents: Stream[NumberedFileContent]) =>
       streamOfFileContents
         .map(attachBlameInformation)
         .flatten
-
 }
 
 case class BlameFields(hash: String, author: String, commitDate: LocalDate, lineNumber: String, lineContent: String) 

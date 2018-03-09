@@ -2,30 +2,38 @@ package com.billding.clients
 
 import ammonite.ops.Path
 
-object Gradle extends Client {
-  val client = new ClientBuilder("./gradlew")
+trait GradleOps {
+  def build()(implicit wd: Path): Unit
+  def cleanBuild()(implicit wd: Path): Unit
+  def findbugs()(implicit wd: Path): Unit
+  def test()(implicit wd: Path): Unit
+  def fullPrProcess()(implicit wd: Path): Unit
+}
+
+object Gradle extends Client with GradleOps {
+  private val client = new ClientBuilder("./gradlew")
   def execute(args: String*): Unit = client.execute(args: _*)
 
-  def findBugsStages = List("findbugsMain", "findbugsTest")
-  def testStages = List("integrationTest", "test")
+  private def findBugsStages = List("findbugsMain", "findbugsTest")
+  private def testStages = List("integrationTest", "test")
 
   // Can we get rid of implicit wd: Path on each of these? Should we?
-  def build()(implicit wd: Path) =
+  def build()(implicit wd: Path): Unit =
     c("build")
 
-  def cleanBuild()(implicit wd: Path) =
+  def cleanBuild()(implicit wd: Path): Unit =
     c("clean", "build")
 
-  def findbugs()(implicit wd: Path) =
+  def findbugs()(implicit wd: Path): Unit =
     c(findBugsStages)
 
-  def test()(implicit wd: Path) =
+  def test()(implicit wd: Path): Unit =
     c(testStages)
 
-  def fullPrProcess()(implicit wd: Path) =
+  def fullPrProcess()(implicit wd: Path): Unit =
     c(findBugsStages ++: testStages)
 
-  def monolith()(implicit wd: Path) =
+  def monolith()(implicit wd: Path): Unit =
     c("ear")
 
   object Projects {
@@ -40,7 +48,16 @@ object Gradle extends Client {
     val MLLPEJB = Project("MLLPEJB")
     val Records = Project("Records")
   }
-  sealed case class Project(name: String) {
+
+  sealed case class Project(name: String) extends GradleOps {
+    private def findBugsStages = List("findbugsMain", "findbugsTest")
+    private def testStages = List("integrationTest", "test")
+    def build()(implicit wd: Path) =
+      c("build")
+
+    def cleanBuild()(implicit wd: Path) =
+      complexTask(List("clean", "build"))
+
     def test()(implicit wd: Path) =
       Gradle.c(s":$name:test")
 
@@ -54,6 +71,9 @@ object Gradle extends Client {
 
     def findbugs()(implicit wd: Path) =
       complexTask(Gradle.findBugsStages)
+
+    def fullPrProcess()(implicit wd: Path) =
+      complexTask(findBugsStages ++: testStages)
 
   }
 }

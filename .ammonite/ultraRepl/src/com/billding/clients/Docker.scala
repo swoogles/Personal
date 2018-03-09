@@ -32,10 +32,10 @@ object Docker {
     def refreshImages()(implicit wd: Path) =
       this("build", "--pull")
 
-    def up(containers: String*)(implicit wd: Path) =
+    private def up(containers: String*)(implicit wd: Path) =
       action(List("up", "--no-color") ++: containers)
 
-    def upD(containers: String*)(implicit wd: Path) =
+    private def upD(containers: String*)(implicit wd: Path) =
       action(List("up", "--no-color", "-d") ++: containers)
 
     def monolith()(implicit wd: Path) = {
@@ -48,7 +48,7 @@ object Docker {
       permitFilesForDocker()
       up("edie-ear")
     }
-    
+
     def nonCore()(implicit wd: Path) = {
       permitFilesForDocker()
       upD("edie-flyway", "edie-rabbitmq", "edie-auth", "edie-httpd", "onboarding-services", "edie-mysql" )

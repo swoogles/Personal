@@ -11,9 +11,15 @@ trait Client {
     execute(args:_*)
 }
 
+class SubClient(parent: ClientBuilder) extends ClientBuilder {
+
+}
+
 class ClientBuilder(executables: String*) extends Client {
-  def execute(args: String*): Unit =
+  def execute(args: String*): Unit = {
+    println(executables.mkString("") + ":" + args.mkString(""))
     %(executables ++: args)
+  }
     
   def subclient(subCommand: String): ClientBuilder =
     new ClientBuilder((executables :+ subCommand):_*)

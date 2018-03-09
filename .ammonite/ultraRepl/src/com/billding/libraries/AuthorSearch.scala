@@ -1,7 +1,7 @@
 package com.billding.libraries
 
 import ammonite.ops.{Path, home}
-import com.billding.clients.{BlameFields, Git}
+import com.billding.clients.{AdvancedGit, BlameFields, Git}
 
 /*
  * Overal goal:
@@ -81,11 +81,11 @@ object AuthorSearch {
 
   def fullBlameContent(implicit wd: Path): (String) => Stream[Stream[BlameFields]] = 
     (fileOperations.fullContent _)
-      .andThen(Git.attachBlameToMultipleFiles)
+      .andThen(AdvancedGit.attachBlameToMultipleFiles)
 
   def fullSearch(implicit wd: Path): String => Stream[Stream[BlameFields]] =
     fileOperations.searchForTerm
-      .andThen(Git.attachBlameToMultipleFiles)
+      .andThen(AdvancedGit.attachBlameToMultipleFiles)
 
   def authorRanking(implicit wd: Path): String => Seq[(String, Int)] =
     fullSearch
