@@ -18,7 +18,8 @@ import com.billding.clients.{AdvancedGit, BlameFields, Git}
 // from the disk to make an NFC instance.
 
 object AuthorSearch {
-  val targetDir = home/'CmtRepositories/'dev
+  // TODO Should probably changed this to either a normal or implicit param
+  private val targetDir = home/'CmtRepositories/'dev
 
   val extensionsOfInterest = List("jsp", "java", "js")
   val badExtensions = List(".swp", ".jar", ".json", ".min.js")
@@ -50,28 +51,26 @@ object AuthorSearch {
   def sortMapByNumberOfValueElements[A](map: Map[String, Int]): Stream[(String, Int)] =
    map.toStream.sortBy{-_._2}
 
-  def isLineSignificant(lineOfCode: String) =
+  def isLineSignificant(lineOfCode: String): Boolean =
     lineOfCode.count{ Character.isLetter(_) } > 5
 
   def hasSignificantDuplicates( tup: (Path, Stream[(String, Int)])): Boolean =
-    (!tup._2.isEmpty)
+    tup._2.nonEmpty
 
-  def fileContentRankedByMostDuplicatedLine(implicit wd: Path) = 
+  def fileContentRankedByMostDuplicatedLine(implicit wd: Path): Stream[(Path, Stream[(String, Int)])] =
     // Must be duplicated at least three times to show up in results
     fileOperations.contentUniqueLineMap
       .map{x => (x._1, sortMapByNumberOfValueElements(x._2)
                          .filter{x=>isLineSignificant(x._1) && x._2 > 2}) 
       }.filter(hasSignificantDuplicates)
 
-  def numberOfMostDuplicatedLineOccurances(implicit wd: Path) = 
+  def numberOfMostDuplicatedLineOccurances(implicit wd: Path): Stream[(Path, Int)] =
     fileContentRankedByMostDuplicatedLine
       .map{ x => (x._1, x._2.take(1).map {_._2 }.head )}
 
   def calculateMostProlificAuthor(blameFields: Stream[Stream[BlameFields]] ): Seq[(String, Int)] = {
     val results: Map[String, Stream[BlameFields]] = 
-    blameFields.flatten groupBy { case line =>
-      line.author // returns  Map[String, Stream[BlameFields]]
-    }
+    blameFields.flatten groupBy (line => line.author)
     results
       .map { mapByAuthor => (mapByAuthor._1, mapByAuthor._2.length)}
       .toSeq
