@@ -10,10 +10,10 @@ object Git extends Client {
   def execute(args: String*): Unit = client.execute(args: _*)
 
   def log: Unit =
-    c("log")
+    execute("log")
 
   def status: Unit =
-    c("status")
+    execute("status")
 
   object checkout {
     private val subClient = client.subclient("checkout")
