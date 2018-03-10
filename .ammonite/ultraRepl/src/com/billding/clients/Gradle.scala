@@ -61,6 +61,9 @@ object Gradle extends Client with GradleOps {
     def test()(implicit wd: Path) =
       Gradle.c(s":$name:test")
 
+    def testIndividual(testClass: String)(implicit wd: Path) =
+      Gradle.c(s":$name:test --tests *$testClass*")
+
     def integrationTest()(implicit wd: Path) =
       Gradle.c(s":$name:integrationTest")
 
@@ -74,6 +77,9 @@ object Gradle extends Client with GradleOps {
 
     def fullPrProcess()(implicit wd: Path) =
       complexTask(findBugsStages ++: testStages)
+
+    // Implement this
+    // ./gradlew --info :EDIEEJB:test --tests *CarePlanContentTest*
 
   }
 }
