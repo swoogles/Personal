@@ -10,12 +10,14 @@ trait GradleOps {
   def fullPrProcess()(implicit wd: Path): Unit
 }
 
+object GradleStages {
+  val findBugsStages = List("findbugsMain", "findbugsTest")
+  val testStages = List("integrationTest", "test")
+}
+
 object Gradle extends Client with GradleOps {
   private val client = new ClientBuilder("./gradlew")
   def execute(args: String*): Unit = client.execute(args: _*)
-
-  private def findBugsStages = List("findbugsMain", "findbugsTest")
-  private def testStages = List("integrationTest", "test")
 
   // Can we get rid of implicit wd: Path on each of these? Should we?
   def build()(implicit wd: Path): Unit =
@@ -25,13 +27,13 @@ object Gradle extends Client with GradleOps {
     c("clean", "build")
 
   def findbugs()(implicit wd: Path): Unit =
-    c(findBugsStages)
+    c(GradleStages.findBugsStages)
 
   def test()(implicit wd: Path): Unit =
-    c(testStages)
+    c(GradleStages.testStages)
 
   def fullPrProcess()(implicit wd: Path): Unit =
-    c(findBugsStages ++: testStages)
+    c(GradleStages.findBugsStages ++: GradleStages.testStages)
 
   def monolith()(implicit wd: Path): Unit =
     c("ear")
@@ -50,8 +52,6 @@ object Gradle extends Client with GradleOps {
   }
 
   sealed case class Project(name: String) extends GradleOps {
-    private def findBugsStages = List("findbugsMain", "findbugsTest")
-    private def testStages = List("integrationTest", "test")
     def build()(implicit wd: Path) =
       c("build")
 
@@ -73,10 +73,10 @@ object Gradle extends Client with GradleOps {
       )
 
     def findbugs()(implicit wd: Path) =
-      complexTask(Gradle.findBugsStages)
+      complexTask(GradleStages.findBugsStages)
 
     def fullPrProcess()(implicit wd: Path) =
-      complexTask(findBugsStages ++: testStages)
+      complexTask(GradleStages.findBugsStages ++: GradleStages .testStages)
 
     // Implement this
     // ./gradlew --info :EDIEEJB:test --tests *CarePlanContentTest*
