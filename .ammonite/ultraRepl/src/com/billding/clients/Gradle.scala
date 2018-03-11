@@ -5,7 +5,6 @@ import ammonite.ops.Path
 trait GradleOps {
   def build()(implicit wd: Path): Unit
   def cleanBuild()(implicit wd: Path): Unit
-  def findbugs()(implicit wd: Path): Unit
   def test()(implicit wd: Path): Unit
   def fullPrProcess()(implicit wd: Path): Unit
 }
@@ -13,16 +12,19 @@ trait GradleOps {
 object GradleStages {
   object findbugs {
     private val base = "findbugs"
-    val main = base + "Main"
-    val test = base + "Test"
-    val stages = List(main, test)
+    private val main = base + "Main"
+    private val test = base + "Test"
+    val stages: List[String] = List(main, test)
   }
   val testStages = List("integrationTest", "test")
 }
 
+// This should just be another project...
 object Gradle extends Client with GradleOps {
   private val client = new ClientBuilder("./gradlew")
   def execute(args: String*): Unit = client.execute(args: _*)
+
+  private val findbugs = GradleStages.findbugs
 
   // Can we get rid of implicit wd: Path on each of these? Should we?
   def build()(implicit wd: Path): Unit =
@@ -32,13 +34,13 @@ object Gradle extends Client with GradleOps {
     c("clean", "build")
 
   def findbugs()(implicit wd: Path): Unit =
-    c(GradleStages.findbugs.stages)
+    c(findbugs.stages)
 
   def test()(implicit wd: Path): Unit =
     c(GradleStages.testStages)
 
   def fullPrProcess()(implicit wd: Path): Unit =
-    c(GradleStages.findbugs.stages ++: GradleStages.testStages)
+    c(findbugs.stages ++: GradleStages.testStages)
 
   def monolith()(implicit wd: Path): Unit =
     c("ear")
@@ -57,6 +59,8 @@ object Gradle extends Client with GradleOps {
   }
 
   sealed case class Project(name: String) extends GradleOps {
+    private val findbugs = GradleStages.findbugs
+
     def build()(implicit wd: Path) =
       c("build")
 
@@ -78,10 +82,10 @@ object Gradle extends Client with GradleOps {
       )
 
     def findbugs()(implicit wd: Path) =
-      complexTask(GradleStages.findbugs.stages)
+      complexTask(findbugs.stages)
 
     def fullPrProcess()(implicit wd: Path) =
-      complexTask(GradleStages.findbugs.stages ++: GradleStages.testStages)
+      complexTask(findbugs.stages ++: GradleStages.testStages)
 
     // Implement this
     // ./gradlew --info :EDIEEJB:test --tests *CarePlanContentTest*
