@@ -11,7 +11,12 @@ trait GradleOps {
 }
 
 object GradleStages {
-  val findBugsStages = List("findbugsMain", "findbugsTest")
+  object findbugs {
+    private val base = "findbugs"
+    val main = base + "Main"
+    val test = base + "Test"
+    val stages = List(main, test)
+  }
   val testStages = List("integrationTest", "test")
 }
 
@@ -27,13 +32,13 @@ object Gradle extends Client with GradleOps {
     c("clean", "build")
 
   def findbugs()(implicit wd: Path): Unit =
-    c(GradleStages.findBugsStages)
+    c(GradleStages.findbugs.stages)
 
   def test()(implicit wd: Path): Unit =
     c(GradleStages.testStages)
 
   def fullPrProcess()(implicit wd: Path): Unit =
-    c(GradleStages.findBugsStages ++: GradleStages.testStages)
+    c(GradleStages.findbugs.stages ++: GradleStages.testStages)
 
   def monolith()(implicit wd: Path): Unit =
     c("ear")
@@ -73,10 +78,10 @@ object Gradle extends Client with GradleOps {
       )
 
     def findbugs()(implicit wd: Path) =
-      complexTask(GradleStages.findBugsStages)
+      complexTask(GradleStages.findbugs.stages)
 
     def fullPrProcess()(implicit wd: Path) =
-      complexTask(GradleStages.findBugsStages ++: GradleStages .testStages)
+      complexTask(GradleStages.findbugs.stages ++: GradleStages.testStages)
 
     // Implement this
     // ./gradlew --info :EDIEEJB:test --tests *CarePlanContentTest*
