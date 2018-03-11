@@ -22,6 +22,8 @@ import $cp.out.ultraRepl.assembly.dest.out
 import com.billding.clients.Git
 import com.billding.clients.Gradle
 import com.billding.clients.Docker
+import com.billding.clients.Cmt
+import com.billding.clients.Kafka
 // TODO Cmt-specific. Figure out how to completely separate.
 // I think it can just be a second project akin to the primary ultraRepl one
 import com.billding.clients.Setup
