@@ -81,8 +81,8 @@ object Gradle extends Client with GradleOps {
         stages.map(stage => s":$name:$stage")
       )
 
-    def findbugs()(implicit wd: Path) =
-      complexTask(findbugs.stages)
+    // def findbugs()(implicit wd: Path) =
+      // complexTask(findbugs.stages)
 
     def fullPrProcess()(implicit wd: Path) =
       complexTask(findbugs.stages ++: GradleStages.testStages)
