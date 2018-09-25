@@ -30,3 +30,5 @@ fi
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/bfrasure/.sdkman"
 [[ -s "/home/bfrasure/.sdkman/bin/sdkman-init.sh" ]] && source "/home/bfrasure/.sdkman/bin/sdkman-init.sh"
+
+eval "$(rbenv init -)"
