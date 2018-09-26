@@ -1,14 +1,23 @@
 import XMonad
 import XMonad.Config.Desktop
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.DynamicLog
 
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
 myKeys x  = M.union (M.fromList (newKeys x)) (keys defaultConfig x)
 
-launchIde :: MonadIO m => m()
-launchIde = spawn "/home/bill.frasure/.local/share/JetBrains/Toolbox/apps/IDEA-U/ch-0/182.4323.46/bin/idea.sh"
+spawnToWorkspace :: String -> String -> X ()
+spawnToWorkspace program workspace = do
+                                      spawn program     
+                                      windows $ W.greedyView workspace
+
+launchCommunication :: X()
+launchCommunication = spawnToWorkspace "wavebox" "4:communication"
+
+launchIde :: X()
+launchIde = spawnToWorkspace "/home/bill.frasure/.local/share/JetBrains/Toolbox/apps/IDEA-U/ch-0/182.4323.46/bin/idea.sh" "2:ide"
 
 openSprintBoard :: MonadIO m => m()
 openSprintBoard = spawn "firefox https://jira.collectivemedicaltech.com/secure/RapidBoard.jspa?rapidView=69"
@@ -22,6 +31,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = [
   ((modm, xK_b), spawn "firefox")
   , ((modm, xK_s), openSprintBoard)
   , ((modm, xK_i), launchIde)
+  , ((modm, xK_c), launchCommunication)
   , ((modm , xK_l), spawn "gnome-power-statistics")
   , ((mod4Mask, xK_h), windows $ W.greedyView "1:terminal")
   , ((mod4Mask, xK_j), windows $ W.greedyView "2:ide")
@@ -54,7 +64,7 @@ onScr n f i = screenWorkspace n >>= \sn -> windows (f i . maybe id W.view sn)
 configureForSwing :: X()
 configureForSwing = setWMName "LG3D"
 
-main = xmonad $ desktopConfig {
+main = xmonad =<< xmobar  desktopConfig {
   keys          = myKeys
   , workspaces = myWorkspaces
   , startupHook = onScr 1 W.greedyView "web" <+> configureForSwing
