@@ -201,6 +201,7 @@ killjava() { kill -9 `pidof java`; }
 
 addpath $HOME/scripts
 addpath /home/bfrasure/.local/bin
+addpath $HOME/.cabal/bin:$PATH
 
 
 alias billding='ssh -p 7822 root@199.195.116.237'
