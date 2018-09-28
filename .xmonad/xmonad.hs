@@ -3,6 +3,8 @@ import XMonad.Config.Desktop
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.DynamicLog
 
+import Control.Concurrent
+
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
@@ -16,8 +18,17 @@ spawnToWorkspace program workspace = do
 launchCommunication :: X()
 launchCommunication = spawnToWorkspace "wavebox" "4:communication"
 
+-- Figure out where I can stick this to deal with Intellij startup lag.
+-- Concurrent.threadDelay 10
+
 launchIde :: X()
 launchIde = spawnToWorkspace "/home/bill.frasure/.local/share/JetBrains/Toolbox/apps/IDEA-U/ch-0/182.4323.46/bin/idea.sh" "2:ide"
+
+launchDatagrip :: X()
+launchDatagrip = spawnToWorkspace "datagrip" "6:database"
+
+launchPostman :: X()
+launchPostman = spawnToWorkspace "~/Postman/Postman" "7:postman"
 
 openSprintBoard :: MonadIO m => m()
 openSprintBoard = spawn "firefox https://jira.collectivemedicaltech.com/secure/RapidBoard.jspa?rapidView=69"
@@ -32,12 +43,15 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = [
   , ((modm, xK_s), openSprintBoard)
   , ((modm, xK_i), launchIde)
   , ((modm, xK_c), launchCommunication)
+  , ((modm, xK_d), launchDatagrip)
+  , ((modm, xK_a), launchPostman)
   , ((modm , xK_l), spawn "gnome-power-statistics")
   , ((mod4Mask, xK_h), windows $ W.greedyView "1:terminal")
   , ((mod4Mask, xK_j), windows $ W.greedyView "2:ide")
   , ((mod4Mask, xK_k), windows $ W.greedyView "3:browser")
   , ((mod4Mask, xK_l), windows $ W.greedyView "4:communication")
   , ((mod4Mask, xK_semicolon), windows $ W.greedyView "5:music")
+  , ((mod4Mask, xK_d), windows $ W.greedyView "6:database")
 	
   -- , ((xK_Super_L , xK_h), W.shift, 1)
   -- ((modm, xK_f), spawn "urxvt -e mc"),
@@ -54,7 +68,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = [
    ]
 --}}}
 
-myWorkspaces = ["1:terminal", "2:ide", "3:browser", "4:communication", "5:music"]
+myWorkspaces = ["1:terminal", "2:ide", "3:browser", "4:communication", "5:music", "6:database", "7:postman"]
 
 onScr :: ScreenId -> (WorkspaceId -> WindowSet -> WindowSet) -> WorkspaceId -> X ()
 onScr n f i = screenWorkspace n >>= \sn -> windows (f i . maybe id W.view sn)
