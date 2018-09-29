@@ -3,10 +3,43 @@ import XMonad.Config.Desktop
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.DynamicLog
 
+import XMonad.Actions.TopicSpace
+import XMonad.Actions.DynamicProjects
+
+import XMonad.Prompt
+
 import Control.Concurrent
 
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
+
+communicationProject = Project { projectName      = "Communication"
+            , projectDirectory = "~/Downloads"
+            , projectStartHook = Just $ do spawn "wavebox"
+            }
+ideProject = Project { projectName      = "ide"
+            , projectDirectory = "~/Downloads"
+            , projectStartHook = Just $ do launchIde
+            }
+
+
+
+projects :: [Project]
+projects =
+  [ Project { projectName      = "scratch"
+            , projectDirectory = "~/"
+            , projectStartHook = Nothing
+            }
+
+  , Project { projectName      = "browser"
+            , projectDirectory = "~/Downloads"
+            , projectStartHook = Just $ do spawn "conkeror"
+                                           spawn "chromium"
+            }
+
+  , ideProject
+  ,  communicationProject 
+  ]
 
 myKeys x  = M.union (M.fromList (newKeys x)) (keys defaultConfig x)
 
@@ -41,15 +74,19 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = [
   -- ((modm, xK_p), spawn "dmenu_run -nb '#3F3F3F' -nf '#DCDCCC' -sb '#7F9F7F' -sf '#DCDCCC'"),  --Uses a colourscheme with dmenu
   ((modm, xK_b), spawn "firefox")
   , ((modm, xK_s), openSprintBoard)
-  , ((modm, xK_i), launchIde)
+  , ((modm, xK_i), switchProject ideProject)
   , ((modm, xK_c), launchCommunication)
   , ((modm, xK_d), launchDatagrip)
   , ((modm, xK_a), launchPostman)
-  , ((modm , xK_l), spawn "gnome-power-statistics")
+  -- , ((modm, xK_space), switchProjectPrompt)
+  -- , ((modm, xK_slash), shiftToProjectPrompt)
+  -- , ((modm , xK_l), spawn "gnome-power-statistics")
   , ((mod4Mask, xK_h), windows $ W.greedyView "1:terminal")
   , ((mod4Mask, xK_j), windows $ W.greedyView "2:ide")
   , ((mod4Mask, xK_k), windows $ W.greedyView "3:browser")
   , ((mod4Mask, xK_l), windows $ W.greedyView "4:communication")
+  , ((modm, xK_l), switchProject communicationProject  )
+  -- , ((modm, xK_l), shiftToProjectPrompt )
   , ((mod4Mask, xK_semicolon), windows $ W.greedyView "5:music")
   , ((mod4Mask, xK_d), windows $ W.greedyView "6:database")
 	
@@ -73,20 +110,22 @@ myWorkspaces = ["1:terminal", "2:ide", "3:browser", "4:communication", "5:music"
 onScr :: ScreenId -> (WorkspaceId -> WindowSet -> WindowSet) -> WorkspaceId -> X ()
 onScr n f i = screenWorkspace n >>= \sn -> windows (f i . maybe id W.view sn)
 
--- Needed for opening Swing applications, namely Intellij
-
 configureForSwing :: X()
 configureForSwing = setWMName "LG3D"
 
-main = xmonad =<< xmobar  desktopConfig {
-  keys          = myKeys
-  , workspaces = myWorkspaces
-  , startupHook = onScr 1 W.greedyView "web" <+> configureForSwing
-  }
+-- something :: IO()
+-- something =  xmonad $ dynamicProjects projects def
 
---   where
---     mykeys (XConfig {modMask = modm}) = M.fromList $
---          [ ((modm , xK_x), spawn "gnome-power-statistics")
---          , ((xK_Super_L , xK_h), W.shift, 1) ]
+main = xmonad $ ( dynamicProjects projects desktopConfig {
+  keys          = myKeys
+  -- , workspaces = myWorkspaces
+  , startupHook = onScr 1 W.greedyView "web" <+> configureForSwing
+  })
+
+-- main = xmonad  =<< xmobar  desktopConfig {
+  -- keys          = myKeys
+  -- , workspaces = myWorkspaces
+  -- , startupHook = onScr 1 W.greedyView "web" <+> configureForSwing
+  -- }
 
 
