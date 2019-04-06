@@ -13,7 +13,7 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
-Plugin 'airblade/vim-gitgutter'
+" Plugin 'airblade/vim-gitgutter'
 Plugin 'aklt/plantuml-syntax'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'dscleaver/sbt-quickfix'
@@ -34,6 +34,9 @@ Plugin 'wincent/command-t' " Fuzzy searching
 Plugin 'xolox/vim-easytags' "Generate tags for the file you're in
 Plugin 'xolox/vim-misc'
 Plugin 'lervag/vimtex'
+
+Plugin 'junegunn/goyo.vim'
+Plugin 'junegunn/limelight.vim'
 
 
 " plugin from http://vim-scripts.org/vim/scripts.html
@@ -413,6 +416,9 @@ filetype plugin indent on    " required
   nnoremap <leader>gd :Gdiff<CR>
   nnoremap <leader>gvd :Gvdiff<CR>
   nnoremap <leader>gbl :Gblame<CR>
+  nnoremap <leader>gp :Gpush<CR>
+
+  nnoremap <leader>y :Goyo<CR>
 
   " nnoremap <leader>dp :diffput
   " nnoremap <leader>dP :diffput | diffup
@@ -645,3 +651,12 @@ let &rtp .= ',~/.vim/bundle/vimtex/after'
 
 " TODO Shortcut/function for "Git checkout $someBranch; :CommandTFlush
 " So I'm not looking at the previous branch's file list
+
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
