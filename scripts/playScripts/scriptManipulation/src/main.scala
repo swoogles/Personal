@@ -76,14 +76,11 @@ object Example{
       file.appendLines(newLines:_*)
     }
 
-    def lineConversion(originalLines: List[String], florenceAction: String=>String, sidAction: String=>String, irvAction: String=>String) = {
+    def lineConversion(originalLines: List[String], charlieAction: String=>String, randiAction: String=>String, irvAction: String=>String) = {
       originalLines.map { line =>
-        // val partialFilter = if line startsWith "FLORENCE."
-        // val partial =  { case florenceLine: String if florenceLine startsWith "FLORENCE." => "FLORENCE: " + florenceAction(florenceLine) }
-
-        line match { 
-          case florenceLine if florenceLine startsWith "FLORENCE." => "FLORENCE: " + florenceAction(florenceLine)
-          case sidLine if sidLine startsWith "SID." => "SID: " + sidAction(sidLine)
+        line match {
+          case charlieLine if charlieLine startsWith "CHARLIE:" => "CHARLIE: " + charlieAction(charlieLine)
+          case randiLine if randiLine startsWith "RANDI:" => "RANDI: " + randiAction(randiLine)
           case irvLine if irvLine startsWith "IRV." => "IRV: " + irvAction(irvLine)
           case stageDirection if stageDirection startsWith "(" => "stage direction: " + stageDirection
           case emptyLine if emptyLine isEmpty => emptyLine
@@ -94,15 +91,15 @@ object Example{
       } 
     }
 
-    def totalProgram(outFileName: String, allLines: List[String], florenceAction: String=>String, sidAction: String=>String, irvAction: String=>String) = {
-      val convertedLines = lineConversion(allLines, florenceAction, sidAction, irvAction)
+    def totalProgram(outFileName: String, allLines: List[String], charlieAction: String=>String, randiAction: String=>String, irvAction: String=>String) = {
+      val convertedLines = lineConversion(allLines, charlieAction, randiAction, irvAction)
       writeNewLines(outFileName, convertedLines)
     }
 
-    totalProgram( "original_script", fileLines, florenceAction=linePrep, sidAction=linePrep, irvAction=linePrep)
-    totalProgram( "florence_first_letter_of_each_word", fileLines, florenceAction=firstLetterOfEachWord, sidAction=linePrep, irvAction=linePrep)
-    totalProgram( "florence_first_word_of_each_sentence", fileLines, florenceAction=firstWordOfEachSentence, sidAction=linePrep, irvAction=linePrep)
-    totalProgram( "sid_first_letter_of_each_word", fileLines, florenceAction=linePrep, sidAction=firstLetterOfEachWord, irvAction=linePrep)
-    totalProgram( "sid_first_word_of_each_sentence", fileLines, florenceAction=linePrep, sidAction=firstWordOfEachSentence, irvAction=linePrep)
+    totalProgram( "original_script", fileLines, charlieAction=linePrep, randiAction=linePrep, irvAction=linePrep)
+    totalProgram( "charlie_first_letter_of_each_word", fileLines, charlieAction=firstLetterOfEachWord, randiAction=linePrep, irvAction=linePrep)
+    totalProgram( "charlie_first_word_of_each_sentence", fileLines, charlieAction=firstWordOfEachSentence, randiAction=linePrep, irvAction=linePrep)
+    totalProgram( "randi_first_letter_of_each_word", fileLines, charlieAction=linePrep, randiAction=firstLetterOfEachWord, irvAction=linePrep)
+    totalProgram( "randi_first_word_of_each_sentence", fileLines, charlieAction=linePrep, randiAction=firstWordOfEachSentence, irvAction=linePrep)
   }
 }
