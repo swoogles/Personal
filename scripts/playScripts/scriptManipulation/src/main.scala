@@ -20,13 +20,22 @@ object Example{
   def firstLetterOfEachWord(line: String): String = {
     val words = wordsFrom(line).tail
     words.map{ word =>
-      // TODO Handle ellipses as words.
-      if (word == "...") {
-        word
-      } else if (endsWithPunctuation(word)) // Preserve punctuation.
-        word.head + word.last.toString
+      println(word)
+      val leadingQuote: String = if ( word.head == '"')  "\"" else ""
+      val startIndex = if (leadingQuote.length > 0) 1 else 0
+
+      val trailingQuote: String = if ( word.last == '"')  "\"" else ""
+      val endIndex = if (trailingQuote.length > 0) word.length - 1 else word.length
+      val quoteStrippedWord = word.substring(startIndex, endIndex)
+      val innerWordResult =
+        if (quoteStrippedWord == "...") {
+        quoteStrippedWord
+      } else if (endsWithPunctuation(quoteStrippedWord)) // Preserve punctuation.
+        quoteStrippedWord.head + quoteStrippedWord.last.toString
       else
-        word.head
+        quoteStrippedWord.head
+
+      leadingQuote + innerWordResult + trailingQuote
     }
       .mkString(" ")
   }
