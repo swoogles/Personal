@@ -26,7 +26,10 @@ object Example{
     def firstLetterOfEachWord(line: String) = {
       val words = wordsFrom(line).tail
       words.map{ word =>
-        if (endsWithPunctuation(word)) // Preserve punctuation.
+        // TODO Handle ellipses as words.
+        if (word == "...") {
+          word
+        } else if (endsWithPunctuation(word)) // Preserve punctuation.
           word.head + word.last.toString
         else
           word.head 
@@ -53,22 +56,21 @@ object Example{
       val sentences = splitIntoSentences(preppedLine)
       sentences.map { sentence =>
         val (firstWord :: restOfSentence) = wordsFrom(sentence.trim)
-        val blackedOutWords = restOfSentence.map { word => 
+        val blackedOutWords = restOfSentence.map { word =>
           word.map{letter=>
             "_"
-        }.mkString("") }
+          }.mkString("") }
           .mkString(" ")
 
-          // TODO rm blacked out punctuation mark, as it increases the masked length by 1 additional underscore
-          val result = 
-            if (!restOfSentence.isEmpty)
-              firstWord + " " + blackedOutWords + restOfSentence.last.last
-            else
-              firstWord + " " + blackedOutWords
-            result
+        // TODO rm blacked out punctuation mark, as it increases the masked length by 1 additional underscore
+        val result =
+          if (!restOfSentence.isEmpty)
+            firstWord + " " + blackedOutWords + restOfSentence.last.last
+          else
+            firstWord + " " + blackedOutWords
+        result
       }.mkString(" ")
     }
-
 
     def writeNewLines(outFileName: String, newLines: List[String]) = {
       val file = cwd / "out" / (outFileName + ".txt")
@@ -76,30 +78,33 @@ object Example{
       file.appendLines(newLines:_*)
     }
 
-    def lineConversion(originalLines: List[String], charlieAction: String=>String, randiAction: String=>String, irvAction: String=>String) = {
+    def lineConversion(originalLines: List[String], charlieAction: String=>String, randiAction: String=>String, tammyAction: String=>String) = {
       originalLines.map { line =>
         line match {
           case charlieLine if charlieLine startsWith "CHARLIE:" => "CHARLIE: " + charlieAction(charlieLine)
           case randiLine if randiLine startsWith "RANDI:" => "RANDI: " + randiAction(randiLine)
-          case irvLine if irvLine startsWith "IRV." => "IRV: " + irvAction(irvLine)
-          case stageDirection if stageDirection startsWith "(" => "stage direction: " + stageDirection
+          case tammyLine if tammyLine startsWith "TAMMY:" => "TAMMY: " + tammyAction(tammyLine)
+          case togetherLine if togetherLine startsWith "TOGETHER" => togetherLine
+          case stageDirection if stageDirection startsWith "(" => stageDirection
           case emptyLine if emptyLine isEmpty => emptyLine
-          case title if title startsWith "III." => title
+          case title if title startsWith "WATCH HILL" => title
           case comment if comment startsWith "//" => ""
           case other => "FAILURE: " + other
         }
       } 
     }
 
-    def totalProgram(outFileName: String, allLines: List[String], charlieAction: String=>String, randiAction: String=>String, irvAction: String=>String) = {
-      val convertedLines = lineConversion(allLines, charlieAction, randiAction, irvAction)
+    def totalProgram(outFileName: String, allLines: List[String], charlieAction: String=>String, randiAction: String=>String, tammyAction: String=>String) = {
+      val convertedLines = lineConversion(allLines, charlieAction, randiAction, tammyAction)
       writeNewLines(outFileName, convertedLines)
     }
 
-    totalProgram( "original_script", fileLines, charlieAction=linePrep, randiAction=linePrep, irvAction=linePrep)
-    totalProgram( "charlie_first_letter_of_each_word", fileLines, charlieAction=firstLetterOfEachWord, randiAction=linePrep, irvAction=linePrep)
-    totalProgram( "charlie_first_word_of_each_sentence", fileLines, charlieAction=firstWordOfEachSentence, randiAction=linePrep, irvAction=linePrep)
-    totalProgram( "randi_first_letter_of_each_word", fileLines, charlieAction=linePrep, randiAction=firstLetterOfEachWord, irvAction=linePrep)
-    totalProgram( "randi_first_word_of_each_sentence", fileLines, charlieAction=linePrep, randiAction=firstWordOfEachSentence, irvAction=linePrep)
+    totalProgram( "original_script", fileLines, charlieAction=linePrep, randiAction=linePrep, tammyAction=linePrep)
+    totalProgram( "charlie_first_letter_of_each_word", fileLines, charlieAction=firstLetterOfEachWord, randiAction=linePrep, tammyAction=linePrep)
+    totalProgram( "charlie_first_word_of_each_sentence", fileLines, charlieAction=firstWordOfEachSentence, randiAction=linePrep, tammyAction=linePrep)
+    totalProgram( "randi_first_letter_of_each_word", fileLines, charlieAction=linePrep, randiAction=firstLetterOfEachWord, tammyAction=linePrep)
+    totalProgram( "randi_first_word_of_each_sentence", fileLines, charlieAction=linePrep, randiAction=firstWordOfEachSentence, tammyAction=linePrep)
+    totalProgram( "tammy_first_letter_of_each_word", fileLines, charlieAction=linePrep, randiAction=linePrep, tammyAction=firstLetterOfEachWord)
+    totalProgram( "tammy_first_word_of_each_sentence", fileLines, charlieAction=linePrep, randiAction=linePrep, tammyAction=firstWordOfEachSentence)
   }
 }
