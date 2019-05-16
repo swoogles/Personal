@@ -3,21 +3,21 @@ package foo
 import better.files._
 import better.files.Dsl._
 object Example{
-  def wordsFrom(line: String) = {
+  def wordsFrom(line: String): List[String] = {
     line.split("\\s+").toList
   }
 
-  def linePrep(line: String) = {
+  def linePrep(line: String): String = {
     wordsFrom(line.trim).tail
       .mkString(" ")
   }
 
-  def endsWithPunctuation(word: String) = {
+  def endsWithPunctuation(word: String): Boolean = {
     val punctuation = List(".", "!", "-", "?", ",")
     punctuation.foldLeft(false)(_ || word.endsWith(_))
   }
 
-  def firstLetterOfEachWord(line: String) = {
+  def firstLetterOfEachWord(line: String): String = {
     val words = wordsFrom(line).tail
     words.map{ word =>
       // TODO Handle ellipses as words.
@@ -45,7 +45,7 @@ object Example{
     }
   }
 
-  def firstWordOfEachSentence(line: String) = {
+  def firstWordOfEachSentence(line: String): String = {
     val preppedLine = linePrep(line)
     val sentences = splitIntoSentences(preppedLine)
     sentences.map { sentence =>
@@ -66,13 +66,13 @@ object Example{
     }.mkString(" ")
   }
 
-  def writeNewLines(outFileName: String, newLines: List[String]) = {
+  private def writeNewLines(outFileName: String, newLines: List[String]) = {
     val file = cwd / "out" / (outFileName + ".txt")
     file.overwrite("")
     file.appendLines(newLines:_*)
   }
 
-  def lineConversion(originalLines: List[String], charlieAction: String=>String, randiAction: String=>String, tammyAction: String=>String) = {
+  def lineConversion(originalLines: List[String], charlieAction: String=>String, randiAction: String=>String, tammyAction: String=>String): List[String] = {
     originalLines.map { line =>
       line match {
         case charlieLine if charlieLine startsWith "CHARLIE:" => "CHARLIE: " + charlieAction(charlieLine)
