@@ -17,26 +17,28 @@ object Example{
     punctuation.foldLeft(false)(_ || word.endsWith(_))
   }
 
-  def firstLetterOfEachWord(line: String): String = {
-    val words = wordsFrom(line).tail
-    words.map{ word =>
-      println(word)
-      val leadingQuote: String = if ( word.head == '"')  "\"" else ""
-      val startIndex = if (leadingQuote.length > 0) 1 else 0
+  def firstLetterOfWord(word: String): String = {
+    val leadingQuote: String = if ( word.head == '"')  "\"" else ""
+    val startIndex = if (leadingQuote.length > 0) 1 else 0
 
-      val trailingQuote: String = if ( word.last == '"')  "\"" else ""
-      val endIndex = if (trailingQuote.length > 0) word.length - 1 else word.length
-      val quoteStrippedWord = word.substring(startIndex, endIndex)
-      val innerWordResult =
-        if (quoteStrippedWord == "...") {
+    val trailingQuote: String = if ( word.last == '"')  "\"" else ""
+    val endIndex = if (trailingQuote.length > 0) word.length - 1 else word.length
+    val quoteStrippedWord = word.substring(startIndex, endIndex)
+    val innerWordResult =
+      if (quoteStrippedWord == "...") {
         quoteStrippedWord
       } else if (endsWithPunctuation(quoteStrippedWord)) // Preserve punctuation.
         quoteStrippedWord.head + quoteStrippedWord.last.toString
       else
         quoteStrippedWord.head
 
-      leadingQuote + innerWordResult + trailingQuote
-    }
+    leadingQuote + innerWordResult + trailingQuote
+  }
+
+  def firstLetterOfEachWord(line: String): String = {
+    val words = wordsFrom(line).tail // Ignores character name
+    words
+      .map{ word => firstLetterOfWord(word) }
       .mkString(" ")
   }
 

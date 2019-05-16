@@ -4,6 +4,13 @@ import utest._
 
 object HelloTests extends TestSuite{
   val tests = Tests{
+    'WordSurroundedWithQuotesAndPunctuation - {
+      val word = "\"Yes,\""
+      assert(
+        Example.firstLetterOfWord(word) == "\"Y,\""
+      )
+    }
+
     'WithQuotesAndEllipse - {
       val lineWithQuotesAndEllipses = """
       "Yes," Wolf said "but give me a chance to change man.
@@ -14,8 +21,6 @@ object HelloTests extends TestSuite{
       val expectedResult = "\"Y,\" W s \"b g m a c t c m. I m s h g o e d t p, I c h w h s o s, I b h g w h c s, p h w h i d, I r u h s, I m h l j b b m ... I l m u a r m w h s t b.\""
 
       val actualResultss = Example.firstLetterOfEachWord(lineWithQuotesAndEllipses)
-      println(expectedResult)
-      println(actualResultss)
       assert(actualResultss.contains(expectedResult))
     }
   }
