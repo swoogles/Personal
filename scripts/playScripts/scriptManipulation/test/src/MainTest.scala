@@ -2,8 +2,10 @@ package foo
 
 import utest._
 
+
 object HelloTests extends TestSuite{
   val tests = Tests{
+    /*
     'WordSurroundedWithQuotesAndPunctuation - {
       val word = "\"Yes,\""
       assert(
@@ -23,5 +25,29 @@ object HelloTests extends TestSuite{
       val actualResultss = Example.firstLetterOfEachWord(lineWithQuotesAndEllipses)
       assert(actualResultss.contains(expectedResult))
     }
+    */
+
+
+    val characters = List(
+      "CHARLIE",
+      "TAMMY",
+      "RANDI"
+    )
+
+    val actions: List[(String, String=>String)] =
+      List(
+        ("first_letter_of_each_word", Example.firstLetterOfWord),
+        ("first_word_of_each_sentence", Example.firstWordOfEachSentence)
+      )
+
+
+    'DynamicCharacterList - {
+      val line = "RANDI: hi there. I'm Randi."
+      val result = Example.convertSingleLine(line, "RANDI", characters, Example.firstLetterOfEachWord _)
+      println(result)
+
+    }
   }
+
+
 }
