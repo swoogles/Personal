@@ -28,24 +28,30 @@ object HelloTests extends TestSuite{
     */
 
 
-    val characters = List(
-      "CHARLIE",
-      "TAMMY",
-      "RANDI"
-    )
-
-    val actions: List[(String, String=>String)] =
-      List(
-        ("first_letter_of_each_word", Example.firstLetterOfWord),
-        ("first_word_of_each_sentence", Example.firstWordOfEachSentence)
+    'DynamicCharacterList - {
+      val characters = List(
+        "CHARLIE",
+        "TAMMY",
+        "RANDI"
       )
 
-
-    'DynamicCharacterList - {
       val line = "RANDI: hi there. I'm Randi."
       val result = Example.convertSingleLine(line, "RANDI", characters, Example.firstLetterOfEachWord _)
-      println(result)
+      assert(result == "RANDI: h t. I R.")
+    }
 
+    'DynamicCharacterListWithMultimpleLines - {
+      val lines = List(
+        "ALICE: My text should be showing.",
+        "BOB: This is too small."
+      )
+      val characters = List(
+        "ALICE",
+        "BOB"
+      )
+      val result = Example.convertLinesWithDynamicCharacters(lines, "BOB", characters, Example.firstLetterOfEachWord _)
+      assert(result(0) == "ALICE: My text should be showing.")
+      assert(result(1) == "BOB: T i t s.")
     }
   }
 

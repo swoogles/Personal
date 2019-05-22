@@ -12,6 +12,11 @@ object Example{
       .mkString(" ")
   }
 
+  def linePrepWithoutTrimmingBeginning(line: String): String = {
+    wordsFrom(line.trim)
+      .mkString(" ")
+  }
+
   def endsWithPunctuation(word: String): Boolean = {
     val punctuation = List(".", "!", "-", "?", ",")
     punctuation.foldLeft(false)(_ || word.endsWith(_))
@@ -87,6 +92,15 @@ object Example{
     characters.exists(originalLine.startsWith)
   }
 
+  def convertLinesWithDynamicCharacters(
+                                         originalLines: List[String],
+                                         targetCharacter: String,
+                                         characters: List[String],
+                                         action: String=>String
+                                       ): List[String] = {
+    originalLines.map(convertSingleLine(_, targetCharacter, characters, action))
+  }
+
   def convertSingleLine(
                          originalLine: String,
                          targetCharacter: String,
@@ -103,7 +117,7 @@ object Example{
         }
       case otherCharacterLine if startsWithAnyCharacter(otherCharacterLine, characters) => {
         println("Other character!")
-        linePrep(otherCharacterLine)
+        linePrepWithoutTrimmingBeginning(otherCharacterLine)
       }
       case togetherLine if togetherLine startsWith "TOGETHER" => togetherLine
       case stageDirection if stageDirection startsWith "(" => stageDirection
