@@ -1,3 +1,4 @@
-case class Line(character: Character, content: String) {
+package foo
+case class Line(character: PlayCharacter, content: String) {
 
 }

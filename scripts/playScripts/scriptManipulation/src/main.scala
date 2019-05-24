@@ -88,32 +88,22 @@ object Example{
     file.appendLines(newLines:_*)
   }
 
-  def startsWithAnyCharacter(originalLine: String, characters: List[String]): Boolean = {
-    characters.exists(originalLine.startsWith)
+  def startsWithAnyCharacter(originalLine: String, characters: List[PlayCharacter]): Boolean = {
+    characters.exists(character=> originalLine.startsWith(character.name))
   }
 
-  def convertLinesWithDynamicCharacters(
-                                         originalLines: List[String],
-                                         targetCharacter: String,
-                                         characters: List[String],
-                                         action: String=>String
-                                       ): List[String] = {
+  def convertLinesWithDynamicCharacters(originalLines: List[String], targetCharacter: PlayCharacter, characters: List[PlayCharacter], action: String => String): List[String] = {
     originalLines.map(convertSingleLine(_, targetCharacter, characters, action))
   }
 
-  def convertSingleLine(
-                         originalLine: String,
-                         targetCharacter: String,
-                         characters: List[String],
-                         action: String=>String
-                       ): String = {
+  def convertSingleLine(originalLine: String, targetCharacter: PlayCharacter, characters: List[PlayCharacter], action: String => String): String = {
     println("executing conversion with originalLine: " + originalLine)
-    println( "Starts with target character: " + originalLine.startsWith(targetCharacter))
+    println( "Starts with target character: " + originalLine.startsWith(targetCharacter.name))
     originalLine match {
       case targetCharacterLine
-        if targetCharacterLine startsWith (targetCharacter + ":") => {
+        if targetCharacterLine startsWith (targetCharacter.name + ":") => {
           println("Hit the right line!")
-          targetCharacter + ": " + action.apply(targetCharacterLine)
+          targetCharacter.name + ": " + action.apply(targetCharacterLine)
         }
       case otherCharacterLine if startsWithAnyCharacter(otherCharacterLine, characters) => {
         println("Other character!")
@@ -128,35 +118,16 @@ object Example{
     }
   }
 
-  def convertSingleLine(originalLine: String, charlieAction: String=>String, randiAction: String=>String, tammyAction: String=>String): String = {
-    originalLine match {
-      case charlieLine if charlieLine startsWith "CHARLIE:" => "CHARLIE: " + charlieAction(charlieLine)
-      case randiLine if randiLine startsWith "RANDI:" => "RANDI: " + randiAction(randiLine)
-      case tammyLine if tammyLine startsWith "TAMMY:" => "TAMMY: " + tammyAction(tammyLine)
-      case togetherLine if togetherLine startsWith "TOGETHER" => togetherLine
-      case stageDirection if stageDirection startsWith "(" => stageDirection
-      case emptyLine if emptyLine isEmpty => emptyLine
-      case title if title startsWith "WATCH HILL" => title
-      case comment if comment startsWith "//" => ""
-      case other => "FAILURE: " + other
-    }
-
-  }
-
-  def convertAllLines(originalLines: List[String], charlieAction: String=>String, randiAction: String=>String, tammyAction: String=>String): List[String] = {
-    originalLines.map {  convertSingleLine(_, charlieAction, randiAction, tammyAction) }
-  }
-
-  def totalProgram(outFileName: String, allLines: List[String], charlieAction: String=>String, randiAction: String=>String, tammyAction: String=>String) = {
-    val convertedLines = convertAllLines(allLines, charlieAction, randiAction, tammyAction)
-    writeNewLines(outFileName, convertedLines)
-  }
+//  def totalProgram(outFileName: String, allLines: List[String], charlieAction: String=>String, randiAction: String=>String, tammyAction: String=>String) = {
+//    val convertedLines = convertAllLines(allLines, charlieAction, randiAction, tammyAction)
+//    writeNewLines(outFileName, convertedLines)
+//  }
 
   def main(args: Array[String]): Unit = {
     val characters = List(
-      "CHARLIE",
-      "TAMMY",
-      "RANDI"
+      PlayCharacter("CHARLIE"),
+      PlayCharacter("TAMMY"),
+      PlayCharacter("RANDI")
     )
 
     val actions: List[(String, String=>String)] =
@@ -171,12 +142,12 @@ object Example{
 
     val fileLines = betterFile.contentAsString.split("\n").toList
 
-    totalProgram( "original_script", fileLines, charlieAction=linePrep, randiAction=linePrep, tammyAction=linePrep)
-    totalProgram( "charlie_first_letter_of_each_word", fileLines, charlieAction=firstLetterOfEachWord, randiAction=linePrep, tammyAction=linePrep)
-    totalProgram( "charlie_first_word_of_each_sentence", fileLines, charlieAction=firstWordOfEachSentence, randiAction=linePrep, tammyAction=linePrep)
-    totalProgram( "randi_first_letter_of_each_word", fileLines, charlieAction=linePrep, randiAction=firstLetterOfEachWord, tammyAction=linePrep)
-    totalProgram( "randi_first_word_of_each_sentence", fileLines, charlieAction=linePrep, randiAction=firstWordOfEachSentence, tammyAction=linePrep)
-    totalProgram( "tammy_first_letter_of_each_word", fileLines, charlieAction=linePrep, randiAction=linePrep, tammyAction=firstLetterOfEachWord)
-    totalProgram( "tammy_first_word_of_each_sentence", fileLines, charlieAction=linePrep, randiAction=linePrep, tammyAction=firstWordOfEachSentence)
+//    totalProgram( "original_script", fileLines, charlieAction=linePrep, randiAction=linePrep, tammyAction=linePrep)
+//    totalProgram( "charlie_first_letter_of_each_word", fileLines, charlieAction=firstLetterOfEachWord, randiAction=linePrep, tammyAction=linePrep)
+//    totalProgram( "charlie_first_word_of_each_sentence", fileLines, charlieAction=firstWordOfEachSentence, randiAction=linePrep, tammyAction=linePrep)
+//    totalProgram( "randi_first_letter_of_each_word", fileLines, charlieAction=linePrep, randiAction=firstLetterOfEachWord, tammyAction=linePrep)
+//    totalProgram( "randi_first_word_of_each_sentence", fileLines, charlieAction=linePrep, randiAction=firstWordOfEachSentence, tammyAction=linePrep)
+//    totalProgram( "tammy_first_letter_of_each_word", fileLines, charlieAction=linePrep, randiAction=linePrep, tammyAction=firstLetterOfEachWord)
+//    totalProgram( "tammy_first_word_of_each_sentence", fileLines, charlieAction=linePrep, randiAction=linePrep, tammyAction=firstWordOfEachSentence)
   }
 }

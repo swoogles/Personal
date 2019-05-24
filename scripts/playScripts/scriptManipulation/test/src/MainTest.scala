@@ -30,13 +30,13 @@ object HelloTests extends TestSuite{
 
     'DynamicCharacterList - {
       val characters = List(
-        "CHARLIE",
-        "TAMMY",
-        "RANDI"
+        PlayCharacter("CHARLIE"),
+        PlayCharacter("TAMMY"),
+        PlayCharacter("RANDI")
       )
 
       val line = "RANDI: hi there. I'm Randi."
-      val result = Example.convertSingleLine(line, "RANDI", characters, Example.firstLetterOfEachWord _)
+      val result = Example.convertSingleLine(line, PlayCharacter("RANDI"), characters, Example.firstLetterOfEachWord _)
       assert(result == "RANDI: h t. I R.")
     }
 
@@ -46,10 +46,10 @@ object HelloTests extends TestSuite{
         "BOB: This is too small."
       )
       val characters = List(
-        "ALICE",
-        "BOB"
+        PlayCharacter("ALICE"),
+        PlayCharacter("BOB")
       )
-      val result = Example.convertLinesWithDynamicCharacters(lines, "BOB", characters, Example.firstLetterOfEachWord _)
+      val result = Example.convertLinesWithDynamicCharacters(lines, PlayCharacter("BOB"), characters, Example.firstLetterOfEachWord _)
       assert(result(0) == "ALICE: My text should be showing.")
       assert(result(1) == "BOB: T i t s.")
     }
