@@ -101,18 +101,16 @@ object Example{
     println( "Starts with target character: " + originalLine.startsWith(targetCharacter.name))
     originalLine match {
       case targetCharacterLine
-        if targetCharacterLine startsWith (targetCharacter.name + ":") => {
-          println("Hit the right line!")
-          targetCharacter.name + ": " + action.apply(targetCharacterLine)
+        if targetCharacterLine startsWith (targetCharacter.name + ".") => {
+          SpokenLine(targetCharacter, action.apply(targetCharacterLine)).originalScriptFormat
         }
       case otherCharacterLine if startsWithAnyCharacter(otherCharacterLine, characters) => {
-        println("Other character!")
-        linePrepWithoutTrimmingBeginning(otherCharacterLine)
+        val character: String = otherCharacterLine.takeWhile(_ != '.')
+        SpokenLine(PlayCharacter(character), linePrep(otherCharacterLine)).originalScriptFormat
       }
-      case togetherLine if togetherLine startsWith "TOGETHER" => togetherLine
-      case stageDirection if stageDirection startsWith "(" => stageDirection
-      case emptyLine if emptyLine isEmpty => emptyLine
-      case title if title startsWith "WATCH HILL" => title
+      case togetherLine if togetherLine startsWith "TOGETHER" => CombinedSpokenLine(characters.toSet, togetherLine).toString
+      case stageDirection if stageDirection startsWith "(" => StageDirection(stageDirection).toString
+      case emptyLine if emptyLine isEmpty => BlankLine().toString
       case comment if comment startsWith "//" => ""
       case other => "FAILURE: " + other
     }

@@ -35,23 +35,23 @@ object HelloTests extends TestSuite{
         PlayCharacter("RANDI")
       )
 
-      val line = "RANDI: hi there. I'm Randi."
+      val line = "RANDI. hi there. I'm Randi."
       val result = Example.convertSingleLine(line, PlayCharacter("RANDI"), characters, Example.firstLetterOfEachWord _)
-      assert(result == "RANDI: h t. I R.")
+      assert(result == "RANDI. h t. I R.")
     }
 
     'DynamicCharacterListWithMultimpleLines - {
       val lines = List(
-        "ALICE: My text should be showing.",
-        "BOB: This is too small."
+        "ALICE. My text should be showing.",
+        "BOB. This is too small."
       )
       val characters = List(
         PlayCharacter("ALICE"),
         PlayCharacter("BOB")
       )
       val result = Example.convertLinesWithDynamicCharacters(lines, PlayCharacter("BOB"), characters, Example.firstLetterOfEachWord _)
-      assert(result(0) == "ALICE: My text should be showing.")
-      assert(result(1) == "BOB: T i t s.")
+      assert(result(0) == "ALICE. My text should be showing.")
+      assert(result(1) == "BOB. T i t s.")
     }
   }
 
