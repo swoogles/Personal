@@ -49,7 +49,7 @@ object Example{
 
   def splitIntoSentences(line: String): List[String] = {
     val punctuation = List('.', '!', '-', '?', ',')
-    if (line.size == 0) {
+    if (line.isEmpty) {
       Nil
     } else {
       val (s1, s2) = line.span{ !punctuation.contains(_) }
@@ -74,7 +74,7 @@ object Example{
 
       // TODO rm blacked out punctuation mark, as it increases the masked length by 1 additional underscore
       val result =
-        if (!restOfSentence.isEmpty)
+        if (restOfSentence.nonEmpty)
           firstWord + " " + blackedOutWords + restOfSentence.last.last
         else
           firstWord + " " + blackedOutWords
@@ -110,7 +110,7 @@ object Example{
       }
       case togetherLine if togetherLine startsWith "TOGETHER" => CombinedSpokenLine(characters.toSet, togetherLine).toString
       case stageDirection if stageDirection startsWith "(" => StageDirection(stageDirection).toString
-      case emptyLine if emptyLine isEmpty => BlankLine().toString
+      case emptyLine if emptyLine.isEmpty => BlankLine().toString
       case comment if comment startsWith "//" => ""
       case other => "FAILURE: " + other
     }
