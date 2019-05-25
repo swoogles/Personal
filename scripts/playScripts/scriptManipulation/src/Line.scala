@@ -17,7 +17,10 @@ case object PageBreak extends Line
 
 case class PageNumber(number: Int)
 
+case object StartLine extends Line {
+  val originalScriptFormat: String = "Start"
+}
+
 case object EndLine extends Line {
   val originalScriptFormat: String = "End"
-
 }

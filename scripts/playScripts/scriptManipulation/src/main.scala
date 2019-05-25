@@ -98,6 +98,7 @@ object Example{
 
   def convertSingleLine(originalLine: String, targetCharacter: PlayCharacter, characters: List[PlayCharacter], action: String => String): String = {
     originalLine match {
+      case beginLine if beginLine equals  "Start" => StartLine.originalScriptFormat
       case targetCharacterLine
         if targetCharacterLine startsWith (targetCharacter.name + ".") => {
           SpokenLine(targetCharacter, action.apply(targetCharacterLine)).originalScriptFormat
