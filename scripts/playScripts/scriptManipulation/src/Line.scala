@@ -13,7 +13,9 @@ case class CombinedSpokenLine(characters: Set[PlayCharacter], content: String) e
 
 case class EveryoneLine(characters: Set[PlayCharacter], content: String) extends Line
 
-case object PageBreak extends Line
+case object PageBreak extends Line {
+  val originalScriptFormat: String = "------------------"
+}
 
 case class PageNumber(number: Int)
 

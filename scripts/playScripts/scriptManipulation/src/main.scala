@@ -110,7 +110,7 @@ object Example{
       case togetherLine if togetherLine startsWith "ALL" => CombinedSpokenLine(characters.toSet, togetherLine).toString
       case stageDirection if stageDirection startsWith "(" => StageDirection(stageDirection).toString
       case emptyLine if emptyLine.isEmpty => BlankLine().toString
-      case pageBreak if pageBreak startsWith "---" => BlankLine().toString
+      case pageBreak if pageBreak startsWith "---" => PageBreak.originalScriptFormat
       case pageNumberLine if pageNumberLine startsWith "Page" => PageNumber(pageNumberLine.replaceAll("[^0-9]", "").toInt).toString
       case endLine if endLine equals  "End" => EndLine.originalScriptFormat
 //      case comment if comment startsWith "//" => ""
