@@ -43,7 +43,7 @@ object Example{
   def firstLetterOfEachWord(line: String): String = {
     val words = wordsFrom(line).tail // Ignores character name. Not the right way to handle this!
     words
-      .map{ word => firstLetterOfWord(word) }
+      .map{ firstLetterOfWord }
       .mkString(" ")
   }
 
@@ -97,8 +97,6 @@ object Example{
   }
 
   def convertSingleLine(originalLine: String, targetCharacter: PlayCharacter, characters: List[PlayCharacter], action: String => String): String = {
-    println("executing conversion with originalLine: " + originalLine)
-    println( "Starts with target character: " + originalLine.startsWith(targetCharacter.name))
     originalLine match {
       case targetCharacterLine
         if targetCharacterLine startsWith (targetCharacter.name + ".") => {
@@ -108,11 +106,14 @@ object Example{
         val character: String = otherCharacterLine.takeWhile(_ != '.')
         SpokenLine(PlayCharacter(character), linePrep(otherCharacterLine)).originalScriptFormat
       }
-      case togetherLine if togetherLine startsWith "TOGETHER" => CombinedSpokenLine(characters.toSet, togetherLine).toString
+      case togetherLine if togetherLine startsWith "ALL" => CombinedSpokenLine(characters.toSet, togetherLine).toString
       case stageDirection if stageDirection startsWith "(" => StageDirection(stageDirection).toString
       case emptyLine if emptyLine.isEmpty => BlankLine().toString
-      case comment if comment startsWith "//" => ""
-      case other => "FAILURE: " + other
+      case pageBreak if pageBreak startsWith "---" => BlankLine().toString
+      case pageNumberLine if pageNumberLine startsWith "Page" => PageNumber(pageNumberLine.replaceAll("[^0-9]", "").toInt).toString
+      case endLine if endLine equals  "End" => EndLine.originalScriptFormat
+//      case comment if comment startsWith "//" => ""
+//      case other => "FAILURE: " + other
     }
   }
 

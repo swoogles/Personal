@@ -10,3 +10,14 @@ case class StageDirection(content: String) extends Line
 case class BlankLine() extends Line
 
 case class CombinedSpokenLine(characters: Set[PlayCharacter], content: String) extends Line
+
+case class EveryoneLine(characters: Set[PlayCharacter], content: String) extends Line
+
+case object PageBreak extends Line
+
+case class PageNumber(number: Int)
+
+case object EndLine extends Line {
+  val originalScriptFormat: String = "End"
+
+}

@@ -2,6 +2,8 @@ package foo
 
 import utest._
 
+import better.files._
+import better.files.Dsl._
 
 object HelloTests extends TestSuite{
   val tests = Tests{
@@ -53,6 +55,32 @@ object HelloTests extends TestSuite{
       assert(result(0) == "ALICE. My text should be showing.")
       assert(result(1) == "BOB. T i t s.")
     }
+
+    'ReadFullScript - {
+      val targetCharacter = PlayCharacter("PICASSO")
+
+      val allCharacters = List(
+          PlayCharacter("FREDDY"),
+          PlayCharacter("GASTON"),
+          PlayCharacter("GERMAINE"),
+          PlayCharacter("EINSTEIN"),
+          PlayCharacter("SUZANNE"),
+          PlayCharacter("SAGOT"),
+          PlayCharacter("PICASSO"),
+          PlayCharacter("SCHMENDIMAN"),
+          PlayCharacter("COUNTESS"),
+          PlayCharacter("FEMALE ADMIRER"),
+          PlayCharacter("VISITOR")
+      )
+
+      val betterFile = cwd /  "full_script.md"
+
+      val fileLines = betterFile.contentAsString.split("\n").toList
+
+     Example.convertLinesWithDynamicCharacters(fileLines, targetCharacter, allCharacters, Example.firstLetterOfEachWord _)
+      .foreach(println)
+    }
+
   }
 
 
