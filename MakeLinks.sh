@@ -15,3 +15,6 @@ rm -f ~/.tmux.conf; ln .tmux.conf ~/.tmux.conf
 rm -Rf ~/scripts; mkdir ~/scripts; cp -R scripts ~/
 rm -Rf ~/.vim; mkdir ~/.vim; cp -R .vim ~/
 rm -Rf ~/.ammonite; mkdir ~/.ammonite; cp -R .ammonite ~/
+
+ln .sbt/1.0/global.sbt ~/.sbt/1.0/global.sbt 
+ln .sbt/1.0/plugins/build.sbt ~/.sbt/1.0/plugins/build.sbt 
